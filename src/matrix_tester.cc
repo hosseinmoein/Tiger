@@ -10,6 +10,8 @@
 #include <Matrix.h>
 #include <MathOperators.h>
 
+using namespace hmma;
+
 // ----------------------------------------------------------------------------
 
 int main (int argCnt, char *argVctr [])  {
