@@ -66,18 +66,18 @@ class   Complex  {
 
     public:
 
-        inline Complex () throw () : real_ (), imaginary_ ()  {   }
+        inline Complex () noexcept : real_ (), imaginary_ ()  {   }
         inline Complex (const value_type &r, const value_type &i)
-            throw ()
+            noexcept
             : real_ (r), imaginary_ (i)  {   }
 
-        inline const value_type &real () const throw ()  { return (real_); }
-        inline value_type &real () throw ()  { return (real_); }
-        inline const value_type &imaginary () const throw ()  {
+        inline const value_type &real () const noexcept  { return (real_); }
+        inline value_type &real () noexcept  { return (real_); }
+        inline const value_type &imaginary () const noexcept  {
 
             return (imaginary_);
         }
-        inline value_type &imaginary () throw ()  { return (imaginary_); }
+        inline value_type &imaginary () noexcept  { return (imaginary_); }
 
        // NOTE: Mathematically speaking this assignment makes no sense. But
        //       I define it here for practical reasons. For example I want
@@ -85,18 +85,18 @@ class   Complex  {
        //       numbers.
        //           double  x = 0;
        //
-        inline Complex &operator = (const value_type &rhs) throw ()  {
+        inline Complex &operator = (const value_type &rhs) noexcept  {
 
             real () = imaginary () = rhs;
             return (*this);
         }
 
-        inline Complex conjugate () const throw ()  {
+        inline Complex conjugate () const noexcept  {
 
             return (Complex (real (), -imaginary ()));
         }
 
-        inline value_type norm () const throw ()  {
+        inline value_type norm () const noexcept  {
 
             return (real () * real () + imaginary () * imaginary ());
         }
@@ -104,9 +104,9 @@ class   Complex  {
        // Complex absolute value also called Modulus, also called magnitude,
        // also called the distance from the origin
        //
-        inline value_type cabs () const throw () { return (::sqrt (norm ())); }
+        inline value_type cabs () const noexcept { return (::sqrt (norm ())); }
 
-        inline Complex sqrt () const throw ()  {
+        inline Complex sqrt () const noexcept  {
 
             const   value_type  y = ::sqrt ((cabs () - real ()) / 2.0);
 
@@ -126,14 +126,14 @@ class   Complex  {
        // the four quadrant arctan (often expressed as atan2(b, a) in computer
        // languages). The angle of the complex number 0 is undefined.
        //
-        inline value_type angle () const throw ()  {
+        inline value_type angle () const noexcept  {
 
             return (::atan2 (imaginary (), real ()));
         }
 
        // e raised to the power of (a + bi)
        //
-        inline Complex exp () const throw ()  {
+        inline Complex exp () const noexcept  {
 
             return (Complex (::exp (real ()) * ::cos (imaginary ()),
                                     ::exp (real ()) * ::sin (imaginary ())));
@@ -149,7 +149,7 @@ class   Complex  {
        //       where k is any integer 0, +/-1, +/-2, ...
        // k == 0 is called the principal logarithm
        //
-        inline Complex ln (int k = 0) const throw ()  {
+        inline Complex ln (int k = 0) const noexcept  {
 
             return (Complex (
                         ::log (cabs ()),
@@ -158,7 +158,7 @@ class   Complex  {
 
        // a + bi raised to the power of c + di
        //
-        inline Complex pow (const Complex &n) const throw ()  {
+        inline Complex pow (const Complex &n) const noexcept  {
 
             const   value_type  ca = cabs ();
             const   value_type  an = angle ();
@@ -172,7 +172,7 @@ class   Complex  {
 
        // a + bi raised to the power real number n
        //
-        inline Complex pow (const value_type &n) const throw ()  {
+        inline Complex pow (const value_type &n) const noexcept  {
 
             const   value_type  an = angle ();
             const   value_type  v = ::exp (n * ::log (cabs ()));
@@ -180,13 +180,13 @@ class   Complex  {
             return (Complex (v * ::cos (n * an), v * ::sin (n * an)));
         }
 
-        inline Complex &operator ++ () throw ()  {    // ++Prefix
+        inline Complex &operator ++ () noexcept  {    // ++Prefix
 
             real () += 1;
             imaginary () += 1;
             return (*this);
         }
-        inline Complex operator ++ (int) throw ()  {  // Postfix++
+        inline Complex operator ++ (int) noexcept  {  // Postfix++
 
             const   Complex  slug = *this;
 
@@ -195,13 +195,13 @@ class   Complex  {
             return (slug);
         }
 
-        inline Complex &operator -- () throw ()  {    // --Prefix
+        inline Complex &operator -- () noexcept  {    // --Prefix
 
             real () -= 1;
             imaginary () -= 1;
             return (*this);
         }
-        inline Complex operator -- (int) throw ()  {  // Postfix--
+        inline Complex operator -- (int) noexcept  {  // Postfix--
 
             const   Complex  slug = *this;
 
@@ -210,16 +210,16 @@ class   Complex  {
             return (slug);
         }
 
-        inline Complex &operator + () throw ()  { return (*this); }
-        inline Complex operator - () throw ()  {
+        inline Complex &operator + () noexcept  { return (*this); }
+        inline Complex operator - () noexcept  {
 
             return (Complex (-real (), -imaginary ()));
         }
-        inline const Complex &operator + () const throw () {
+        inline const Complex &operator + () const noexcept {
 
             return (*this);
         }
-        inline Complex operator - () const throw ()  {
+        inline Complex operator - () const noexcept  {
 
             return (Complex (-real (), -imaginary ()));
         }

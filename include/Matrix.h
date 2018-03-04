@@ -35,20 +35,20 @@ class   Matrix : public BASE<TYPE>  {
 
     public:
 
-        inline Matrix () throw ()  {   }
+        inline Matrix () noexcept  {   }
 
         inline Matrix (size_type row,
                               size_type col,
                               const_reference def_value = value_type ())
-            throw ()
+            noexcept
             : BaseClass (row, col, def_value)  {   }
 
-        inline reference operator () (size_type r, size_type c) throw ();
+        inline reference operator () (size_type r, size_type c) noexcept;
         inline const_reference
-        operator () (size_type r, size_type c) const throw ();
+        operator () (size_type r, size_type c) const noexcept;
 
-        inline Matrix &transpose () throw ();
-        inline Matrix &transpose (Matrix &that) const throw ();
+        inline Matrix &transpose () noexcept;
+        inline Matrix &transpose (Matrix &that) const noexcept;
 
        // Inverse(A) * A = A * Inverse(A) = I
        //
@@ -57,9 +57,9 @@ class   Matrix : public BASE<TYPE>  {
        //     Inverse(A) = ---------------- * Adjoint(A)
        //                   Determinant(A)
        //
-        inline Matrix &invert () throw (NotSquare, Singular);
+        inline Matrix &invert (); // throw (NotSquare, Singular);
         inline Matrix &
-        inverse (Matrix &that) const throw (NotSquare, Singular);
+        inverse (Matrix &that) const; // throw (NotSquare, Singular);
 
        // Row Reduced Echelon Form:
        // A matrix that has undergone Gaussian elimination is said to be in
@@ -74,12 +74,12 @@ class   Matrix : public BASE<TYPE>  {
        // RREF is an important technique in solving simultaneous equations and
        // finding the rank of a matrix.
        //
-        inline Matrix &rref (size_type &rank) throw ();
+        inline Matrix &rref (size_type &rank) noexcept;
         inline Matrix &
-        rref (Matrix &that, size_type &rank) const throw ();
+        rref (Matrix &that, size_type &rank) const noexcept;
 
-        inline Matrix &identity () throw (NotSquare);
-        static Matrix &identity (Matrix &that) throw (NotSquare);
+        inline Matrix &identity (); // throw (NotSquare);
+        static Matrix &identity (Matrix &that); // throw (NotSquare);
 
        // The column rank of a matrix is the maximal number of linearly
        // independent columns of the matrix. Likewise, the row rank is the
@@ -89,7 +89,7 @@ class   Matrix : public BASE<TYPE>  {
        // for the proofs, see,  Murase (1960), Andrea & Wong (1960),
        // Williams & Cater (1968), Mackiw (1995).
        //
-        inline size_type rank () const throw ();
+        inline size_type rank () const noexcept;
 
        // This is the best determinant definition I could find:
        //
@@ -128,7 +128,7 @@ class   Matrix : public BASE<TYPE>  {
        // NOTE: This is a relatively _expensive_ calculation. Its complexity
        //       is O(n!), where n is the number of rows or columns.
        //
-        inline value_type determinant () const throw (NotSquare);
+        inline value_type determinant () const; // throw (NotSquare);
 
        // Minor of a matrix is the same matrix with the specified row
        // and column taken out.
@@ -139,19 +139,19 @@ class   Matrix : public BASE<TYPE>  {
        //
         inline Matrix &get_minor (Matrix &mmatrix,
                                          size_type drow,
-                                         size_type dcol) const throw ();
+                                         size_type dcol) const noexcept;
 
        // A Cofactor of a matrix is the determinant of a minor of the matrix.
        // You can also say cofactor is the signed minor of the matrix.
        //
         inline value_type
-        cofactor (size_type row, size_type column) const throw (NotSquare);
+        cofactor (size_type row, size_type column) const; // throw (NotSquare);
 
        // The Adjoint of a matrix is formed by taking the transpose of the
        // cofactors matrix of the original matrix.
        //
         inline Matrix &
-        adjoint (Matrix &amatrix) const throw (NotSquare);
+        adjoint (Matrix &amatrix) const; // throw (NotSquare);
 
        // Variance/Covariance matrix.
        // The columns of the matrix are assumed to be observations of some
@@ -171,7 +171,7 @@ class   Matrix : public BASE<TYPE>  {
        // For a nXm matrix, you will get a mXm covariance matrix
        //
         inline Matrix
-        covariance (bool is_unbiased = true) const throw (NotSolvable);
+        covariance (bool is_unbiased = true) const; // throw (NotSolvable);
 
        // The Pearson product-moment correlation coefficient:
        //
@@ -181,34 +181,34 @@ class   Matrix : public BASE<TYPE>  {
        //
        // For a nXm matrix, you will get a mXm correlation matrix
        //
-        inline Matrix correlation () const throw (NotSolvable);
+        inline Matrix correlation () const; // throw (NotSolvable);
 
        // Solve the simultaneous equation Ax = rhs by Gaussian elimination.
        // It returns the x vector.
        //
         inline Matrix
-        solve_se (const Matrix &rhs) const throw(NotSolvable, Singular);
+        solve_se (const Matrix &rhs) const; // throw(NotSolvable, Singular);
 
        // Frobenius Norm:
        // The Frobenius norm of a matrix is the square root of the sum of
        // the squares of the values of the elements of the matrix.
        //
-        inline value_type norm () const throw ();
+        inline value_type norm () const noexcept;
 
        // The Max (Euclidian) norm of a matrix is the maximum absolute singular
        // value of the matrix.
        //
-        inline value_type max_norm () const throw ();
+        inline value_type max_norm () const noexcept;
 
        // The Column norm of a matrix is the absolute sum of the column with
        // the maximum value in the matrix.
        //
-        inline value_type col_norm () const throw ();
+        inline value_type col_norm () const noexcept;
 
        // The Row norm of a matrix is the absolute sum of the row with the
        // maximum value in the matrix.
        //
-        inline value_type row_norm () const throw ();
+        inline value_type row_norm () const noexcept;
 
        // In numerical analysis, the condition number associated with a
        // problem is a measure of that problem's amenability to digital
@@ -234,12 +234,12 @@ class   Matrix : public BASE<TYPE>  {
        // The condition number is defined more precisely to be the maximum
        // ratio of the relative error in x divided by the relative error in b.
        //
-        inline value_type condition () const throw (NotSquare, Singular);
+        inline value_type condition () const; // throw (NotSquare, Singular);
 
        // Sum of the values on the main diagonal or equivalently sum of the
        // matrix's eigenvalues.
        //
-        inline value_type trace () const throw (NotSquare);
+        inline value_type trace () const; // throw (NotSquare);
 
        // Let A be an nXn matrix. The number l is an eigenvalue of A if there
        // exists a non-zero vector v such that
@@ -311,7 +311,7 @@ class   Matrix : public BASE<TYPE>  {
         inline void
         eigen_space (MAT &eigenvalues,
                      MAT &eigenvectors,
-                     bool sort_values = false) const throw (NotSolvable);
+                     bool sort_values = false) const; // throw (NotSolvable);
 
        // The n-th root of a diagonal matrix is another diagonal matrix with 
        // each element being the n-th root of the corresponding element in the
@@ -323,9 +323,9 @@ class   Matrix : public BASE<TYPE>  {
        // 
         inline Matrix &power (Matrix &result,
                                      value_type n,
-                                     bool is_diag) const throw (NotSolvable);
+                                     bool is_diag) const; // throw (NotSolvable);
         inline Matrix &power (value_type n,
-                                     bool is_diag) throw (NotSolvable);
+                                     bool is_diag); // throw (NotSolvable);
 
 	   // In linear algebra, the Singular Value Decomposition (SVD) is an
        // important factorization of a rectangular real or complex matrix,
@@ -361,7 +361,7 @@ class   Matrix : public BASE<TYPE>  {
         inline void svd (Matrix &U,
                          Matrix &S,
                          Matrix &V,
-                         bool full_size_S = true) const throw (NotSolvable);
+                         bool full_size_S = true) const; // throw (NotSolvable);
 
        // In linear algebra, the QR decomposition (also called the QR
        // factorization) of a matrix is a decomposition of the matrix into an
@@ -378,7 +378,7 @@ class   Matrix : public BASE<TYPE>  {
        // Analogously, we can define the QL, RQ, and LQ decompositions of A
        // (with L being a left triangular matrix in this case).
        //
-        inline void qrd (Matrix &Q, Matrix &R) const throw ();
+        inline void qrd (Matrix &Q, Matrix &R) const noexcept;
 
        // In linear algebra, the LU decomposition is a matrix decomposition
        // which writes a matrix as the product of a lower and upper triangular
@@ -400,7 +400,7 @@ class   Matrix : public BASE<TYPE>  {
        //       equations. This will fail if is_singular() returns false.
        //
         inline void
-        lud (Matrix &L, Matrix &U) const throw (NotSquare);
+        lud (Matrix &L, Matrix &U) const; // throw (NotSquare);
 
        // Cholesky decomposition:
        //
@@ -429,32 +429,32 @@ class   Matrix : public BASE<TYPE>  {
        //
         template<class MAT>
         inline void
-        chod (MAT &R, bool right = true) const throw (NotSolvable);
+        chod (MAT &R, bool right = true) const; // throw (NotSolvable);
 
         //
         // Boolean methods
         //
 
-        inline bool is_square () const throw ();
-        inline bool is_singular () const throw ();
-        inline bool is_diagonal () const throw ();
+        inline bool is_square () const noexcept;
+        inline bool is_singular () const noexcept;
+        inline bool is_diagonal () const noexcept;
 
        // a diagonal matrix with non-zero diagonal
        //
-        inline bool is_scalar () const throw ();
-        inline bool is_identity () const throw ();
-        inline bool is_null () const throw ();
+        inline bool is_scalar () const noexcept;
+        inline bool is_identity () const noexcept;
+        inline bool is_null () const noexcept;
 
        // For real matrices symmetric and Hermitian are equivalent
        //
-        inline bool is_symmetric () const throw ();
-        inline bool is_skew_symmetric () const throw ();
-        inline bool is_upper_triangular () const throw ();
-        inline bool is_lower_triangular () const throw ();
+        inline bool is_symmetric () const noexcept;
+        inline bool is_skew_symmetric () const noexcept;
+        inline bool is_upper_triangular () const noexcept;
+        inline bool is_lower_triangular () const noexcept;
 
        // A * ~A == ~A * A
        //
-        inline bool is_normal () const throw ();
+        inline bool is_normal () const noexcept;
 
        // An orthogonal matrix is a square matrix whose transpose is its
        // inverse:
@@ -462,11 +462,11 @@ class   Matrix : public BASE<TYPE>  {
        //
        // A complex orthogonal matrix is called unitary
        //
-        inline bool is_orthogonal () const throw (Singular);
+        inline bool is_orthogonal () const; // throw (Singular);
 
        // It is orthogonal and its determinant == 1
        //
-        inline bool is_special_orthogonal () const throw (Singular);
+        inline bool is_special_orthogonal () const; // throw (Singular);
 
     private:
 
@@ -476,7 +476,7 @@ class   Matrix : public BASE<TYPE>  {
 
         inline void diagonal_power_ (value_type n);
 
-        inline void power (value_type n) const throw (NotSolvable);
+        inline void power (value_type n) const; // throw (NotSolvable);
 
        // Partial pivoting for Gaussian elimination:
        //
@@ -485,7 +485,7 @@ class   Matrix : public BASE<TYPE>  {
        // sorting of the rows of the matrix so that row r contains the maximum
        // absolute column value for column c, among all rows r ... n.
        //
-        inline size_type ppivot_ (size_type the_row) throw ();
+        inline size_type ppivot_ (size_type the_row) noexcept;
 
        // Symmetric Householder reduction to tridiagonal form.
        //
@@ -496,7 +496,7 @@ class   Matrix : public BASE<TYPE>  {
         template<class MAT>
         static inline void tridiagonalize_ (MAT &e_vecs,
                                             MAT &e_vals,
-                                            MAT &imagi) throw ();
+                                            MAT &imagi) noexcept;
 
        // Symmetric tridiagonal QL algorithm.
        //
@@ -507,7 +507,7 @@ class   Matrix : public BASE<TYPE>  {
         template<class MAT>
         static inline void diagonalize_ (MAT &e_vecs,
                                          MAT &e_vals,
-                                         MAT &imagi) throw ();
+                                         MAT &imagi) noexcept;
 
        // Nonsymmetric reduction to Hessenberg form.
        //
@@ -518,7 +518,7 @@ class   Matrix : public BASE<TYPE>  {
         template<class MAT>
         static inline void red_to_hessenberg_ (MAT &e_vecs,
                                                MAT &hess_form)
-            throw ();
+            noexcept;
 
        // Nonsymmetric reduction from Hessenberg to real Schur form.
        //
@@ -531,7 +531,7 @@ class   Matrix : public BASE<TYPE>  {
                                                  MAT &e_vals,
                                                  MAT &imagi,
                                                  MAT &hess_form)
-            throw ();
+            noexcept;
 
         // It returns the quotient of two complex numbers:
         // (a + ib) / (c + id)
@@ -543,7 +543,7 @@ class   Matrix : public BASE<TYPE>  {
                                    value_type yr,
                                    value_type yi,
                                    value_type &cdivr,
-                                   value_type &cdivi) throw ();
+                                   value_type &cdivi) noexcept;
 
     public:
 

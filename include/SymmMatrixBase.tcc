@@ -12,7 +12,7 @@ namespace hmma
 
 template<class TYPE>
 inline typename SymmMatrixBase<TYPE>::reference
-SymmMatrixBase<TYPE>::at (size_type r, size_type c) throw ()  {
+SymmMatrixBase<TYPE>::at (size_type r, size_type c) noexcept  {
 
     if (r > c)
         std::swap (r, c);
@@ -26,7 +26,7 @@ SymmMatrixBase<TYPE>::at (size_type r, size_type c) throw ()  {
 template<class TYPE>
 inline typename SymmMatrixBase<TYPE>::const_reference
 SymmMatrixBase<TYPE>::
-at (size_type r, size_type c) const throw ()  {
+at (size_type r, size_type c) const noexcept  {
 
     if (r > c)
         std::swap (r, c);

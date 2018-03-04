@@ -33,11 +33,11 @@ class   DMScu_StepVectorRange  {
 
     public:
 
-        inline DMScu_StepVectorRange () throw ()
+        inline DMScu_StepVectorRange () noexcept
             : begin_ptr_ (NULL), end_ptr_ (NULL), step_size_ (0)  {   }
         inline DMScu_StepVectorRange (value_type *bp,
                                       value_type *ep,
-                                      size_type step) throw (DMScu_Exception)
+                                      size_type step)
             : begin_ptr_ (bp), end_ptr_ (ep), step_size_ (step)  {
 
             // std::cout <<
@@ -55,14 +55,14 @@ class   DMScu_StepVectorRange  {
                                        "of steps");
         }
 
-        inline bool empty () const throw ()  {
+        inline bool empty () const noexcept  {
 
             return (step_size_ == 0 ||
                     (reinterpret_cast<unsigned long long int>(end_ptr_) -
                      reinterpret_cast<unsigned long long int>(begin_ptr_)) /
                     sizeof (value_type) <= step_size_);
         }
-        inline size_type size () const throw ()  {
+        inline size_type size () const noexcept  {
 
             return (step_size_ == 0
                     ? 0
@@ -71,29 +71,29 @@ class   DMScu_StepVectorRange  {
                        sizeof (value_type)) /
                       step_size_) + 1);
         }
-        inline void clear () throw ()  {
+        inline void clear () noexcept  {
 
             begin_ptr_ = end_ptr_ = NULL;
             step_size_ = 0;
         }
 
-        inline reference operator [] (size_type i) throw ()  {
+        inline reference operator [] (size_type i) noexcept  {
 
             return (*(begin_ptr_ + i * step_size_));
         }
-        inline const_reference operator [] (size_type i) const throw ()  {
+        inline const_reference operator [] (size_type i) const noexcept  {
 
             return (*(begin_ptr_ + i * step_size_));
         }
-        inline reference front () throw ()  { return (*begin_ptr_); }
-        inline const_reference front () const throw ()  {
+        inline reference front () noexcept  { return (*begin_ptr_); }
+        inline const_reference front () const noexcept  {
 
             return (*begin_ptr_);
         }
-        inline reference back () throw ()  { return (*end_ptr_); }
-        inline const_reference back () const throw ()  { return (*end_ptr_); }
+        inline reference back () noexcept  { return (*end_ptr_); }
+        inline const_reference back () const noexcept  { return (*end_ptr_); }
 
-        inline void swap (DMScu_StepVectorRange &rhs) throw ()  {
+        inline void swap (DMScu_StepVectorRange &rhs) noexcept  {
 
             std::swap (begin_ptr_, rhs.begin_ptr_);
             std::swap (end_ptr_, rhs.end_ptr_);
@@ -125,17 +125,17 @@ class   DMScu_StepVectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be an "undefined" iterator
                //
-                inline iterator () throw () : node_ (NULL), step_ (0)  {   }
+                inline iterator () noexcept : node_ (NULL), step_ (0)  {   }
 
-                inline iterator (value_type *node, size_type step) throw ()
+                inline iterator (value_type *node, size_type step) noexcept
                     : node_ (node), step_ (step)  {  }
 
-                inline iterator (const iterator &that) throw ()  {
+                inline iterator (const iterator &that) noexcept  {
 
                     *this = that;
                 }
 
-                inline iterator &operator = (const iterator &rhs) throw ()  {
+                inline iterator &operator = (const iterator &rhs) noexcept  {
 
                     if (this != &rhs)  {
                         node_ = rhs.node_;
@@ -145,11 +145,11 @@ class   DMScu_StepVectorRange  {
                     return (*this);
                 }
 
-                inline bool operator == (const iterator &rhs) const throw ()  {
+                inline bool operator == (const iterator &rhs) const noexcept  {
 
                     return (node_ == rhs.node_);
                 }
-                inline bool operator != (const iterator &rhs) const throw ()  {
+                inline bool operator != (const iterator &rhs) const noexcept  {
 
                     return (node_ != rhs.node_);
                 }
@@ -157,24 +157,24 @@ class   DMScu_StepVectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline pointer operator -> () const throw ()  {
+                inline pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline reference operator * () const throw ()  {
+                inline reference operator * () const noexcept  {
 
                     return (*node_);
                 }
-                inline operator pointer () const throw ()  { return (node_); }
+                inline operator pointer () const noexcept  { return (node_); }
 
                // We are following STL style iterator interface.
                //
-                inline iterator &operator ++ () throw ()  {    // ++Prefix
+                inline iterator &operator ++ () noexcept  {    // ++Prefix
 
                     node_ += step_;
                     return (*this);
                 }
-                inline iterator operator ++ (int) throw ()  {  // Postfix++
+                inline iterator operator ++ (int) noexcept  {  // Postfix++
 
                     value_type   *ret_node = node_;
 
@@ -182,18 +182,18 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
-                inline iterator &operator += (long i) throw ()  {
+                inline iterator &operator += (long i) noexcept  {
 
                     node_ += i * step_;
                     return (*this);
                 }
 
-                inline iterator &operator -- () throw ()  {    // --Prefix
+                inline iterator &operator -- () noexcept  {    // --Prefix
 
                     node_ -= step_;
                     return (*this);
                 }
-                inline iterator operator -- (int) throw ()  {  // Postfix--
+                inline iterator operator -- (int) noexcept  {  // Postfix--
 
                     value_type   *ret_node = node_;
 
@@ -201,13 +201,13 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
-                inline iterator &operator -= (int i) throw ()  {
+                inline iterator &operator -= (int i) noexcept  {
 
                     node_ -= i * step_;
                     return (*this);
                 }
 
-                inline iterator operator + (int i) throw ()  {
+                inline iterator operator + (int i) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -215,7 +215,7 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
-                inline iterator operator - (int i) throw ()  {
+                inline iterator operator - (int i) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -223,7 +223,7 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
-                inline iterator operator + (long i) throw ()  {
+                inline iterator operator + (long i) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -231,7 +231,7 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
-                inline iterator operator - (long i) throw ()  {
+                inline iterator operator - (long i) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -260,26 +260,26 @@ class   DMScu_StepVectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be an "undefined" iterator
                //
-                inline const_iterator () throw ()
+                inline const_iterator () noexcept
                     : node_ (NULL), step_ (0)  {   }
 
                 inline const_iterator (value_type const *node,
-                                       size_type step) throw ()
+                                       size_type step) noexcept
                     : node_ (node), step_ (step)  {   }
 
-                inline const_iterator (const const_iterator &that) throw ()  {
+                inline const_iterator (const const_iterator &that) noexcept  {
 
                     *this = that;
                 }
 
-                inline const_iterator (const iterator &itr) throw ()
+                inline const_iterator (const iterator &itr) noexcept
                     : node_ (NULL)  {
 
                     *this = itr;
                 }
 
                 inline const_iterator &operator = (const const_iterator &rhs)
-                    throw ()  {
+                    noexcept  {
 
                     if (this != &rhs)  {
                         node_ = rhs.node_;
@@ -290,7 +290,7 @@ class   DMScu_StepVectorRange  {
                 }
 
                 inline const_iterator &operator = (const iterator &rhs)
-                    throw ()  {
+                    noexcept  {
 
                     node_ = rhs.node_;
                     step_ = rhs.step_;
@@ -298,12 +298,12 @@ class   DMScu_StepVectorRange  {
                 }
 
                 inline bool operator == (const const_iterator &rhs)
-                    const throw ()  {
+                    const noexcept  {
 
                     return (node_ == rhs.node_);
                 }
                 inline bool operator != (const const_iterator &rhs)
-                    const throw ()  {
+                    const noexcept  {
 
                     return (node_ != rhs.node_);
                 }
@@ -311,22 +311,22 @@ class   DMScu_StepVectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const throw ()  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline const_reference operator * () const throw ()  {
+                inline const_reference operator * () const noexcept  {
 
                     return (*node_);
                 }
-                inline operator const_pointer () const throw ()  {
+                inline operator const_pointer () const noexcept  {
 
                     return (node_);
                 }
 
                // ++Prefix
                //
-                inline const_iterator &operator ++ () throw ()  {
+                inline const_iterator &operator ++ () noexcept  {
 
                     node_ += step_;
                     return (*this);
@@ -334,7 +334,7 @@ class   DMScu_StepVectorRange  {
 
                // Postfix++
                //
-                inline const_iterator operator ++ (int) throw ()  {
+                inline const_iterator operator ++ (int) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -342,7 +342,7 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
-                inline const_iterator &operator += (int i) throw ()  {
+                inline const_iterator &operator += (int i) noexcept  {
 
                     node_ += i * step_;
                     return (*this);
@@ -350,7 +350,7 @@ class   DMScu_StepVectorRange  {
 
                // --Prefix
                //
-                inline const_iterator &operator -- () throw ()  {
+                inline const_iterator &operator -- () noexcept  {
 
                     node_ -= step_;
                     return (*this);
@@ -358,7 +358,7 @@ class   DMScu_StepVectorRange  {
 
                // Postfix--
                //
-                inline const_iterator operator -- (int) throw ()  {
+                inline const_iterator operator -- (int) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -366,13 +366,13 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
-                inline const_iterator &operator -= (int i) throw ()  {
+                inline const_iterator &operator -= (int i) noexcept  {
 
                     node_ -= i * step_;
                     return (*this);
                 }
 
-                inline const_iterator operator + (int i) throw ()  {
+                inline const_iterator operator + (int i) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -380,7 +380,7 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
-                inline const_iterator operator - (int i) throw ()  {
+                inline const_iterator operator - (int i) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -388,7 +388,7 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
-                inline const_iterator operator + (long i) throw ()  {
+                inline const_iterator operator + (long i) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -396,7 +396,7 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
-                inline const_iterator operator - (long i) throw ()  {
+                inline const_iterator operator - (long i) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -412,20 +412,20 @@ class   DMScu_StepVectorRange  {
 
     public:
 
-        inline iterator begin () throw ()  {
+        inline iterator begin () noexcept  {
 
             return (empty () ? end () : iterator (begin_ptr_, step_size_));
         }
-        inline iterator end () throw ()  {
+        inline iterator end () noexcept  {
 
             return (iterator (end_ptr_ + step_size_, step_size_));
         }
-        inline const_iterator begin () const throw ()  {
+        inline const_iterator begin () const noexcept  {
 
             return (empty ()
                         ? end () : const_iterator (begin_ptr_, step_size_));
         }
-        inline const_iterator end () const throw ()  {
+        inline const_iterator end () const noexcept  {
 
             return (const_iterator (end_ptr_ + step_size_, step_size_));
         }
@@ -434,7 +434,7 @@ class   DMScu_StepVectorRange  {
        //
         template<class cu_EXPR>
         inline DMScu_StepVectorRange &operator = (const cu_EXPR &rhs)
-            throw ()  {
+            noexcept  {
 
             rhs.assign (*this);
             return (*this);

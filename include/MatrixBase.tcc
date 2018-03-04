@@ -37,7 +37,7 @@ _resize (size_type in_row,
 // ----------------------------------------------------------------------------
 
 template<class TYPE, class STORAGE>
-void DenseMatrixStorage<TYPE, STORAGE>::clear () throw ()  {
+void DenseMatrixStorage<TYPE, STORAGE>::clear () noexcept  {
 
     data_.clear ();
     rows_ = 0;
@@ -49,7 +49,7 @@ void DenseMatrixStorage<TYPE, STORAGE>::clear () throw ()  {
 
 template<class TYPE, class STORAGE>
 inline void DenseMatrixStorage<TYPE, STORAGE>::
-swap (DenseMatrixStorage &rhs) throw ()  {
+swap (DenseMatrixStorage &rhs) noexcept  {
 
     data_.swap (rhs.data_);
     std::swap (rows_, rhs.rows_);

@@ -41,20 +41,20 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
     protected:
 
-        inline SymmMatrixBase () throw ()  {   }
+        inline SymmMatrixBase () noexcept  {   }
 
         inline
         SymmMatrixBase (size_type row,
                                size_type col,
                                const_reference def_value = value_type ())
-            throw (NotSquare)
+            // throw (NotSquare)
             : BaseClass (row, col, (col * (col + 1)) / 2, def_value)  {
 
             if (row != col)
                 throw NotSquare ();
         }
 
-        static inline bool _is_symmetric_matrix () throw()  { return (true); }
+        static inline bool _is_symmetric_matrix () noexcept { return (true); }
 
     public:
 
@@ -62,8 +62,8 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                      size_type in_col, 
                      const_reference def_value = value_type ());
 
-        inline reference at (size_type r, size_type c) throw ();
-        inline const_reference at (size_type r, size_type c) const throw ();
+        inline reference at (size_type r, size_type c) noexcept;
+        inline const_reference at (size_type r, size_type c) const noexcept;
 
         std::ostream &dump (std::ostream &out_stream) const;
 
@@ -82,9 +82,9 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be an "undefined" iterator
                //
-                inline iterator () throw () : matx_ (NULL), idx_ (0)  {   }
+                inline iterator () noexcept : matx_ (NULL), idx_ (0)  {   }
 
-                inline iterator (SelfType *m, size_type idx = 0) throw ()
+                inline iterator (SelfType *m, size_type idx = 0) noexcept
                     : matx_ (m), idx_ (idx)  {   }
 
                 inline bool operator == (const iterator &rhs) const  {
@@ -99,17 +99,17 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline pointer operator -> () const throw ()  {
+                inline pointer operator -> () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
                 }
-                inline reference operator * () const throw ()  {
+                inline reference operator * () const noexcept  {
 
                     return (matx_->at (idx_ / matx_->columns (),
                                        idx_ % matx_->columns ()));
                 }
-                inline operator pointer () const throw ()  {
+                inline operator pointer () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
@@ -117,12 +117,12 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // We are following STL style iterator interface.
                //
-                inline iterator &operator ++ () throw ()  {    // ++Prefix
+                inline iterator &operator ++ () noexcept  {    // ++Prefix
 
                     idx_ += 1;
                     return (*this);
                 }
-                inline iterator operator ++ (int) throw ()  {  // Postfix++
+                inline iterator operator ++ (int) noexcept  {  // Postfix++
 
                     const   size_type   ret_idx = idx_;
 
@@ -130,18 +130,18 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (iterator (matx_, ret_idx));
                 }
 
-                inline iterator &operator += (long i) throw ()  {
+                inline iterator &operator += (long i) noexcept  {
 
                     idx_ += i;
                     return (*this);
                 }
 
-                inline iterator &operator -- () throw ()  {    // --Prefix
+                inline iterator &operator -- () noexcept  {    // --Prefix
 
                     idx_ -= 1;
                     return (*this);
                 }
-                inline iterator operator -- (int) throw ()  {  // Postfix--
+                inline iterator operator -- (int) noexcept  {  // Postfix--
 
                     const   size_type   ret_idx = idx_;
 
@@ -149,28 +149,28 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (iterator (matx_, ret_idx));
                 }
 
-                inline iterator &operator -= (int i) throw ()  {
+                inline iterator &operator -= (int i) noexcept  {
 
                     idx_ -= i;
                     return (*this);
                 }
 
-                inline iterator operator + (int i) throw ()  {
+                inline iterator operator + (int i) noexcept  {
 
                     return (iterator (matx_, idx_ + i));
                 }
 
-                inline iterator operator - (int i) throw ()  {
+                inline iterator operator - (int i) noexcept  {
 
                     return (iterator (matx_, idx_ - i));
                 }
 
-                inline iterator operator + (long i) throw ()  {
+                inline iterator operator + (long i) noexcept  {
 
                     return (iterator (matx_, idx_ + i));
                 }
 
-                inline iterator operator - (long i) throw ()  {
+                inline iterator operator - (long i) noexcept  {
 
                     return (iterator (matx_, idx_ - i));
                 }
@@ -197,11 +197,11 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                //       the const_iterator to be an "undefined"
                //       const_iterator
                //
-                inline const_iterator () throw ()
+                inline const_iterator () noexcept
                     : matx_ (NULL), idx_ (0)  {   }
 
                 inline const_iterator (const SelfType *m, 
-                                       size_type idx = 0) throw ()
+                                       size_type idx = 0) noexcept
                     : matx_ (m), idx_ (idx)  {   }
 
                 inline const_iterator (
@@ -230,17 +230,17 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const throw ()  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
                 }
-                inline const_reference operator * () const throw ()  {
+                inline const_reference operator * () const noexcept  {
 
                     return (matx_->at (idx_ / matx_->columns (),
                                        idx_ % matx_->columns ()));
                 }
-                inline operator const_pointer () const throw ()  {
+                inline operator const_pointer () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
@@ -248,7 +248,7 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // ++Prefix
                //
-                inline const_iterator &operator ++ () throw ()  {
+                inline const_iterator &operator ++ () noexcept  {
 
                     idx_ += 1;
                     return (*this);
@@ -256,14 +256,14 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // Postfix++
                //
-                inline const_iterator operator ++ (int) throw ()  {
+                inline const_iterator operator ++ (int) noexcept  {
 
                     const   size_type   ret_idx = idx_;
 
                     idx_ += 1;
                     return (const_iterator (matx_, ret_idx));
                 }
-                inline const_iterator &operator += (long i) throw ()  {
+                inline const_iterator &operator += (long i) noexcept  {
 
                     idx_ += i;
                     return (*this);
@@ -271,7 +271,7 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // --Prefix
                //
-                inline const_iterator &operator -- () throw ()  {
+                inline const_iterator &operator -- () noexcept  {
 
                     idx_ -= 1;
                     return (*this);
@@ -279,7 +279,7 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // Postfix--
                //
-                inline const_iterator operator -- (int) throw ()  {
+                inline const_iterator operator -- (int) noexcept  {
 
                     const   size_type   ret_idx = idx_;
 
@@ -287,28 +287,28 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (const_iterator (matx_, ret_idx));
                 }
 
-                inline const_iterator &operator -= (int i) throw ()  {
+                inline const_iterator &operator -= (int i) noexcept  {
 
                     idx_ -= i;
                     return (*this);
                 }
 
-                inline const_iterator operator + (int i) throw ()  {
+                inline const_iterator operator + (int i) noexcept  {
 
                     return (const_iterator (matx_, idx_ + i));
                 }
 
-                inline const_iterator operator - (int i) throw ()  {
+                inline const_iterator operator - (int i) noexcept  {
 
                     return (const_iterator (matx_, idx_ - i));
                 }
 
-                inline const_iterator operator + (long i) throw ()  {
+                inline const_iterator operator + (long i) noexcept  {
 
                     return (const_iterator (matx_, idx_ + i));
                 }
 
-                inline const_iterator operator - (long i) throw ()  {
+                inline const_iterator operator - (long i) noexcept  {
 
                     return (const_iterator (matx_, idx_ - i));
                 }
@@ -324,40 +324,40 @@ class   SymmMatrixBase : public DenseMatrixStorage<TYPE>  {
         typedef const_iterator  row_const_iterator;
         typedef const_iterator  col_const_iterator;
 
-        inline col_iterator col_begin () throw ()  {
+        inline col_iterator col_begin () noexcept  {
 
             return (col_iterator (this));
         }
-        inline col_const_iterator col_begin () const throw ()  {
+        inline col_const_iterator col_begin () const noexcept  {
 
             return (col_const_iterator (this));
         }
-        inline col_iterator col_end () throw ()  {
+        inline col_iterator col_end () noexcept  {
 
             return (col_iterator (this,
                                   BaseClass::rows () * BaseClass::columns ()));
         }
-        inline col_const_iterator col_end () const throw ()  {
+        inline col_const_iterator col_end () const noexcept  {
 
             return (col_const_iterator (
                         this,
                         BaseClass::rows () * BaseClass::columns ()));
         }
 
-        inline row_iterator row_begin () throw ()  {
+        inline row_iterator row_begin () noexcept  {
 
             return (row_iterator (this));
         }
-        inline row_const_iterator row_begin () const throw ()  {
+        inline row_const_iterator row_begin () const noexcept  {
 
             return (row_const_iterator (this));
         }
-        inline row_iterator row_end () throw ()  {
+        inline row_iterator row_end () noexcept  {
 
             return (row_iterator (this,
                                   BaseClass::rows () * BaseClass::columns ()));
         }
-        inline row_const_iterator row_end () const throw ()  {
+        inline row_const_iterator row_end () const noexcept  {
 
             return (row_const_iterator (
                         this,

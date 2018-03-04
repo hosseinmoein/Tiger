@@ -47,16 +47,16 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
         typedef typename BaseClass::DataVector  DataVector;
 
-        inline DenseMatrixBase () throw ()  {   }
+        inline DenseMatrixBase () noexcept  {   }
 
         inline
         DenseMatrixBase (size_type row,
                                 size_type col,
                                 const_reference def_value = value_type ())
-            throw ()
+            noexcept
             : BaseClass (row, col, row * col, def_value)  {   }
 
-        static inline bool _is_symmetric_matrix () throw()  { return (false); }
+        static inline bool _is_symmetric_matrix () noexcept { return (false); }
 
     public:
 
@@ -64,15 +64,15 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                      size_type in_col,
                      const_reference def_value = value_type ());
 
-        inline reference at (size_type r, size_type c) throw ();
-        inline const_reference at (size_type r, size_type c) const throw ();
+        inline reference at (size_type r, size_type c) noexcept;
+        inline const_reference at (size_type r, size_type c) const noexcept;
 
        // Return the given row or column in vector format
        //
-        inline ColumnVector get_column (size_type c) throw ();
-        inline ColumnVector get_column (size_type c) const throw ();
-        inline RowVector get_row (size_type r) throw ();
-        inline RowVector get_row (size_type r) const throw ();
+        inline ColumnVector get_column (size_type c) noexcept;
+        inline ColumnVector get_column (size_type c) const noexcept;
+        inline RowVector get_row (size_type r) noexcept;
+        inline RowVector get_row (size_type r) const noexcept;
 
        // Set the given row or column from the given iterator
        //
@@ -105,7 +105,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
        // Scale the matrix by the given operator and scalar
        //
         template<class OPT, class EXPR>
-        inline void scale (OPT opt, const EXPR &e) throw ();
+        inline void scale (OPT opt, const EXPR &e) noexcept;
 
         std::ostream &dump (std::ostream &out_stream) const;
 
@@ -131,9 +131,9 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                // NOTE: The constructor with no argument initializes
                //       the row_iterator to be an "undefined" row_iterator
                //
-                inline row_iterator () throw () : matx_ (NULL), idx_ (0)  {   }
+                inline row_iterator () noexcept : matx_ (NULL), idx_ (0)  {   }
 
-                inline row_iterator (SelfType *m, size_type idx = 0) throw ()
+                inline row_iterator (SelfType *m, size_type idx = 0) noexcept
                     : matx_ (m), idx_ (idx)  {   }
 
                 inline bool operator == (const row_iterator &rhs) const  {
@@ -148,17 +148,17 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline pointer operator -> () const throw ()  {
+                inline pointer operator -> () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
                 }
-                inline reference operator * () const throw ()  {
+                inline reference operator * () const noexcept  {
 
                     return (matx_->at (idx_ / matx_->columns (),
                                        idx_ % matx_->columns ()));
                 }
-                inline operator pointer () const throw ()  {
+                inline operator pointer () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
@@ -166,12 +166,12 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // We are following STL style iterator interface.
                //
-                inline row_iterator &operator ++ () throw ()  {    // ++Prefix
+                inline row_iterator &operator ++ () noexcept  {    // ++Prefix
 
                     idx_ += 1;
                     return (*this);
                 }
-                inline row_iterator operator ++ (int) throw ()  {  // Postfix++
+                inline row_iterator operator ++ (int) noexcept  {  // Postfix++
 
                     const   size_type   ret_idx = idx_;
 
@@ -179,18 +179,18 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (row_iterator (matx_, ret_idx));
                 }
 
-                inline row_iterator &operator += (long i) throw ()  {
+                inline row_iterator &operator += (long i) noexcept  {
 
                     idx_ += i;
                     return (*this);
                 }
 
-                inline row_iterator &operator -- () throw ()  {    // --Prefix
+                inline row_iterator &operator -- () noexcept  {    // --Prefix
 
                     idx_ -= 1;
                     return (*this);
                 }
-                inline row_iterator operator -- (int) throw ()  {  // Postfix--
+                inline row_iterator operator -- (int) noexcept  {  // Postfix--
 
                     const   size_type   ret_idx = idx_;
 
@@ -198,28 +198,28 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (row_iterator (matx_, ret_idx));
                 }
 
-                inline row_iterator &operator -= (int i) throw ()  {
+                inline row_iterator &operator -= (int i) noexcept  {
 
                     idx_ -= i;
                     return (*this);
                 }
 
-                inline row_iterator operator + (int i) throw ()  {
+                inline row_iterator operator + (int i) noexcept  {
 
                     return (row_iterator (matx_, idx_ + i));
                 }
 
-                inline row_iterator operator - (int i) throw ()  {
+                inline row_iterator operator - (int i) noexcept  {
 
                     return (row_iterator (matx_, idx_ - i));
                 }
 
-                inline row_iterator operator + (long i) throw ()  {
+                inline row_iterator operator + (long i) noexcept  {
 
                     return (row_iterator (matx_, idx_ + i));
                 }
 
-                inline row_iterator operator - (long i) throw ()  {
+                inline row_iterator operator - (long i) noexcept  {
 
                     return (row_iterator (matx_, idx_ - i));
                 }
@@ -246,11 +246,11 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                //       the row_const_iterator to be an "undefined"
                //       row_const_iterator
                //
-                inline row_const_iterator () throw ()
+                inline row_const_iterator () noexcept
                     : matx_ (NULL), idx_ (0)  {   }
 
                 inline row_const_iterator (const SelfType *m,
-                                           size_type idx = 0) throw ()
+                                           size_type idx = 0) noexcept
                     : matx_ (m), idx_ (idx)  {   }
 
                 inline row_const_iterator (const row_iterator &that)  {
@@ -278,17 +278,17 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const throw ()  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
                 }
-                inline const_reference operator * () const throw ()  {
+                inline const_reference operator * () const noexcept  {
 
                     return (matx_->at (idx_ / matx_->columns (),
                                        idx_ % matx_->columns ()));
                 }
-                inline operator const_pointer () const throw ()  {
+                inline operator const_pointer () const noexcept  {
 
                     return (&(matx_->at (idx_ / matx_->columns (),
                                          idx_ % matx_->columns ())));
@@ -296,7 +296,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // ++Prefix
                //
-                inline row_const_iterator &operator ++ () throw ()  {
+                inline row_const_iterator &operator ++ () noexcept  {
 
                     idx_ += 1;
                     return (*this);
@@ -304,7 +304,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // Postfix++
                //
-                inline row_const_iterator operator ++ (int) throw ()  {
+                inline row_const_iterator operator ++ (int) noexcept  {
 
                     const   size_type   ret_idx = idx_;
 
@@ -312,7 +312,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (row_const_iterator (matx_, ret_idx));
                 }
 
-                inline row_const_iterator &operator += (long i) throw ()  {
+                inline row_const_iterator &operator += (long i) noexcept  {
 
                     idx_ += i;
                     return (*this);
@@ -320,7 +320,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // --Prefix
                //
-                inline row_const_iterator &operator -- () throw ()  {
+                inline row_const_iterator &operator -- () noexcept  {
 
                     idx_ -= 1;
                     return (*this);
@@ -328,7 +328,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
                // Postfix--
                //
-                inline row_const_iterator operator -- (int) throw ()  {
+                inline row_const_iterator operator -- (int) noexcept  {
 
                     const   size_type   ret_idx = idx_;
 
@@ -336,28 +336,28 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                     return (row_const_iterator (matx_, ret_idx));
                 }
 
-                inline row_const_iterator &operator -= (int i) throw ()  {
+                inline row_const_iterator &operator -= (int i) noexcept  {
 
                     idx_ -= i;
                     return (*this);
                 }
 
-                inline row_const_iterator operator + (int i) throw ()  {
+                inline row_const_iterator operator + (int i) noexcept  {
 
                     return (row_const_iterator (matx_, idx_ + i));
                 }
 
-                inline row_const_iterator operator - (int i) throw ()  {
+                inline row_const_iterator operator - (int i) noexcept  {
 
                     return (row_const_iterator (matx_, idx_ - i));
                 }
 
-                inline row_const_iterator operator + (long i) throw ()  {
+                inline row_const_iterator operator + (long i) noexcept  {
 
                     return (row_const_iterator (matx_, idx_ + i));
                 }
 
-                inline row_const_iterator operator - (long i) throw ()  {
+                inline row_const_iterator operator - (long i) noexcept  {
 
                     return (row_const_iterator (matx_, idx_ - i));
                 }
@@ -368,36 +368,36 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
                 size_type           idx_;
         };
 
-        inline col_iterator col_begin () throw ()  {
+        inline col_iterator col_begin () noexcept  {
 
             return (BaseClass::_get_data ().begin ());
         }
-        inline col_const_iterator col_begin () const throw ()  {
+        inline col_const_iterator col_begin () const noexcept  {
 
             return (BaseClass::_get_data ().begin ());
         }
-        inline col_iterator col_end () throw ()  {
+        inline col_iterator col_end () noexcept  {
 
             return (BaseClass::_get_data ().end ());
         }
-        inline col_const_iterator col_end () const throw ()  {
+        inline col_const_iterator col_end () const noexcept  {
 
             return (BaseClass::_get_data ().end ());
         }
 
-        inline row_iterator row_begin () throw ()  {
+        inline row_iterator row_begin () noexcept  {
 
             return (row_iterator (this));
         }
-        inline row_const_iterator row_begin () const throw ()  {
+        inline row_const_iterator row_begin () const noexcept  {
 
             return (row_const_iterator (this));
         }
-        inline row_iterator row_end () throw ()  {
+        inline row_iterator row_end () noexcept  {
 
             return (row_iterator (this, BaseClass::_get_data ().size ()));
         }
-        inline row_const_iterator row_end () const throw ()  {
+        inline row_const_iterator row_end () const noexcept  {
 
             return (row_const_iterator (this, BaseClass::_get_data().size ()));
         }

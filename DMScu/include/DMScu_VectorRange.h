@@ -30,40 +30,40 @@ class   DMScu_VectorRange  {
 
     public:
 
-        inline DMScu_VectorRange () throw ()
+        inline DMScu_VectorRange () noexcept
             : begin_ptr_ (NULL), end_ptr_ (NULL)  {   }
-        inline DMScu_VectorRange (value_type *bp, value_type *ep) throw ()
+        inline DMScu_VectorRange (value_type *bp, value_type *ep) noexcept
             : begin_ptr_ (bp), end_ptr_ (ep)  {   }
 
-        inline bool empty () const throw ()  {
+        inline bool empty () const noexcept  {
 
             return (begin_ptr_ == end_ptr_);
         }
-        inline size_type size () const throw ()  {
+        inline size_type size () const noexcept  {
 
             return (begin_ptr_
                         ? static_cast<size_type>(end_ptr_ - begin_ptr_) + 1
                         : 0);
         }
-        inline void clear () throw ()  { begin_ptr_ = end_ptr_ = NULL; }
+        inline void clear () noexcept  { begin_ptr_ = end_ptr_ = NULL; }
 
-        inline reference operator [] (size_type i) throw ()  {
-
-            return (*(begin_ptr_ + i));
-        }
-        inline const_reference operator [] (size_type i) const throw ()  {
+        inline reference operator [] (size_type i) noexcept  {
 
             return (*(begin_ptr_ + i));
         }
-        inline reference front () throw ()  { return (*begin_ptr_); }
-        inline const_reference front () const throw ()  {
+        inline const_reference operator [] (size_type i) const noexcept  {
+
+            return (*(begin_ptr_ + i));
+        }
+        inline reference front () noexcept  { return (*begin_ptr_); }
+        inline const_reference front () const noexcept  {
 
             return (*begin_ptr_);
         }
-        inline reference back () throw ()  { return (*end_ptr_); }
-        inline const_reference back () const throw ()  { return (*end_ptr_); }
+        inline reference back () noexcept  { return (*end_ptr_); }
+        inline const_reference back () const noexcept  { return (*end_ptr_); }
 
-        inline void swap (DMScu_VectorRange &rhs) throw ()  {
+        inline void swap (DMScu_VectorRange &rhs) noexcept  {
 
             std::swap (begin_ptr_, rhs.begin_ptr_);
             std::swap (end_ptr_, rhs.end_ptr_);
@@ -93,16 +93,16 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline iterator () throw () : node_ (NULL)  {   }
+                inline iterator () noexcept : node_ (NULL)  {   }
 
-                inline iterator (value_type *node) throw ()
+                inline iterator (value_type *node) noexcept
                     : node_ (node)  {  }
 
-                inline bool operator == (const iterator &rhs) const throw ()  {
+                inline bool operator == (const iterator &rhs) const noexcept  {
 
                     return (node_ == rhs.node_);
                 }
-                inline bool operator != (const iterator &rhs) const throw ()  {
+                inline bool operator != (const iterator &rhs) const noexcept  {
 
                     return (node_ != rhs.node_);
                 }
@@ -110,24 +110,24 @@ class   DMScu_VectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline pointer operator -> () const throw ()  {
+                inline pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline reference operator * () const throw ()  {
+                inline reference operator * () const noexcept  {
 
                     return (*node_);
                 }
-                inline operator pointer () const throw ()  { return (node_); }
+                inline operator pointer () const noexcept  { return (node_); }
 
                // We are following STL style iterator interface.
                //
-                inline iterator &operator ++ () throw ()  {    // ++Prefix
+                inline iterator &operator ++ () noexcept  {    // ++Prefix
 
                     node_ += 1;
                     return (*this);
                 }
-                inline iterator operator ++ (int) throw ()  {  // Postfix++
+                inline iterator operator ++ (int) noexcept  {  // Postfix++
 
                     value_type   *ret_node = node_;
 
@@ -135,18 +135,18 @@ class   DMScu_VectorRange  {
                     return (iterator (ret_node));
                 }
 
-                inline iterator &operator += (long step) throw ()  {
+                inline iterator &operator += (long step) noexcept  {
 
                     node_ += step;
                     return (*this);
                 }
 
-                inline iterator &operator -- () throw ()  {    // --Prefix
+                inline iterator &operator -- () noexcept  {    // --Prefix
 
                     node_ -= 1;
                     return (*this);
                 }
-                inline iterator operator -- (int) throw ()  {  // Postfix--
+                inline iterator operator -- (int) noexcept  {  // Postfix--
 
                     value_type   *ret_node = node_;
 
@@ -154,13 +154,13 @@ class   DMScu_VectorRange  {
                     return (iterator (ret_node));
                 }
 
-                inline iterator &operator -= (int step) throw ()  {
+                inline iterator &operator -= (int step) noexcept  {
 
                     node_ -= step;
                     return (*this);
                 }
 
-                inline iterator operator + (int step) throw ()  {
+                inline iterator operator + (int step) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -168,7 +168,7 @@ class   DMScu_VectorRange  {
                     return (iterator (ret_node));
                 }
 
-                inline iterator operator - (int step) throw ()  {
+                inline iterator operator - (int step) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -176,7 +176,7 @@ class   DMScu_VectorRange  {
                     return (iterator (ret_node));
                 }
 
-                inline iterator operator + (long step) throw ()  {
+                inline iterator operator + (long step) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -184,7 +184,7 @@ class   DMScu_VectorRange  {
                     return (iterator (ret_node));
                 }
 
-                inline iterator operator - (long step) throw ()  {
+                inline iterator operator - (long step) noexcept  {
 
                     value_type   *ret_node = node_;
 
@@ -212,31 +212,31 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline const_iterator () throw () : node_ (NULL)  {   }
+                inline const_iterator () noexcept : node_ (NULL)  {   }
 
-                inline const_iterator (value_type const *const node) throw ()
+                inline const_iterator (value_type const *const node) noexcept
                     : node_ (node)  {   }
 
-                inline const_iterator (const iterator &itr) throw ()
+                inline const_iterator (const iterator &itr) noexcept
                     : node_ (NULL)  {
 
                     *this = itr;
                 }
 
                 inline const_iterator &operator = (const iterator &rhs)
-                    throw ()  {
+                    noexcept  {
 
                     node_ = rhs.node_;
                     return (*this);
                 }
 
                 inline bool
-                operator == (const const_iterator &rhs) const throw ()  {
+                operator == (const const_iterator &rhs) const noexcept  {
 
                     return (node_ == rhs.node_);
                 }
                 inline bool
-                operator != (const const_iterator &rhs) const throw ()  {
+                operator != (const const_iterator &rhs) const noexcept  {
 
                     return (node_ != rhs.node_);
                 }
@@ -244,22 +244,22 @@ class   DMScu_VectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const throw ()  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline const_reference operator * () const throw ()  {
+                inline const_reference operator * () const noexcept  {
 
                     return (*node_);
                 }
-                inline operator const_pointer () const throw ()  {
+                inline operator const_pointer () const noexcept  {
 
                     return (node_);
                 }
 
                // ++Prefix
                //
-                inline const_iterator &operator ++ () throw ()  {
+                inline const_iterator &operator ++ () noexcept  {
 
                     node_ += 1;
                     return (*this);
@@ -267,7 +267,7 @@ class   DMScu_VectorRange  {
 
                // Postfix++
                //
-                inline const_iterator operator ++ (int) throw ()  {
+                inline const_iterator operator ++ (int) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -275,7 +275,7 @@ class   DMScu_VectorRange  {
                     return (const_iterator (ret_node));
                 }
 
-                inline const_iterator &operator += (int step) throw ()  {
+                inline const_iterator &operator += (int step) noexcept  {
 
                     node_ += step;
                     return (*this);
@@ -283,7 +283,7 @@ class   DMScu_VectorRange  {
 
                // --Prefix
                //
-                inline const_iterator &operator -- () throw ()  {
+                inline const_iterator &operator -- () noexcept  {
 
                     node_ -= 1;
                     return (*this);
@@ -291,7 +291,7 @@ class   DMScu_VectorRange  {
 
                // Postfix--
                //
-                inline const_iterator operator -- (int) throw ()  {
+                inline const_iterator operator -- (int) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -299,13 +299,13 @@ class   DMScu_VectorRange  {
                     return (const_iterator (ret_node));
                 }
 
-                inline const_iterator &operator -= (int step) throw ()  {
+                inline const_iterator &operator -= (int step) noexcept  {
 
                     node_ -= step;
                     return (*this);
                 }
 
-                inline const_iterator operator + (int step) throw ()  {
+                inline const_iterator operator + (int step) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -313,7 +313,7 @@ class   DMScu_VectorRange  {
                     return (const_iterator (ret_node));
                 }
 
-                inline const_iterator operator - (int step) throw ()  {
+                inline const_iterator operator - (int step) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -321,7 +321,7 @@ class   DMScu_VectorRange  {
                     return (const_iterator (ret_node));
                 }
 
-                inline const_iterator operator + (long step) throw ()  {
+                inline const_iterator operator + (long step) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -329,7 +329,7 @@ class   DMScu_VectorRange  {
                     return (const_iterator (ret_node));
                 }
 
-                inline const_iterator operator - (long step) throw ()  {
+                inline const_iterator operator - (long step) noexcept  {
 
                     value_type  const  *ret_node = node_;
 
@@ -357,31 +357,31 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline const_reverse_iterator () throw () : node_ (NULL)  {   }
+                inline const_reverse_iterator () noexcept : node_ (NULL)  {   }
 
                 inline const_reverse_iterator (value_type const *const node)
-                    throw () : node_ (node)  {   }
+                    noexcept : node_ (node)  {   }
 
                 inline const_reverse_iterator (const const_iterator &itr)
-                    throw () : node_ (NULL)  {
+                    noexcept : node_ (NULL)  {
 
                     *this = itr;
                 }
 
                 inline const_reverse_iterator &
-                operator = (const const_iterator &rhs) throw ()  {
+                operator = (const const_iterator &rhs) noexcept  {
 
                     node_ = rhs.node_;
                     return (*this);
                 }
 
                 inline bool
-                operator == (const const_reverse_iterator &rhs) const throw() {
+                operator == (const const_reverse_iterator &rhs) const noexcept{
 
                     return (node_ == rhs.node_);
                 }
                 inline bool
-                operator != (const const_reverse_iterator &rhs) const throw() {
+                operator != (const const_reverse_iterator &rhs) const noexcept{
 
                     return (node_ != rhs.node_);
                 }
@@ -389,19 +389,19 @@ class   DMScu_VectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const throw ()  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline const_reference operator *() const throw ()  {
+                inline const_reference operator *() const noexcept  {
 
                     return (*node_);
                 }
-                inline operator pointer () const throw ()  { return (node_); }
+                inline operator pointer () const noexcept  { return (node_); }
 
                // ++Prefix
                //
-                inline const_reverse_iterator &operator ++ () throw ()  {
+                inline const_reverse_iterator &operator ++ () noexcept  {
 
                     node_ -= 1;
                     return (*this);
@@ -409,7 +409,7 @@ class   DMScu_VectorRange  {
 
                // Postfix++
                //
-                inline const_reverse_iterator operator ++ (int) throw ()  {
+                inline const_reverse_iterator operator ++ (int) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -418,7 +418,7 @@ class   DMScu_VectorRange  {
                 }
 
                 inline const_reverse_iterator &
-                operator += (int step) throw ()  {
+                operator += (int step) noexcept  {
 
                     node_ -= step;
                     return (*this);
@@ -426,7 +426,7 @@ class   DMScu_VectorRange  {
 
                // --Prefix
                //
-                inline const_reverse_iterator &operator -- () throw ()  {
+                inline const_reverse_iterator &operator -- () noexcept  {
 
                     node_ += 1;
                     return (*this);
@@ -434,7 +434,7 @@ class   DMScu_VectorRange  {
 
                // Postfix--
                //
-                inline const_reverse_iterator operator -- (int) throw ()  {
+                inline const_reverse_iterator operator -- (int) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -443,13 +443,13 @@ class   DMScu_VectorRange  {
                 }
 
                 inline const_reverse_iterator &
-                operator -= (int step) throw ()  {
+                operator -= (int step) noexcept  {
 
                     node_ += step;
                     return (*this);
                 }
 
-                inline const_reverse_iterator operator + (int step) throw ()  {
+                inline const_reverse_iterator operator + (int step) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -457,7 +457,7 @@ class   DMScu_VectorRange  {
                     return (const_reverse_iterator (ret_node));
                 }
 
-                inline const_reverse_iterator operator - (int step) throw ()  {
+                inline const_reverse_iterator operator - (int step) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -466,7 +466,7 @@ class   DMScu_VectorRange  {
                 }
 
                 inline const_reverse_iterator
-                operator + (long step) throw ()  {
+                operator + (long step) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -475,7 +475,7 @@ class   DMScu_VectorRange  {
                 }
 
                 inline const_reverse_iterator
-                operator - (long step) throw ()  {
+                operator - (long step) noexcept  {
 
                     value_type   const  *ret_node = node_;
 
@@ -490,25 +490,25 @@ class   DMScu_VectorRange  {
 
     public:
 
-        inline iterator begin () throw ()  {
+        inline iterator begin () noexcept  {
 
             return (empty () ? end () : iterator (begin_ptr_));
         }
-        inline iterator end () throw ()  { return (iterator (end_ptr_ + 1)); }
-        inline const_iterator begin () const throw ()  {
+        inline iterator end () noexcept  { return (iterator (end_ptr_ + 1)); }
+        inline const_iterator begin () const noexcept  {
 
             return (empty () ? end () : const_iterator (begin_ptr_));
         }
-        inline const_iterator end () const throw ()  {
+        inline const_iterator end () const noexcept  {
 
             return (const_iterator (end_ptr_ + 1));
         }
 
-        inline const_reverse_iterator rbegin () const throw ()  {
+        inline const_reverse_iterator rbegin () const noexcept  {
 
             return (empty () ? rend () : const_iterator (end_ptr_));
         }
-        inline const_reverse_iterator rend () const throw ()  {
+        inline const_reverse_iterator rend () const noexcept  {
 
             return (const_iterator (begin_ptr_ - 1));
         }
@@ -517,7 +517,7 @@ class   DMScu_VectorRange  {
        //
         template<class cu_EXPR>
         inline DMScu_VectorRange &
-        operator = (const cu_EXPR &rhs) throw ()  {
+        operator = (const cu_EXPR &rhs) noexcept  {
 
             rhs.assign (*this);
             return (*this);

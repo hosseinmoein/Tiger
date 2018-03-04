@@ -41,15 +41,15 @@ class   MatPlus : public MatrixOptBase  {
 
     public:
 
-        inline MatPlus (size_type) throw ()  {   }
+        inline MatPlus (size_type) noexcept  {   }
 
-        static inline TYPE type () throw ()  { return (_plus_); }
+        static inline TYPE type () noexcept  { return (_plus_); }
 
         template<class RHS_ARG_TYPE, class LHS_ARG_TYPE>
         inline result_type operator () (const RHS_ARG_TYPE &lhs,
                                         const LHS_ARG_TYPE &rhs,
                                         size_type,
-                                        size_type) const throw ()  {
+                                        size_type) const noexcept  {
 
             return (*lhs + *rhs);
         }
@@ -67,15 +67,15 @@ class   MatMinus : public MatrixOptBase  {
 
     public:
 
-        inline MatMinus (size_type) throw ()  {   }
+        inline MatMinus (size_type) noexcept  {   }
 
-        static inline TYPE type () throw ()  { return (_minus_); }
+        static inline TYPE type () noexcept  { return (_minus_); }
 
         template<class RHS_ARG_TYPE, class LHS_ARG_TYPE>
         inline result_type operator () (const RHS_ARG_TYPE &lhs,
                                         const LHS_ARG_TYPE &rhs,
                                         size_type,
-                                        size_type) const throw ()  {
+                                        size_type) const noexcept  {
 
             return (*lhs - *rhs);
         }
@@ -115,9 +115,9 @@ class   MatMultiplies : public MatrixOptBase  {
 
     public:
 
-        inline MatMultiplies (size_type) throw ()  {   }
+        inline MatMultiplies (size_type) noexcept  {   }
 
-        static inline TYPE type () throw ()  { return (_multiply_); }
+        static inline TYPE type () noexcept  { return (_multiply_); }
 
        // NOTE: It would have been easier/more natural if lhs were a row
        //       iterator. But for compilation reasons it cannot be.
@@ -129,9 +129,9 @@ class   MatMultiplies : public MatrixOptBase  {
         operator () (RHS_ARG_TYPE lhs,
                      LHS_ARG_TYPE rhs,
                      size_type rhs_row_size,
-                     size_type lhs_row_size) const throw ()  {
+                     size_type lhs_row_size) const noexcept  {
 
-            register    result_type v = 0;
+            result_type v = 0;
 
             while (rhs_row_size-- > 0)  {
                 v += *lhs * *rhs;
@@ -157,17 +157,17 @@ class   MatColMean : public MatrixOptBase  {
 
     public:
 
-        inline MatColMean (size_type) throw ()  {   }
+        inline MatColMean (size_type) noexcept  {   }
 
-        static size_type lhs_row_size () throw ()  { return (1); }
+        static size_type lhs_row_size () noexcept  { return (1); }
 
-        static inline TYPE type () throw ()  { return (_mean_); }
+        static inline TYPE type () noexcept  { return (_mean_); }
 
         template<class ARG_TYPE>
         inline result_type
-        operator () (ARG_TYPE &rhs, size_type rhs_row_size) const throw ()  {
+        operator () (ARG_TYPE &rhs, size_type rhs_row_size) const noexcept  {
 
-            register    result_type v = 0;
+            result_type v = 0;
 
             for (size_type i = 0; i < rhs_row_size; ++i, ++rhs)
                 v += *rhs;
@@ -198,19 +198,19 @@ class   MatTranspose : public MatrixOptBase  {
 
     public:
 
-        inline MatTranspose (size_type lrs) throw ()
+        inline MatTranspose (size_type lrs) noexcept
             : lhs_row_size_ (lrs)  {   }
 
-        inline size_type lhs_row_size () const throw ()  {
+        inline size_type lhs_row_size () const noexcept  {
 
             return (lhs_row_size_);
         }
 
-        static inline TYPE type () throw ()  { return (_transpose_); }
+        static inline TYPE type () noexcept  { return (_transpose_); }
 
         template<class ARG_TYPE>
         inline result_type
-        operator () (const ARG_TYPE &rhs, const size_type &) const throw ()  {
+        operator () (const ARG_TYPE &rhs, const size_type &) const noexcept  {
 
             return (*rhs);
         }
@@ -241,7 +241,7 @@ class   MatUnaExprOpt  {
 
         inline MatUnaExprOpt (const ITER &it,
                                      size_type rhs_row_size,
-                                     size_type rhs_col_size) throw ()
+                                     size_type rhs_col_size) noexcept
             : rhs_citer_ (it),
               rhs_row_size_ (rhs_row_size),
               rhs_col_size_ (rhs_col_size),
@@ -258,46 +258,46 @@ class   MatUnaExprOpt  {
                                      "lhs_col_decrement(): mustn't be called");
         }
         inline void
-        rhs_col_increment (size_type i) throw ()  { rhs_citer_ += i; }
+        rhs_col_increment (size_type i) noexcept  { rhs_citer_ += i; }
         inline void
-        rhs_col_decrement (size_type i) throw ()  { rhs_citer_ -= i; }
+        rhs_col_decrement (size_type i) noexcept  { rhs_citer_ -= i; }
 
-        inline MatUnaExprOpt &operator ++ () throw ()  {    // ++Prefix
+        inline MatUnaExprOpt &operator ++ () noexcept  {    // ++Prefix
 
             rhs_col_increment (1);
             return (*this);
         }
-        inline MatUnaExprOpt &operator += (size_type i) throw ()  {
+        inline MatUnaExprOpt &operator += (size_type i) noexcept  {
 
             rhs_col_increment (i);
             return (*this);
         }
 
-        inline MatUnaExprOpt &operator -- () throw ()  {    // --Prefix
+        inline MatUnaExprOpt &operator -- () noexcept  {    // --Prefix
 
             rhs_col_decrement (1);
             return (*this);
         }
-        inline MatUnaExprOpt &operator -= (size_type i) throw ()  {
+        inline MatUnaExprOpt &operator -= (size_type i) noexcept  {
 
             rhs_col_decrement (i);
             return (*this);
         }
 
         inline size_type
-        lhs_row_size () const throw ()  { return (opt_.lhs_row_size ()); }
-        inline size_type rhs_row_size () const throw ()  {
+        lhs_row_size () const noexcept  { return (opt_.lhs_row_size ()); }
+        inline size_type rhs_row_size () const noexcept  {
 
             return (opt_.type () == MatrixOptBase::_transpose_
                         ? rhs_col_size_ : rhs_row_size_);
         }
-        inline size_type rhs_col_size () const throw ()  {
+        inline size_type rhs_col_size () const noexcept  {
 
             return (opt_.type () == MatrixOptBase::_transpose_
                         ? rhs_row_size_ : rhs_col_size_);
         }
 
-        inline value_type operator * () const throw ()  {
+        inline value_type operator * () const noexcept  {
 
             return (opt_ (rhs_citer_, rhs_row_size_));
         }
@@ -328,7 +328,7 @@ class   MatBinExprOpt  {
                                      const ITER2 &it2,
                                      size_type lhs_row_size,
                                      size_type rhs_row_size,
-                                     size_type rhs_col_size) throw ()
+                                     size_type rhs_col_size) noexcept
             : lhs_citer_ (it1),
               rhs_citer_ (it2),
               lhs_row_size_ (lhs_row_size),
@@ -337,34 +337,34 @@ class   MatBinExprOpt  {
               opt_ (rhs_col_size)  {   }
 
         inline void
-        lhs_col_increment (size_type i) throw ()  { lhs_citer_ += i; }
+        lhs_col_increment (size_type i) noexcept  { lhs_citer_ += i; }
         inline void
-        lhs_col_decrement (size_type i) throw ()  { lhs_citer_ -= i; }
+        lhs_col_decrement (size_type i) noexcept  { lhs_citer_ -= i; }
         inline void
-        rhs_col_increment (size_type i) throw ()  { rhs_citer_ += i; }
+        rhs_col_increment (size_type i) noexcept  { rhs_citer_ += i; }
         inline void
-        rhs_col_decrement (size_type i) throw ()  { rhs_citer_ -= i; }
+        rhs_col_decrement (size_type i) noexcept  { rhs_citer_ -= i; }
 
-        inline MatBinExprOpt &operator ++ () throw ()  {  // ++Prefix
+        inline MatBinExprOpt &operator ++ () noexcept  {  // ++Prefix
 
             lhs_col_increment (1);
             rhs_col_increment (1);
             return (*this);
         }
-        inline MatBinExprOpt &operator += (size_type i) throw ()  {
+        inline MatBinExprOpt &operator += (size_type i) noexcept  {
 
             lhs_col_increment (i);
             rhs_col_increment (i);
             return (*this);
         }
 
-        inline MatBinExprOpt &operator -- () throw ()  {  // --Prefix
+        inline MatBinExprOpt &operator -- () noexcept  {  // --Prefix
 
             lhs_col_decrement (1);
             rhs_col_decrement (1);
             return (*this);
         }
-        inline MatBinExprOpt &operator -= (size_type i) throw ()  {
+        inline MatBinExprOpt &operator -= (size_type i) noexcept  {
 
             lhs_col_decrement (i);
             rhs_col_decrement (i);
@@ -372,13 +372,13 @@ class   MatBinExprOpt  {
         }
 
         inline size_type
-        lhs_row_size () const throw ()  { return (lhs_row_size_); }
+        lhs_row_size () const noexcept  { return (lhs_row_size_); }
         inline size_type
-        rhs_row_size () const throw ()  { return (rhs_row_size_); }
+        rhs_row_size () const noexcept  { return (rhs_row_size_); }
         inline size_type
-        rhs_col_size () const throw ()  { return (rhs_col_size_); }
+        rhs_col_size () const noexcept  { return (rhs_col_size_); }
 
-        inline value_type operator * () const throw ()  {
+        inline value_type operator * () const noexcept  {
 
             return (opt_ (lhs_citer_,
                           rhs_citer_,
@@ -410,10 +410,10 @@ class   MatrixExpr  {
     public:
 
         inline MatrixExpr (const ITER &eo,
-                                  unsigned char opt_type) throw ()
+                                  unsigned char opt_type) noexcept
             : multi_count_ (0), expr_opt_ (eo), opt_type_ (opt_type)  {   }
 
-        inline MatrixExpr &operator ++ () throw ()  {  // ++Prefix
+        inline MatrixExpr &operator ++ () noexcept  {  // ++Prefix
 
             if  (opt_type_ == static_cast<unsigned char>
                                   (MatrixOptBase::_multiply_))  {
@@ -428,7 +428,7 @@ class   MatrixExpr  {
 
             return (*this);
         }
-        inline MatrixExpr &operator += (size_type i) throw ()  {
+        inline MatrixExpr &operator += (size_type i) noexcept  {
 
             if  (opt_type_ == static_cast<unsigned char>
                                   (MatrixOptBase::_multiply_))  {
@@ -446,7 +446,7 @@ class   MatrixExpr  {
             return (*this);
         }
 
-        inline MatrixExpr &operator -- () throw ()  {
+        inline MatrixExpr &operator -- () noexcept  {
 
             if  (opt_type_ == static_cast<unsigned char>
                                   (MatrixOptBase::_multiply_))  {
@@ -461,7 +461,7 @@ class   MatrixExpr  {
 
             return (*this);
         }
-        inline MatrixExpr &operator -= (size_type i) throw ()  {
+        inline MatrixExpr &operator -= (size_type i) noexcept  {
 
             if  (opt_type_ == static_cast<unsigned char>
                                   (MatrixOptBase::_multiply_))  {
@@ -480,16 +480,16 @@ class   MatrixExpr  {
         }
 
         inline value_type
-        operator * () const throw ()  { return (*expr_opt_); }
+        operator * () const noexcept  { return (*expr_opt_); }
 
         inline size_type
-        lhs_row_size () const throw ()  { return (expr_opt_.lhs_row_size ()); }
+        lhs_row_size () const noexcept  { return (expr_opt_.lhs_row_size ()); }
         inline size_type
-        rhs_row_size () const throw ()  { return (expr_opt_.rhs_row_size ()); }
+        rhs_row_size () const noexcept  { return (expr_opt_.rhs_row_size ()); }
         inline size_type
-        rhs_col_size () const throw ()  { return (expr_opt_.rhs_col_size ()); }
+        rhs_col_size () const noexcept  { return (expr_opt_.rhs_col_size ()); }
 
-        size_type result_row_size () const throw ()  {
+        size_type result_row_size () const noexcept  {
 
             return (opt_type_ == static_cast<unsigned char>
                                      (MatrixOptBase::_multiply_) ||
@@ -502,7 +502,7 @@ class   MatrixExpr  {
                               : rhs_row_size ()); // transpose
         }
 
-        size_type result_col_size () const throw ()  {
+        size_type result_col_size () const noexcept  {
 
             return (rhs_col_size ());
         }
@@ -519,8 +519,8 @@ class   MatrixExpr  {
             return;
         }
 
-        inline ITER get_expr_opt () const throw ()  { return (expr_opt_); }
-        inline unsigned char get_expr_opt_type () const throw ()  {
+        inline ITER get_expr_opt () const noexcept  { return (expr_opt_); }
+        inline unsigned char get_expr_opt_type () const noexcept  {
 
             return (opt_type_);
         }
@@ -546,39 +546,39 @@ class   MatrixExpr  {
                // Defualt constructor initializes the iterator into an
                // _undefied_ state
                //
-                inline const_iterator () throw ()
+                inline const_iterator () noexcept
                     : expr_node_ (NULL), expr_opt_ (), multi_count_ (0)  {   }
 
-                inline const_iterator (const MatrixExpr *en) throw ()
+                inline const_iterator (const MatrixExpr *en) noexcept
                     : expr_node_ (en),
                       expr_opt_ (expr_node_->get_expr_opt ()),
                       multi_count_ (0)  {   }
 
                 inline bool
-                operator == (const const_iterator &rhs) const throw ()  {
+                operator == (const const_iterator &rhs) const noexcept  {
 
                     return (expr_node_ == rhs.expr_node_ &&
                             multi_count_ == rhs.multi_count_);
                 }
                 inline bool
-                operator != (const const_iterator &rhs) const throw ()  {
+                operator != (const const_iterator &rhs) const noexcept  {
 
                     return (expr_node_ != rhs.expr_node_ ||
                             multi_count_ != rhs.multi_count_);
                 } 
 
-                inline value_type operator * () const throw ()  {
+                inline value_type operator * () const noexcept  {
     
                     return (*expr_opt_);
                 }
-                inline operator value_type () const throw ()  {
+                inline operator value_type () const noexcept  {
 
                     return (*expr_opt_);
                 }
 
                // ++Prefix
                //
-                inline const_iterator &operator ++ () throw ()  {
+                inline const_iterator &operator ++ () noexcept  {
 
                     if  (expr_node_->get_expr_opt_type () ==
                              static_cast<unsigned char>
@@ -598,7 +598,7 @@ class   MatrixExpr  {
                 }
         };
 
-        const_iterator begin () const throw ()  { return (this); }
+        const_iterator begin () const noexcept  { return (this); }
 };
 
 // ----------------------------------------------------------------------------
@@ -648,7 +648,7 @@ MatrixExpr
           TYPE>,
      BASE,
      TYPE>
-operator ~ (const Matrix<BASE, TYPE> &rhs) throw ()  {
+operator ~ (const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatUnaExprOpt<typename MatrixType::row_const_iterator,
@@ -672,7 +672,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator ~ (const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatUnaExprOpt<MatrixExpr<ITER,
                                                    BASE,
@@ -699,7 +699,7 @@ MatrixExpr
           TYPE>,
      BASE,
      TYPE>
-mat_col_mean (const Matrix<BASE, TYPE> &rhs) throw ()  {
+mat_col_mean (const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatUnaExprOpt<typename MatrixType::col_const_iterator,
@@ -722,7 +722,7 @@ MatrixExpr
      BASE,
      TYPE>
 mat_col_mean (const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatUnaExprOpt<MatrixExpr<ITER,
                                                    BASE,
@@ -756,7 +756,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator + (const Matrix<BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -786,7 +786,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator - (const Matrix<BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -816,7 +816,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator * (const Matrix<BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -849,7 +849,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator / (const Matrix<BASE, TYPE> &lhs,
-            Matrix<BASE, TYPE> &rhs) throw ()  {
+            Matrix<BASE, TYPE> &rhs) noexcept  {
 
     return (lhs * rhs.invert ());
 }
@@ -869,7 +869,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator + (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
@@ -901,7 +901,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator - (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
@@ -933,7 +933,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator * (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-            const Matrix<BASE, TYPE> &rhs) throw ()  {
+            const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
@@ -968,7 +968,7 @@ MatrixExpr
      BASE,
      TYPE>
 operator / (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-            Matrix<BASE, TYPE> &rhs) throw ()  {
+            Matrix<BASE, TYPE> &rhs) noexcept  {
 
     return (lhs * rhs.invert ());
 }
@@ -989,7 +989,7 @@ MatrixExpr
      TYPE>
 operator + (const Matrix<BASE, TYPE> &lhs,
             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -1022,7 +1022,7 @@ MatrixExpr
      TYPE>
 operator - (const Matrix<BASE, TYPE> &lhs,
             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -1055,7 +1055,7 @@ MatrixExpr
      TYPE>
 operator * (const Matrix<BASE, TYPE> &lhs,
             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
@@ -1088,7 +1088,7 @@ operator * (const Matrix<BASE, TYPE> &lhs,
 //      TYPE>
 // operator / (const Matrix<BASE, TYPE> &lhs,
 //             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-//     throw ()  {
+//     noexcept  {
 // 
 //     typedef Matrix<BASE, TYPE>   MatrixType;
 // 
@@ -1115,7 +1115,7 @@ MatrixExpr
      TYPE>
 operator + (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
             const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatBinExprOpt<MatrixExpr<ITER1,
                                      BASE,
@@ -1151,7 +1151,7 @@ MatrixExpr
      TYPE>
 operator - (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
             const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatBinExprOpt<MatrixExpr<ITER1,
                                                    BASE,
@@ -1187,7 +1187,7 @@ MatrixExpr
      TYPE>
 operator * (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
             const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatBinExprOpt<MatrixExpr<ITER1,
                                                    BASE,
@@ -1224,7 +1224,7 @@ operator * (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
 //      TYPE>
 // operator / (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
 //             const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-//     throw ()  {
+//     noexcept  {
 // 
 //     typedef Matrix<BASE, TYPE>   MatrixType;
 // 
@@ -1246,7 +1246,7 @@ operator * (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator += (Matrix<BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs) throw ()  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1264,7 +1264,7 @@ operator += (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator -= (Matrix<BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs) throw ()  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1282,7 +1282,7 @@ operator -= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator *= (Matrix<BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs) throw ()  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1314,7 +1314,7 @@ operator *= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator /= (Matrix<BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs) throw ()  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     return (lhs *= ! rhs);
 }
@@ -1327,7 +1327,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator += (Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>               MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
@@ -1347,7 +1347,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator -= (Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>               MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
@@ -1367,7 +1367,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator *= (Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1382,7 +1382,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator /= (Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1404,7 +1404,7 @@ operator /= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline bool operator == (const Matrix<BASE, TYPE> &lhs,
                          const Matrix<BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1426,7 +1426,7 @@ inline bool operator == (const Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class TYPE>
 inline bool operator != (const Matrix<BASE, TYPE> &lhs,
                          const Matrix<BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1439,7 +1439,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator == (const Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>               MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
@@ -1464,7 +1464,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator != (const Matrix<BASE, TYPE> &lhs,
              const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1477,7 +1477,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator == (const MatrixExpr<ITER, BASE, TYPE> &lhs,
              const Matrix<BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef Matrix<BASE, TYPE>               MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
@@ -1502,7 +1502,7 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator != (const MatrixExpr<ITER, BASE, TYPE> &lhs,
              const Matrix<BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1518,7 +1518,7 @@ template<template<class T> class BASE,
 inline bool
 operator == (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
              const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     typedef MatrixExpr<ITER1, BASE, TYPE> LhsExprType;
     typedef MatrixExpr<ITER2, BASE, TYPE> RhsExprType;
@@ -1549,7 +1549,7 @@ template<template<class T> class BASE,
 inline bool
 operator != (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
              const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    throw ()  {
+    noexcept  {
 
     return (! (lhs == rhs));
 }

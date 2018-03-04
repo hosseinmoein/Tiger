@@ -12,8 +12,7 @@ PROJECT_INCLUDE_DIR = ../../../include
 
 SRCS =
 
-HEADERS =
-          $(LOCAL_INCLUDE_DIR)/DMScu_VectorRange.h \
+HEADERS = $(LOCAL_INCLUDE_DIR)/DMScu_VectorRange.h \
           $(LOCAL_INCLUDE_DIR)/DMScu_StepVectorRange.h \
           $(LOCAL_INCLUDE_DIR)/DMScu_MathOperators.h
 
@@ -27,7 +26,7 @@ TARGETS += $(LOCAL_BIN_DIR)/vec_range_tester \
 
 LFLAGS += -Bstatic -L$(LOCAL_LIB_DIR) -L$(PROJECT_LIB_DIR)
 
-LIBS = $(LFLAGS) -l$(LIB_NAME) $(PLATFORM_LIBS)
+LIBS = $(LFLAGS) $(PLATFORM_LIBS)
 INCLUDES += -I. -I$(LOCAL_INCLUDE_DIR) -I$(PROJECT_INCLUDE_DIR)
 DEFINES = -D_REENTRANT -DDMS_INCLUDE_SOURCE \
           -DP_THREADS -D_POSIX_PTHREAD_SEMANTICS -DDMS_$(BUILD_DEFINE)__
@@ -60,7 +59,7 @@ $(TARGET_LIB): $(LIB_OBJS)
 	ar -clrs $(TARGET_LIB) $(LIB_OBJS)
 
 VEC_RANGE_TESTER_OBJ = $(LOCAL_OBJ_DIR)/vec_range_tester.o
-$(LOCAL_BIN_DIR)/vec_range_tester: $(TARGET_LIB) $(VEC_RANGE_TESTER_OBJ)
+$(LOCAL_BIN_DIR)/vec_range_tester: $(VEC_RANGE_TESTER_OBJ)
 	$(CXX) -o $@ $(VEC_RANGE_TESTER_OBJ) $(LIBS)
 
 MATHOPT_TESTER_OBJ = $(LOCAL_OBJ_DIR)/mathopt_tester.o

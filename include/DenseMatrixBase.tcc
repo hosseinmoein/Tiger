@@ -15,7 +15,7 @@ namespace hmma
 //
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::reference
-DenseMatrixBase<TYPE>::at (size_type r, size_type c) throw ()  {
+DenseMatrixBase<TYPE>::at (size_type r, size_type c) noexcept  {
 
     return (BaseClass::_get_data () [c * BaseClass::rows () + r]);
 }
@@ -25,7 +25,7 @@ DenseMatrixBase<TYPE>::at (size_type r, size_type c) throw ()  {
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::const_reference
 DenseMatrixBase<TYPE>::
-at (size_type r, size_type c) const throw ()  {
+at (size_type r, size_type c) const noexcept  {
 
     return (BaseClass::_get_data () [c * BaseClass::rows () + r]);
 }
@@ -34,7 +34,7 @@ at (size_type r, size_type c) const throw ()  {
 
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::ColumnVector
-DenseMatrixBase<TYPE>::get_column (size_type c) throw ()  {
+DenseMatrixBase<TYPE>::get_column (size_type c) noexcept  {
 
     return (
         ColumnVector (
@@ -46,7 +46,7 @@ DenseMatrixBase<TYPE>::get_column (size_type c) throw ()  {
 
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::ColumnVector
-DenseMatrixBase<TYPE>::get_column (size_type c) const throw ()  {
+DenseMatrixBase<TYPE>::get_column (size_type c) const noexcept  {
 
     return (
         ColumnVector (
@@ -60,7 +60,7 @@ DenseMatrixBase<TYPE>::get_column (size_type c) const throw ()  {
 
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::RowVector
-DenseMatrixBase<TYPE>::get_row (size_type r) throw ()  {
+DenseMatrixBase<TYPE>::get_row (size_type r) noexcept  {
 
     return (
         RowVector (
@@ -73,7 +73,7 @@ DenseMatrixBase<TYPE>::get_row (size_type r) throw ()  {
 
 template<class TYPE>
 inline typename DenseMatrixBase<TYPE>::RowVector
-DenseMatrixBase<TYPE>::get_row (size_type r) const throw ()  {
+DenseMatrixBase<TYPE>::get_row (size_type r) const noexcept  {
 
     return (
         RowVector (
@@ -180,7 +180,7 @@ template<class TYPE>
 template<class OPT, class EXPR>
 inline void
 DenseMatrixBase<TYPE>::
-scale (OPT opt, const EXPR &e) throw ()  {
+scale (OPT opt, const EXPR &e) noexcept  {
 
     for (col_iterator iter = col_begin (); iter != col_end (); ++iter)
         *iter = opt (*iter, e);

@@ -112,10 +112,10 @@ class   DMScu_Plus :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Plus () throw ()  {   }
+        inline DMScu_Plus () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (lhs + rhs); }
+            const noexcept  { return (lhs + rhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -134,10 +134,10 @@ class   DMScu_Minus :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Minus () throw ()  {   }
+        inline DMScu_Minus () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (lhs - rhs); }
+            const noexcept  { return (lhs - rhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -156,10 +156,10 @@ class   DMScu_Multiplies :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Multiplies () throw ()  {   }
+        inline DMScu_Multiplies () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (lhs * rhs); }
+            const noexcept  { return (lhs * rhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -178,10 +178,10 @@ class   DMScu_Divides :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Divides () throw ()  {   }
+        inline DMScu_Divides () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (lhs / rhs); }
+            const noexcept  { return (lhs / rhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -200,10 +200,10 @@ class   DMScu_Modulus :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Modulus () throw ()  {   }
+        inline DMScu_Modulus () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (lhs % rhs); }
+            const noexcept  { return (lhs % rhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -217,9 +217,9 @@ class   DMScu_Negate : public std::unary_function<cu_CLASS, cu_RESULT>  {
         typedef typename BaseClass::result_type                  result_type;
         typedef typename BaseClass::argument_type                argument_type;
 
-        inline DMScu_Negate () throw ()  {   }
+        inline DMScu_Negate () noexcept  {   }
         inline result_type operator () (const argument_type &lhs)
-            const throw ()  { return (-lhs); }
+            const noexcept  { return (-lhs); }
 };
 
 // ----------------------------------------------------------------------------
@@ -237,10 +237,10 @@ class   DMScu_Identity : public std::unary_function<cu_CLASS, cu_RESULT>  {
         typedef typename BaseClass::result_type                  result_type;
         typedef typename BaseClass::argument_type                argument_type;
 
-        inline DMScu_Identity () throw ()  {   }
+        inline DMScu_Identity () noexcept  {   }
 
         inline result_type operator () (const argument_type &lhs)
-            const throw ()  { return (static_cast<result_type>(lhs)); }
+            const noexcept  { return (static_cast<result_type>(lhs)); }
 };
 
 // ----------------------------------------------------------------------------
@@ -258,12 +258,12 @@ class   DMScu_Literal : public std::unary_function<cu_CLASS, cu_RESULT>  {
         typedef typename BaseClass::result_type                  result_type;
         typedef typename BaseClass::argument_type                argument_type;
 
-        inline DMScu_Literal () throw () : value_ ()  {   }
-        inline explicit DMScu_Literal (const cu_CLASS &v) throw ()
+        inline DMScu_Literal () noexcept : value_ ()  {   }
+        inline explicit DMScu_Literal (const cu_CLASS &v) noexcept
             : value_ (v)  {   }
 
         inline result_type operator () (const argument_type &)
-            const throw ()  { return (static_cast<result_type>(value_)); }
+            const noexcept  { return (static_cast<result_type>(value_)); }
 };
 
 // ----------------------------------------------------------------------------
@@ -281,12 +281,12 @@ class   DMScu_Expression : public std::unary_function<cu_ARG, cu_ARG>  {
         typedef typename BaseClass::result_type                 result_type;
         typedef typename BaseClass::argument_type               argument_type;
 
-        inline DMScu_Expression () throw () : exp_ ()  {   }
-        inline explicit DMScu_Expression (const cu_EXP &e) throw ()
+        inline DMScu_Expression () noexcept : exp_ ()  {   }
+        inline explicit DMScu_Expression (const cu_EXP &e) noexcept
             : exp_ (e)  {   }
 
         inline result_type operator () (const argument_type &x)
-            const throw ()  { return (exp_ (x)); }
+            const noexcept  { return (exp_ (x)); }
 };
 
 // ----------------------------------------------------------------------------
@@ -306,13 +306,13 @@ class   DMScu_BinExprOpt : public std::unary_function<cu_ARG, cu_ARG>  {
         typedef typename BaseClass::result_type                 result_type;
         typedef typename BaseClass::argument_type               argument_type;
 
-        inline DMScu_BinExprOpt () throw ()
+        inline DMScu_BinExprOpt () noexcept
             : expr1_ (), expr2_ (), opt_ ()  {   }
         inline DMScu_BinExprOpt (const cu_EXPR1 &e1,
-                                 const cu_EXPR2 &e2) throw ()
+                                 const cu_EXPR2 &e2) noexcept
             : expr1_ (e1), expr2_ (e2), opt_ ()  {   }
 
-        inline result_type operator () (argument_type x) const throw ()  {
+        inline result_type operator () (argument_type x) const noexcept  {
 
             return (opt_ (expr1_ (x), expr2_ (x)));
         }
@@ -334,11 +334,11 @@ class   DMScu_UnaExprOpt : public std::unary_function<cu_ARG, cu_ARG>  {
         typedef typename BaseClass::result_type                 result_type;
         typedef typename BaseClass::argument_type               argument_type;
 
-        inline DMScu_UnaExprOpt () throw () : expr_ (), opt_ ()  {   }
-        inline DMScu_UnaExprOpt (const cu_EXPR &e) throw ()
+        inline DMScu_UnaExprOpt () noexcept : expr_ (), opt_ ()  {   }
+        inline DMScu_UnaExprOpt (const cu_EXPR &e) noexcept
             : expr_ (e), opt_ ()  {   }
 
-        inline result_type operator () (argument_type x) const throw ()  {
+        inline result_type operator () (argument_type x) const noexcept  {
 
             return (opt_ (expr_ (x)));
         }
@@ -359,10 +359,10 @@ class   DMScu_Power :
         typedef typename BaseClass::first_argument_type  first_argument_type;
         typedef typename BaseClass::second_argument_type second_argument_type;
 
-        inline DMScu_Power () throw ()  {   }
+        inline DMScu_Power () noexcept  {   }
         inline result_type operator () (const first_argument_type &lhs,
                                         const second_argument_type &rhs)
-            const throw ()  { return (::pow (lhs, rhs)); }
+            const noexcept  { return (::pow (lhs, rhs)); }
 
        // ::pow (Literal, Expression)
        //
@@ -375,7 +375,7 @@ class   DMScu_Power :
                          cu_TYPE>
         operator () (const first_argument_type &lhs,
                      const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs)
-            const throw ()  {
+            const noexcept  {
 
             typedef DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                                      DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -396,7 +396,7 @@ class   DMScu_Power :
                                           cu_TYPE>,
                          cu_TYPE>
         operator () (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
-                     const second_argument_type &rhs) const throw ()  {
+                     const second_argument_type &rhs) const noexcept  {
 
             typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                      DMScu_Literal<cu_TYPE>,
@@ -418,7 +418,7 @@ class   DMScu_Power :
                          cu_TYPE>
         operator () (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
                      const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs)
-            const throw ()  {
+            const noexcept  {
 
             typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                      DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -442,9 +442,9 @@ class   DMScu_NLog : public std::unary_function<cu_TYPE, cu_RESULT>  {
         typedef typename BaseClass::result_type                  result_type;
         typedef typename BaseClass::argument_type                argument_type;
 
-        inline DMScu_NLog () throw ()  {   }
+        inline DMScu_NLog () noexcept  {   }
         inline result_type operator () (const argument_type &lhs)
-            const throw ()  { return (::log (lhs)); }
+            const noexcept  { return (::log (lhs)); }
 
        // ::log (Expression)
        //
@@ -455,7 +455,7 @@ class   DMScu_NLog : public std::unary_function<cu_TYPE, cu_RESULT>  {
                                           cu_TYPE>,
                          cu_TYPE>
         operator () (const DMScu_Expression<cu_EXPR, cu_TYPE> &x)
-            const throw ()  {
+            const noexcept  {
 
             typedef DMScu_UnaExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                      DMScu_NLog<cu_TYPE>,
@@ -477,9 +477,9 @@ class   DMScu_EExpo : public std::unary_function<cu_TYPE, cu_RESULT>  {
         typedef typename BaseClass::result_type                  result_type;
         typedef typename BaseClass::argument_type                argument_type;
 
-        inline DMScu_EExpo () throw ()  {   }
+        inline DMScu_EExpo () noexcept  {   }
         inline result_type operator () (const argument_type &lhs)
-            const throw ()  { return (::exp (lhs)); }
+            const noexcept  { return (::exp (lhs)); }
 
        // ::exp (Expression)
        //
@@ -490,7 +490,7 @@ class   DMScu_EExpo : public std::unary_function<cu_TYPE, cu_RESULT>  {
                                           cu_TYPE>,
                          cu_TYPE>
         operator () (const DMScu_Expression<cu_EXPR, cu_TYPE> &x)
-            const throw ()  {
+            const noexcept  {
 
             typedef DMScu_UnaExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                      DMScu_NLog<cu_TYPE>,
@@ -515,7 +515,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator + (const cu_TYPE &lhs,
-            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                              DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -536,7 +536,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator - (const cu_TYPE &lhs,
-            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                              DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -557,7 +557,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator * (const cu_TYPE &lhs,
-            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                              DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -578,7 +578,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator / (const cu_TYPE &lhs,
-            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Literal<cu_TYPE>,
                              DMScu_Expression<cu_EXPR, cu_TYPE>,
@@ -603,7 +603,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator + (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
-            const cu_TYPE &rhs) throw ()  {
+            const cu_TYPE &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                              DMScu_Literal<cu_TYPE>,
@@ -624,7 +624,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator - (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
-            const cu_TYPE &rhs) throw ()  {
+            const cu_TYPE &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                              DMScu_Literal<cu_TYPE>,
@@ -645,7 +645,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator * (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
-            const cu_TYPE &rhs) throw ()  {
+            const cu_TYPE &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                              DMScu_Literal<cu_TYPE>,
@@ -666,7 +666,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator / (const DMScu_Expression<cu_EXPR, cu_TYPE> &lhs,
-            const cu_TYPE &rhs) throw ()  {
+            const cu_TYPE &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR, cu_TYPE>,
                              DMScu_Literal<cu_TYPE>,
@@ -691,7 +691,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator + (const DMScu_Expression<cu_EXPR1, cu_TYPE> &lhs,
-            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                              DMScu_Expression<cu_EXPR2, cu_TYPE>,
@@ -711,7 +711,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator - (const DMScu_Expression<cu_EXPR1, cu_TYPE> &lhs,
-            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                              DMScu_Expression<cu_EXPR2, cu_TYPE>,
@@ -731,7 +731,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator * (const DMScu_Expression<cu_EXPR1, cu_TYPE> &lhs,
-            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                              DMScu_Expression<cu_EXPR2, cu_TYPE>,
@@ -751,7 +751,7 @@ DMScu_Expression<DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                                   cu_TYPE>,
                  cu_TYPE>
 operator / (const DMScu_Expression<cu_EXPR1, cu_TYPE> &lhs,
-            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_Expression<cu_EXPR2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_BinExprOpt<DMScu_Expression<cu_EXPR1, cu_TYPE>,
                              DMScu_Expression<cu_EXPR2, cu_TYPE>,
@@ -779,19 +779,19 @@ class   DMScu_Vector : public std::vector<cu_TYPE>  {
         typedef typename BaseClass::size_type   size_type;
         typedef typename BaseClass::value_type  value_type;
 
-        DMScu_Vector () throw () : BaseClass ()  {   }
-        DMScu_Vector (size_type n) throw () : BaseClass (n)  {   }
-        DMScu_Vector (size_type n, const value_type &v) throw ()
+        DMScu_Vector () noexcept : BaseClass ()  {   }
+        DMScu_Vector (size_type n) noexcept : BaseClass (n)  {   }
+        DMScu_Vector (size_type n, const value_type &v) noexcept
             : BaseClass (n, v)  {   }
 
-        inline DMScu_Vector &operator = (const DMScu_Vector &rhs) throw ()  {
+        inline DMScu_Vector &operator = (const DMScu_Vector &rhs) noexcept  {
 
             BaseClass::operator = (rhs);
             return (*this);
         }
 
         template<class cu_EXPR>
-        inline DMScu_Vector &operator = (const cu_EXPR &rhs) throw ()  {
+        inline DMScu_Vector &operator = (const cu_EXPR &rhs) noexcept  {
 
             rhs.assign (*this);
             return (*this);
@@ -815,15 +815,15 @@ class   DMScu_VecExpression  {
 
         typedef cu_TYPE value_type;
 
-        inline explicit DMScu_VecExpression (const cu_ITER &it) throw ()
+        inline explicit DMScu_VecExpression (const cu_ITER &it) noexcept
             : citer_ (it)  {   }
 
-        inline DMScu_VecExpression &operator ++ () throw ()  {    // ++Prefix
+        inline DMScu_VecExpression &operator ++ () noexcept  {    // ++Prefix
 
             ++citer_;
             return (*this);
         }
-        inline DMScu_VecExpression operator ++ (int) throw ()  { // Postfix++
+        inline DMScu_VecExpression operator ++ (int) noexcept  { // Postfix++
 
             DMScu_VecExpression slug (citer_);
 
@@ -831,13 +831,13 @@ class   DMScu_VecExpression  {
             return (slug);
         }
 
-        inline value_type operator * () const throw ()  { return (*citer_); }
-        inline value_type operator [] (unsigned int i) const throw ()  {
+        inline value_type operator * () const noexcept  { return (*citer_); }
+        inline value_type operator [] (unsigned int i) const noexcept  {
 
             return (*(citer_ + i));
         }
 
-        inline void assign (DMScu_Vector<cu_TYPE> &lhs) const throw ()  {
+        inline void assign (DMScu_Vector<cu_TYPE> &lhs) const noexcept  {
 
             cu_ITER slug = citer_;
 
@@ -863,16 +863,16 @@ class   DMScu_VecBinExprOpt  {
         typedef cu_TYPE value_type;
 
         inline DMScu_VecBinExprOpt (const cu_ITER1 &it1,
-                                    const cu_ITER2 &it2) throw ()
+                                    const cu_ITER2 &it2) noexcept
             : citer1_ (it1), citer2_ (it2), opt_ ()  {   }
 
-        inline DMScu_VecBinExprOpt &operator ++ () throw ()  {    // ++Prefix
+        inline DMScu_VecBinExprOpt &operator ++ () noexcept  {    // ++Prefix
 
             ++citer1_;
             ++citer2_;
             return (*this);
         }
-        inline DMScu_VecBinExprOpt operator ++ (int) throw ()  { // Postfix++
+        inline DMScu_VecBinExprOpt operator ++ (int) noexcept  { // Postfix++
 
             DMScu_VecBinExprOpt slug (citer1_, citer2_);
 
@@ -881,11 +881,11 @@ class   DMScu_VecBinExprOpt  {
             return (slug);
         }
 
-        inline value_type operator * () const throw ()  {
+        inline value_type operator * () const noexcept  {
 
             return (opt_ (*citer1_, *citer2_));
         }
-        inline value_type operator [] (unsigned int i) const throw ()  {
+        inline value_type operator [] (unsigned int i) const noexcept  {
 
             return (opt_ (*(citer1_ + i), *(citer2_ + i)));
         }
@@ -906,7 +906,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator + (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -928,7 +928,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator - (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -950,7 +950,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator * (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -972,7 +972,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator / (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -998,7 +998,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator + (const DMScu_VecExpression<cu_ITER, cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER, cu_TYPE>,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -1020,7 +1020,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator - (const DMScu_VecExpression<cu_ITER, cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER, cu_TYPE>,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -1042,7 +1042,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator * (const DMScu_VecExpression<cu_ITER, cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER, cu_TYPE>,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -1064,7 +1064,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator / (const DMScu_VecExpression<cu_ITER, cu_TYPE> &lhs,
-            const DMScu_Vector<cu_TYPE> &rhs) throw ()  {
+            const DMScu_Vector<cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER, cu_TYPE>,
                                 typename DMScu_Vector<cu_TYPE>::const_iterator,
@@ -1090,7 +1090,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator + (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 DMScu_VecExpression<cu_ITER, cu_TYPE>,
@@ -1112,7 +1112,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator - (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 DMScu_VecExpression<cu_ITER, cu_TYPE>,
@@ -1134,7 +1134,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator * (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 DMScu_VecExpression<cu_ITER, cu_TYPE>,
@@ -1156,7 +1156,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<
                         cu_TYPE>,
                     cu_TYPE>
 operator / (const DMScu_Vector<cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<typename DMScu_Vector<cu_TYPE>::const_iterator,
                                 DMScu_VecExpression<cu_ITER, cu_TYPE>,
@@ -1181,7 +1181,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                         cu_TYPE>,
                     cu_TYPE>
 operator + (const DMScu_VecExpression<cu_ITER1, cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                 DMScu_VecExpression<cu_ITER2, cu_TYPE>,
@@ -1201,7 +1201,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                         cu_TYPE>,
                     cu_TYPE>
 operator - (const DMScu_VecExpression<cu_ITER1, cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                 DMScu_VecExpression<cu_ITER2, cu_TYPE>,
@@ -1221,7 +1221,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                         cu_TYPE>,
                     cu_TYPE>
 operator * (const DMScu_VecExpression<cu_ITER1, cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                 DMScu_VecExpression<cu_ITER2, cu_TYPE>,
@@ -1241,7 +1241,7 @@ DMScu_VecExpression<DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                         cu_TYPE>,
                     cu_TYPE>
 operator / (const DMScu_VecExpression<cu_ITER1, cu_TYPE> &lhs,
-            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) throw ()  {
+            const DMScu_VecExpression<cu_ITER2, cu_TYPE> &rhs) noexcept  {
 
     typedef DMScu_VecBinExprOpt<DMScu_VecExpression<cu_ITER1, cu_TYPE>,
                                 DMScu_VecExpression<cu_ITER2, cu_TYPE>,

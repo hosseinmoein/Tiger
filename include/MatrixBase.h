@@ -16,19 +16,19 @@ class   MatrixBase  {
 
     public:
 
-        struct  Exception { inline Exception () throw ()  {   }; };
+        struct  Exception { inline Exception () noexcept  {   }; };
 
         struct  NotSquare : public Exception  {
 
-            inline NotSquare () throw ()  {   };
+            inline NotSquare () noexcept  {   };
         };
         struct  Singular : public Exception  {
 
-            inline Singular () throw ()  {   };
+            inline Singular () noexcept  {   };
         };
         struct  NotSolvable : public Exception  {
 
-            inline NotSolvable () throw ()  {   };
+            inline NotSolvable () noexcept  {   };
         };
 
     public:
@@ -66,8 +66,8 @@ class   DenseMatrixStorage : public MatrixBase<TYPE>  {
 
         static  const   size_type   _NOPOS = static_cast<size_type>(-1);
 
-        inline DataVector &_get_data () throw ()  { return (data_); }
-        inline const DataVector &_get_data () const throw ()  {
+        inline DataVector &_get_data () noexcept  { return (data_); }
+        inline const DataVector &_get_data () const noexcept  {
 
             return (data_);
         }
@@ -78,26 +78,26 @@ class   DenseMatrixStorage : public MatrixBase<TYPE>  {
                       bool set_all_to_def = true,
                       const_reference def_value = value_type ());
 
-        inline DenseMatrixStorage () throw ()
+        inline DenseMatrixStorage () noexcept
             : rows_ (0), cols_ (0), data_ ()  {   }
 
         inline DenseMatrixStorage (size_type row,
                                   size_type col,
                                   size_type data_size,
                                   const_reference def_value = value_type ())
-            throw ()
+            noexcept
             : rows_ (row),
               cols_ (col),
               data_ (data_size, def_value)  {   }
 
     public:
 
-        void clear () throw ();
-        inline void swap (DenseMatrixStorage &rhs) throw ();
-        inline bool empty () const throw ()  { return (data_.empty ()); }
+        void clear () noexcept;
+        inline void swap (DenseMatrixStorage &rhs) noexcept;
+        inline bool empty () const noexcept  { return (data_.empty ()); }
 
-        inline size_type rows () const throw ()  { return (rows_); }
-        inline size_type columns () const throw ()  { return (cols_); }
+        inline size_type rows () const noexcept  { return (rows_); }
+        inline size_type columns () const noexcept  { return (cols_); }
 
     private:
 
