@@ -58,7 +58,14 @@ $(LOCAL_OBJ_DIR)/%.o: %.cc
 
 # -----------------------------------------------------------------------------
 
-all: $(TARGETS)
+all: PRE_BUILD $(TARGETS)
+
+PRE_BUILD:
+	mkdir -p $(LOCAL_LIB_DIR)
+	mkdir -p $(LOCAL_BIN_DIR)
+	mkdir -p $(LOCAL_OBJ_DIR)
+	mkdir -p $(PROJECT_LIB_DIR)
+	mkdir -p $(PROJECT_INCLUDE_DIR)
 
 MATRIX_TESTER_OBJ = $(LOCAL_OBJ_DIR)/matrix_tester.o
 $(LOCAL_BIN_DIR)/matrix_tester: $(MATRIX_TESTER_OBJ)
