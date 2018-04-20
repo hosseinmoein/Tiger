@@ -1,5 +1,6 @@
 // Hossein Moein
-// July 17 2009
+// February 11, 2018
+// Copyright (C) 2018-2019 Hossein Moein
 
 #ifndef _INCLUDED_DMScu_MathOperators_h
 #define _INCLUDED_DMScu_MathOperators_h 0
