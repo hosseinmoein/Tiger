@@ -1,6 +1,6 @@
 // Hossein Moein
-// May 14, 2008
-// Copyright (C) 2017-2018 Hossein Moein
+// February 11, 2018
+// Copyright (C) 2018-2019 Hossein Moein
 // Distributed under the BSD Software License (see file License)
 
 #ifndef _INCLUDED_Complex_h
