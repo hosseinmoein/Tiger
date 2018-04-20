@@ -1,5 +1,5 @@
 ## Hossein Moein
-## July 17 2009
+## February 11, 2018
 
 LOCAL_LIB_DIR = ../lib/$(BUILD_PLATFORM)
 LOCAL_BIN_DIR = ../bin/$(BUILD_PLATFORM)
