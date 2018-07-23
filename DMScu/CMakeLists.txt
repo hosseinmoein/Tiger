@@ -8,6 +8,8 @@ set(${LIBRARY_TARGET_NAME}_HDR
 # Build the test binary
 add_executable(mathopt_tester src/mathopt_tester.cc)
 add_executable(vec_range_tester src/vec_range_tester.cc)
+target_include_directories(mathopt_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(vec_range_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Enable ctest, testing so we can see if unit tests pass or fail in CI
 enable_testing()

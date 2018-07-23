@@ -43,7 +43,7 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
     endif()
 endif()
 
-add_subdirectory(DMScu) # Build DMscu module first
+add_subdirectory(DMScu) # Include files from DMScu module
 
 set(LIBRARY_TARGET_NAME ${PROJECT_NAME})
 
@@ -61,6 +61,7 @@ set(${LIBRARY_TARGET_NAME}_HDR
   include/SymmMatrixBase.tcc
 )
 
+add_definitions(-D DMS_INCLUDE_SOURCE) # Need this for some of the .tcc files to be compiled
 add_library(${LIBRARY_TARGET_NAME} INTERFACE)
 target_sources(${LIBRARY_TARGET_NAME} INTERFACE ${${LIBRARY_TARGET_NAME}_HDR})
 
@@ -99,6 +100,8 @@ include(AddUninstallTarget)
 
 # Build the test binary
 add_executable(matrix_tester src/matrix_tester.cc)
+target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include)
 # if (UNIX)
 #   # Find pthreads library
 #   set(THREADS_PREFER_PTHREAD_FLAG ON)
