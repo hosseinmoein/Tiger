@@ -14,6 +14,6 @@ enable_testing()
 add_test(NAME mathopt_tester
          COMMAND mathopt_tester
          WORKING_DIRECTORY $<TARGET_FILE_DIR:mathopt_tester>)
-add_test(NAME vec_range_testre
-         COMMAND vec_range_testre
-         WORKING_DIRECTORY $<TARGET_FILE_DIR:vec_range_testre>)
+add_test(NAME vec_range_tester
+         COMMAND vec_range_tester
+         WORKING_DIRECTORY $<TARGET_FILE_DIR:vec_range_tester>)
