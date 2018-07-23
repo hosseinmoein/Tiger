@@ -61,12 +61,8 @@ set(${LIBRARY_TARGET_NAME}_HDR
   include/SymmMatrixBase.tcc
 )
 
-
-# Set two minimum target properties for the library.
-# See https://cmake.org/cmake/help/latest/command/set_target_properties.html
-# Properties are: 1) Library version number 2) list of corresponding public headers
-set_target_properties(${LIBRARY_TARGET_NAME} PROPERTIES VERSION       ${${PROJECT_NAME}_VERSION}
-                                                        PUBLIC_HEADER "${${LIBRARY_TARGET_NAME}_HDR}")
+add_library(${LIBRARY_TARGET_NAME} INTERFACE)
+target_sources(${LIBRARY_TARGET_NAME} INTERFACE ${${LIBRARY_TARGET_NAME}_HDR})
 
 # Specify installation targets, typology and destination folders.
 install(TARGETS ${LIBRARY_TARGET_NAME}
@@ -93,7 +89,6 @@ install(TARGETS ${LIBRARY_TARGET_NAME}
 include(InstallBasicPackageFiles)
 install_basic_package_files(${PROJECT_NAME}
                             VERSION ${${PROJECT_NAME}_VERSION}
-                            DEPENDENCIES "DMScu REQUIRED"
                             COMPATIBILITY AnyNewerVersion
                             EXPORT ${PROJECT_NAME}
                             VARS_PREFIX ${PROJECT_NAME}
