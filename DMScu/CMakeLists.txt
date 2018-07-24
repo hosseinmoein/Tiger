@@ -1,9 +1,10 @@
-# List of header files.
-set(${LIBRARY_TARGET_NAME}_HDR
-  include/DMScu_MathOperators.h
-  include/DMScu_StepVectorRange.h
-  include/DMScu_VectorRange.h
-)
+set(LIBRARY_TARGET_NAME ${PROJECT_NAME})
+
+target_sources(${LIBRARY_TARGET_NAME} INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_MathOperators.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_StepVectorRange.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_VectorRange.h>
+  )
 
 # Build the test binary
 add_executable(mathopt_tester src/mathopt_tester.cc)

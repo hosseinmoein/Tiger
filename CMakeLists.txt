@@ -43,27 +43,23 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
     endif()
 endif()
 
-add_subdirectory(DMScu) # Include files from DMScu module
-
 set(LIBRARY_TARGET_NAME ${PROJECT_NAME})
-
-# List of header files.
-set(${LIBRARY_TARGET_NAME}_HDR
-  include/Complex.h
-  include/DenseMatrixBase.h
-  include/DenseMatrixBase.tcc
-  include/MathOperators.h
-  include/Matrix.h
-  include/Matrix.tcc
-  include/MatrixBase.h
-  include/MatrixBase.tcc
-  include/SymmMatrixBase.h
-  include/SymmMatrixBase.tcc
-)
-
 add_definitions(-D DMS_INCLUDE_SOURCE) # Need this for some of the .tcc files to be compiled
 add_library(${LIBRARY_TARGET_NAME} INTERFACE)
-target_sources(${LIBRARY_TARGET_NAME} INTERFACE ${${LIBRARY_TARGET_NAME}_HDR})
+target_sources(${LIBRARY_TARGET_NAME} INTERFACE
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Complex.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MathOperators.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Matrix.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Matrix.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.tcc>
+  )
+
+add_subdirectory(DMScu) # Include files from DMScu module
 
 # Specify installation targets, typology and destination folders.
 install(TARGETS ${LIBRARY_TARGET_NAME}
