@@ -4,6 +4,7 @@ target_sources(${LIBRARY_TARGET_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_MathOperators.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_StepVectorRange.h>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_VectorRange.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_Exception.h>
   )
 
 # Build the test binary
