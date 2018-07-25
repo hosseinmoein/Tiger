@@ -78,12 +78,9 @@ class   DMScu_VectorRange  {
 
     public:
 
-       // This iterator contains only one pointer. Like STL iterators,
-       // it is cheap to create and copy around.
-       //
-        class   iterator
+        class   const_reverse_iterator
             : public std::iterator<std::random_access_iterator_tag,
-                                   value_type, long>  {
+                                   value_type const, long>  {
 
             public:
 
@@ -94,16 +91,31 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline iterator () noexcept : node_ (NULL)  {   }
+                inline const_reverse_iterator () noexcept : node_ (NULL)  {   }
 
-                inline iterator (value_type *node) noexcept
-                    : node_ (node)  {  }
+                inline const_reverse_iterator (value_type const *const node)
+                    noexcept : node_ (node)  {   }
 
-                inline bool operator == (const iterator &rhs) const noexcept  {
+                inline const_reverse_iterator (const const_iterator &itr)
+                    noexcept : node_ (NULL)  {
+
+                    *this = itr;
+                }
+
+                inline const_reverse_iterator &
+                operator = (const const_iterator &rhs) noexcept  {
+
+                    node_ = rhs.node_;
+                    return (*this);
+                }
+
+                inline bool
+                operator == (const const_reverse_iterator &rhs) const noexcept{
 
                     return (node_ == rhs.node_);
                 }
-                inline bool operator != (const iterator &rhs) const noexcept  {
+                inline bool
+                operator != (const const_reverse_iterator &rhs) const noexcept{
 
                     return (node_ != rhs.node_);
                 }
@@ -111,95 +123,105 @@ class   DMScu_VectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline pointer operator -> () const noexcept  {
+                inline const_pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline reference operator * () const noexcept  {
+                inline const_reference operator *() const noexcept  {
 
                     return (*node_);
                 }
                 inline operator pointer () const noexcept  { return (node_); }
 
-               // We are following STL style iterator interface.
+               // ++Prefix
                //
-                inline iterator &operator ++ () noexcept  {    // ++Prefix
-
-                    node_ += 1;
-                    return (*this);
-                }
-                inline iterator operator ++ (int) noexcept  {  // Postfix++
-
-                    value_type   *ret_node = node_;
-
-                    node_ += 1;
-                    return (iterator (ret_node));
-                }
-
-                inline iterator &operator += (long step) noexcept  {
-
-                    node_ += step;
-                    return (*this);
-                }
-
-                inline iterator &operator -- () noexcept  {    // --Prefix
+                inline const_reverse_iterator &operator ++ () noexcept  {
 
                     node_ -= 1;
                     return (*this);
                 }
-                inline iterator operator -- (int) noexcept  {  // Postfix--
 
-                    value_type   *ret_node = node_;
+               // Postfix++
+               //
+                inline const_reverse_iterator operator ++ (int) noexcept  {
+
+                    value_type   const  *ret_node = node_;
 
                     node_ -= 1;
-                    return (iterator (ret_node));
+                    return (const_reverse_iterator (ret_node));
                 }
 
-                inline iterator &operator -= (int step) noexcept  {
+                inline const_reverse_iterator &
+                operator += (int step) noexcept  {
 
                     node_ -= step;
                     return (*this);
                 }
 
-                inline iterator operator + (int step) noexcept  {
+               // --Prefix
+               //
+                inline const_reverse_iterator &operator -- () noexcept  {
 
-                    value_type   *ret_node = node_;
-
-                    ret_node += step;
-                    return (iterator (ret_node));
+                    node_ += 1;
+                    return (*this);
                 }
 
-                inline iterator operator - (int step) noexcept  {
+               // Postfix--
+               //
+                inline const_reverse_iterator operator -- (int) noexcept  {
 
-                    value_type   *ret_node = node_;
+                    value_type   const  *ret_node = node_;
+
+                    node_ += 1;
+                    return (const_reverse_iterator (ret_node));
+                }
+
+                inline const_reverse_iterator &
+                operator -= (int step) noexcept  {
+
+                    node_ += step;
+                    return (*this);
+                }
+
+                inline const_reverse_iterator operator + (int step) noexcept  {
+
+                    value_type   const  *ret_node = node_;
 
                     ret_node -= step;
-                    return (iterator (ret_node));
+                    return (const_reverse_iterator (ret_node));
                 }
 
-                inline iterator operator + (long step) noexcept  {
+                inline const_reverse_iterator operator - (int step) noexcept  {
 
-                    value_type   *ret_node = node_;
+                    value_type   const  *ret_node = node_;
 
                     ret_node += step;
-                    return (iterator (ret_node));
+                    return (const_reverse_iterator (ret_node));
                 }
 
-                inline iterator operator - (long step) noexcept  {
+                inline const_reverse_iterator
+                operator + (long step) noexcept  {
 
-                    value_type   *ret_node = node_;
+                    value_type   const  *ret_node = node_;
 
                     ret_node -= step;
-                    return (iterator (ret_node));
+                    return (const_reverse_iterator (ret_node));
+                }
+
+                inline const_reverse_iterator
+                operator - (long step) noexcept  {
+
+                    value_type   const  *ret_node = node_;
+
+                    ret_node += step;
+                    return (const_reverse_iterator (ret_node));
                 }
 
             private:
 
-                pointer node_;
-
-                friend  class   DMScu_VectorRange::const_iterator;
+                const_pointer   node_;
         };
-
+        
         class   const_iterator
             : public std::iterator<std::random_access_iterator_tag,
                                    value_type const, long>  {
@@ -345,9 +367,12 @@ class   DMScu_VectorRange  {
                 friend  class   DMScu_VectorRange::const_reverse_iterator;
         };
 
-        class   const_reverse_iterator
+       // This iterator contains only one pointer. Like STL iterators,
+       // it is cheap to create and copy around.
+       //
+        class   iterator
             : public std::iterator<std::random_access_iterator_tag,
-                                   value_type const, long>  {
+                                   value_type, long>  {
 
             public:
 
@@ -358,31 +383,16 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline const_reverse_iterator () noexcept : node_ (NULL)  {   }
+                inline iterator () noexcept : node_ (NULL)  {   }
 
-                inline const_reverse_iterator (value_type const *const node)
-                    noexcept : node_ (node)  {   }
+                inline iterator (value_type *node) noexcept
+                    : node_ (node)  {  }
 
-                inline const_reverse_iterator (const const_iterator &itr)
-                    noexcept : node_ (NULL)  {
-
-                    *this = itr;
-                }
-
-                inline const_reverse_iterator &
-                operator = (const const_iterator &rhs) noexcept  {
-
-                    node_ = rhs.node_;
-                    return (*this);
-                }
-
-                inline bool
-                operator == (const const_reverse_iterator &rhs) const noexcept{
+                inline bool operator == (const iterator &rhs) const noexcept  {
 
                     return (node_ == rhs.node_);
                 }
-                inline bool
-                operator != (const const_reverse_iterator &rhs) const noexcept{
+                inline bool operator != (const iterator &rhs) const noexcept  {
 
                     return (node_ != rhs.node_);
                 }
@@ -390,103 +400,93 @@ class   DMScu_VectorRange  {
                // Following STL style, this iterator appears as a pointer
                // to value_type.
                //
-                inline const_pointer operator -> () const noexcept  {
+                inline pointer operator -> () const noexcept  {
 
                     return (node_);
                 }
-                inline const_reference operator *() const noexcept  {
+                inline reference operator * () const noexcept  {
 
                     return (*node_);
                 }
                 inline operator pointer () const noexcept  { return (node_); }
 
-               // ++Prefix
+               // We are following STL style iterator interface.
                //
-                inline const_reverse_iterator &operator ++ () noexcept  {
-
-                    node_ -= 1;
-                    return (*this);
-                }
-
-               // Postfix++
-               //
-                inline const_reverse_iterator operator ++ (int) noexcept  {
-
-                    value_type   const  *ret_node = node_;
-
-                    node_ -= 1;
-                    return (const_reverse_iterator (ret_node));
-                }
-
-                inline const_reverse_iterator &
-                operator += (int step) noexcept  {
-
-                    node_ -= step;
-                    return (*this);
-                }
-
-               // --Prefix
-               //
-                inline const_reverse_iterator &operator -- () noexcept  {
+                inline iterator &operator ++ () noexcept  {    // ++Prefix
 
                     node_ += 1;
                     return (*this);
                 }
+                inline iterator operator ++ (int) noexcept  {  // Postfix++
 
-               // Postfix--
-               //
-                inline const_reverse_iterator operator -- (int) noexcept  {
-
-                    value_type   const  *ret_node = node_;
+                    value_type   *ret_node = node_;
 
                     node_ += 1;
-                    return (const_reverse_iterator (ret_node));
+                    return (iterator (ret_node));
                 }
 
-                inline const_reverse_iterator &
-                operator -= (int step) noexcept  {
+                inline iterator &operator += (long step) noexcept  {
 
                     node_ += step;
                     return (*this);
                 }
 
-                inline const_reverse_iterator operator + (int step) noexcept  {
+                inline iterator &operator -- () noexcept  {    // --Prefix
 
-                    value_type   const  *ret_node = node_;
+                    node_ -= 1;
+                    return (*this);
+                }
+                inline iterator operator -- (int) noexcept  {  // Postfix--
 
-                    ret_node -= step;
-                    return (const_reverse_iterator (ret_node));
+                    value_type   *ret_node = node_;
+
+                    node_ -= 1;
+                    return (iterator (ret_node));
                 }
 
-                inline const_reverse_iterator operator - (int step) noexcept  {
+                inline iterator &operator -= (int step) noexcept  {
 
-                    value_type   const  *ret_node = node_;
+                    node_ -= step;
+                    return (*this);
+                }
+
+                inline iterator operator + (int step) noexcept  {
+
+                    value_type   *ret_node = node_;
 
                     ret_node += step;
-                    return (const_reverse_iterator (ret_node));
+                    return (iterator (ret_node));
                 }
 
-                inline const_reverse_iterator
-                operator + (long step) noexcept  {
+                inline iterator operator - (int step) noexcept  {
 
-                    value_type   const  *ret_node = node_;
+                    value_type   *ret_node = node_;
 
                     ret_node -= step;
-                    return (const_reverse_iterator (ret_node));
+                    return (iterator (ret_node));
                 }
 
-                inline const_reverse_iterator
-                operator - (long step) noexcept  {
+                inline iterator operator + (long step) noexcept  {
 
-                    value_type   const  *ret_node = node_;
+                    value_type   *ret_node = node_;
 
                     ret_node += step;
-                    return (const_reverse_iterator (ret_node));
+                    return (iterator (ret_node));
+                }
+
+                inline iterator operator - (long step) noexcept  {
+
+                    value_type   *ret_node = node_;
+
+                    ret_node -= step;
+                    return (iterator (ret_node));
                 }
 
             private:
 
-                const_pointer   node_;
+                pointer node_;
+
+                friend  class   DMScu_VectorRange::const_iterator;
         };
 
     public:
