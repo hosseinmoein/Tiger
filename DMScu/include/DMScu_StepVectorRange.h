@@ -110,144 +110,6 @@ class   DMScu_StepVectorRange  {
 
     public:
 
-       // This iterator contains only one pointer. Like STL iterators,
-       // it is cheap to create and copy around.
-       //
-        class   iterator
-            : public std::iterator<std::random_access_iterator_tag,
-                                   value_type, long>  {
-
-            public:
-
-                typedef std::random_access_iterator_tag iterator_category;
-
-            public:
-
-               // NOTE: The constructor with no argument initializes
-               //       the iterator to be an "undefined" iterator
-               //
-                inline iterator () noexcept : node_ (NULL), step_ (0)  {   }
-
-                inline iterator (value_type *node, size_type step) noexcept
-                    : node_ (node), step_ (step)  {  }
-
-                inline iterator (const iterator &that) noexcept  {
-
-                    *this = that;
-                }
-
-                inline iterator &operator = (const iterator &rhs) noexcept  {
-
-                    if (this != &rhs)  {
-                        node_ = rhs.node_;
-                        step_ = rhs.step_;
-                    }
-
-                    return (*this);
-                }
-
-                inline bool operator == (const iterator &rhs) const noexcept  {
-
-                    return (node_ == rhs.node_);
-                }
-                inline bool operator != (const iterator &rhs) const noexcept  {
-
-                    return (node_ != rhs.node_);
-                }
-
-               // Following STL style, this iterator appears as a pointer
-               // to value_type.
-               //
-                inline pointer operator -> () const noexcept  {
-
-                    return (node_);
-                }
-                inline reference operator * () const noexcept  {
-
-                    return (*node_);
-                }
-                inline operator pointer () const noexcept  { return (node_); }
-
-               // We are following STL style iterator interface.
-               //
-                inline iterator &operator ++ () noexcept  {    // ++Prefix
-
-                    node_ += step_;
-                    return (*this);
-                }
-                inline iterator operator ++ (int) noexcept  {  // Postfix++
-
-                    value_type   *ret_node = node_;
-
-                    node_ += step_;
-                    return (iterator (ret_node, step_));
-                }
-
-                inline iterator &operator += (long i) noexcept  {
-
-                    node_ += i * step_;
-                    return (*this);
-                }
-
-                inline iterator &operator -- () noexcept  {    // --Prefix
-
-                    node_ -= step_;
-                    return (*this);
-                }
-                inline iterator operator -- (int) noexcept  {  // Postfix--
-
-                    value_type   *ret_node = node_;
-
-                    node_ -= step_;
-                    return (iterator (ret_node, step_));
-                }
-
-                inline iterator &operator -= (int i) noexcept  {
-
-                    node_ -= i * step_;
-                    return (*this);
-                }
-
-                inline iterator operator + (int i) noexcept  {
-
-                    value_type   *ret_node = node_;
-
-                    ret_node += i * step_;
-                    return (iterator (ret_node, step_));
-                }
-
-                inline iterator operator - (int i) noexcept  {
-
-                    value_type   *ret_node = node_;
-
-                    ret_node -= i * step_;
-                    return (iterator (ret_node, step_));
-                }
-
-                inline iterator operator + (long i) noexcept  {
-
-                    value_type   *ret_node = node_;
-
-                    ret_node += i * step_;
-                    return (iterator (ret_node, step_));
-                }
-
-                inline iterator operator - (long i) noexcept  {
-
-                    value_type   *ret_node = node_;
-
-                    ret_node -= i * step_;
-                    return (iterator (ret_node, step_));
-                }
-
-            private:
-
-                pointer     node_;
-                size_type   step_;
-
-                friend  class   DMScu_StepVectorRange::const_iterator;
-        };
-
         class   const_iterator
             : public std::iterator<std::random_access_iterator_tag,
                                    value_type const, long>  {
@@ -410,6 +272,145 @@ class   DMScu_StepVectorRange  {
                 const_pointer   node_;
                 size_type       step_;
         };
+
+       // This iterator contains only one pointer. Like STL iterators,
+       // it is cheap to create and copy around.
+       //
+        class   iterator
+            : public std::iterator<std::random_access_iterator_tag,
+                                   value_type, long>  {
+
+            public:
+
+                typedef std::random_access_iterator_tag iterator_category;
+
+            public:
+
+               // NOTE: The constructor with no argument initializes
+               //       the iterator to be an "undefined" iterator
+               //
+                inline iterator () noexcept : node_ (NULL), step_ (0)  {   }
+
+                inline iterator (value_type *node, size_type step) noexcept
+                    : node_ (node), step_ (step)  {  }
+
+                inline iterator (const iterator &that) noexcept  {
+
+                    *this = that;
+                }
+
+                inline iterator &operator = (const iterator &rhs) noexcept  {
+
+                    if (this != &rhs)  {
+                        node_ = rhs.node_;
+                        step_ = rhs.step_;
+                    }
+
+                    return (*this);
+                }
+
+                inline bool operator == (const iterator &rhs) const noexcept  {
+
+                    return (node_ == rhs.node_);
+                }
+                inline bool operator != (const iterator &rhs) const noexcept  {
+
+                    return (node_ != rhs.node_);
+                }
+
+               // Following STL style, this iterator appears as a pointer
+               // to value_type.
+               //
+                inline pointer operator -> () const noexcept  {
+
+                    return (node_);
+                }
+                inline reference operator * () const noexcept  {
+
+                    return (*node_);
+                }
+                inline operator pointer () const noexcept  { return (node_); }
+
+               // We are following STL style iterator interface.
+               //
+                inline iterator &operator ++ () noexcept  {    // ++Prefix
+
+                    node_ += step_;
+                    return (*this);
+                }
+                inline iterator operator ++ (int) noexcept  {  // Postfix++
+
+                    value_type   *ret_node = node_;
+
+                    node_ += step_;
+                    return (iterator (ret_node, step_));
+                }
+
+                inline iterator &operator += (long i) noexcept  {
+
+                    node_ += i * step_;
+                    return (*this);
+                }
+
+                inline iterator &operator -- () noexcept  {    // --Prefix
+
+                    node_ -= step_;
+                    return (*this);
+                }
+                inline iterator operator -- (int) noexcept  {  // Postfix--
+
+                    value_type   *ret_node = node_;
+
+                    node_ -= step_;
+                    return (iterator (ret_node, step_));
+                }
+
+                inline iterator &operator -= (int i) noexcept  {
+
+                    node_ -= i * step_;
+                    return (*this);
+                }
+
+                inline iterator operator + (int i) noexcept  {
+
+                    value_type   *ret_node = node_;
+
+                    ret_node += i * step_;
+                    return (iterator (ret_node, step_));
+                }
+
+                inline iterator operator - (int i) noexcept  {
+
+                    value_type   *ret_node = node_;
+
+                    ret_node -= i * step_;
+                    return (iterator (ret_node, step_));
+                }
+
+                inline iterator operator + (long i) noexcept  {
+
+                    value_type   *ret_node = node_;
+
+                    ret_node += i * step_;
+                    return (iterator (ret_node, step_));
+                }
+
+                inline iterator operator - (long i) noexcept  {
+
+                    value_type   *ret_node = node_;
+
+                    ret_node -= i * step_;
+                    return (iterator (ret_node, step_));
+                }
+
+            private:
+
+                pointer     node_;
+                size_type   step_;
+
+                friend  class   DMScu_StepVectorRange::const_iterator;
+        };
+
 
     public:
 
