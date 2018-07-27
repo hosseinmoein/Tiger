@@ -4,6 +4,7 @@
 // Distributed under the BSD Software License (see file License)
 
 #include <math.h>
+#include <algorithm>    // std::max and min
 
 #include <MathOperators.h>
 #include <Matrix.h>
