@@ -160,10 +160,13 @@ int main (int argCnt, char *argVctr [])  {
          iter != svec.end (); ++iter)
         std::cout << *iter << "  ";
     std::cout << std::endl;
+
+#if defined(__linux__) || defined(__unix__) || defined(__APPLE__) // This acts weird on windows
     for (DMScu_StepVectorRange<int>::const_iterator citer = svec.begin ();
          citer != svec.end (); ++citer)
         std::cout << *citer << "  ";
     std::cout << std::endl;
+#endif // defined(__linux__) || defined(__unix__) || defined(__APPLE__)
 
     return (EXIT_SUCCESS);
 }
