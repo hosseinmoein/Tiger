@@ -252,6 +252,7 @@ class   DMScu_StepVectorRange  {
                     return (const_iterator (ret_node, step_));
                 }
 
+#ifndef _WIN64
                 inline const_iterator operator + (long i) noexcept  {
 
                     value_type  const  *ret_node = node_;
@@ -259,6 +260,7 @@ class   DMScu_StepVectorRange  {
                     ret_node += i * step_;
                     return (const_iterator (ret_node, step_));
                 }
+#endif
 
                 inline const_iterator operator - (long i) noexcept  {
 
@@ -388,6 +390,7 @@ class   DMScu_StepVectorRange  {
                     return (iterator (ret_node, step_));
                 }
 
+#ifndef _WIN64
                 inline iterator operator + (long i) noexcept  {
 
                     value_type   *ret_node = node_;
@@ -395,6 +398,7 @@ class   DMScu_StepVectorRange  {
                     ret_node += i * step_;
                     return (iterator (ret_node, step_));
                 }
+#endif
 
                 inline iterator operator - (long i) noexcept  {
 
