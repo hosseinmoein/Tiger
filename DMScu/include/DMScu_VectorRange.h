@@ -332,7 +332,6 @@ class   DMScu_VectorRange  {
                     return (*this);
                 }
 
-#ifndef _WIN64
                 inline const_iterator operator + (int step) noexcept  {
 
                     value_type  const  *ret_node = node_;
@@ -340,7 +339,6 @@ class   DMScu_VectorRange  {
                     ret_node += step;
                     return (const_iterator (ret_node));
                 }
-#endif
 
                 inline const_iterator operator - (int step) noexcept  {
 
