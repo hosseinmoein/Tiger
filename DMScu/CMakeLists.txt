@@ -9,15 +9,23 @@ target_sources(${LIBRARY_TARGET_NAME} INTERFACE
 
 # Build the test binary
 add_executable(mathopt_tester src/mathopt_tester.cc)
-add_executable(vec_range_tester src/vec_range_tester.cc)
+if(NOT "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)") # If 64 bit windows build, don't add this
+  add_executable(vec_range_tester src/vec_range_tester.cc)
+endif()
+
 target_include_directories(mathopt_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(vec_range_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+if(NOT "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)") # If 64 bit windows build, don't add this
+  target_include_directories(vec_range_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+endif()
 
 # Enable ctest, testing so we can see if unit tests pass or fail in CI
 enable_testing()
 add_test(NAME mathopt_tester
          COMMAND mathopt_tester
          WORKING_DIRECTORY $<TARGET_FILE_DIR:mathopt_tester>)
-add_test(NAME vec_range_tester
-         COMMAND vec_range_tester
-         WORKING_DIRECTORY $<TARGET_FILE_DIR:vec_range_tester>)
+
+if(NOT "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)") # If 64 bit windows build, don't add this
+  add_test(NAME vec_range_tester
+          COMMAND vec_range_tester
+          WORKING_DIRECTORY $<TARGET_FILE_DIR:vec_range_tester>)
+endif()
