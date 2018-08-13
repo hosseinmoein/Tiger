@@ -110,6 +110,7 @@ class   DMScu_StepVectorRange  {
 
     public:
 
+        class iterator;
         class   const_iterator
             : public std::iterator<std::random_access_iterator_tag,
                                    value_type const, long>  {

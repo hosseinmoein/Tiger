@@ -78,6 +78,7 @@ class   DMScu_VectorRange  {
 
     public:
 
+        class const_iterator;
         class   const_reverse_iterator
             : public std::iterator<std::random_access_iterator_tag,
                                    value_type const, long>  {
@@ -222,6 +223,7 @@ class   DMScu_VectorRange  {
                 const_pointer   node_;
         };
         
+        class iterator;
         class   const_iterator
             : public std::iterator<std::random_access_iterator_tag,
                                    value_type const, long>  {
