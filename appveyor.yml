@@ -3,7 +3,8 @@ version: '{build}'
 image:
   - Visual Studio 2017
 platform:
-  - x64
+  # Uncomment the next line when Windows 64 builds are fine
+  # - x64
   - x86
 
 test: off

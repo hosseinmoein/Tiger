@@ -18,6 +18,11 @@ if(NOT "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)") # If 64 bit windows build, d
   target_include_directories(vec_range_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 endif()
 
+# FIXME: Only on windows 64 builds there seems to errors becuase of ambiguous
+# Polymorphism of the + operator in the DMScu_vectorRange header file. It might
+# be becuase long and int being the same in Windows 64, but simply disabling one
+# of the overloadeed operators didn't seemss to work. fix me!
+
 # Enable ctest, testing so we can see if unit tests pass or fail in CI
 enable_testing()
 add_test(NAME mathopt_tester

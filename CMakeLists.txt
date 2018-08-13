@@ -98,12 +98,6 @@ include(AddUninstallTarget)
 add_executable(matrix_tester src/matrix_tester.cc)
 target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include)
-# if (UNIX)
-#   # Find pthreads library
-#   set(THREADS_PREFER_PTHREAD_FLAG ON)
-#   find_package(Threads REQUIRED)
-#   target_link_libraries(datasci_tester Threads::Threads)
-# endif (UNIX)
 
 # Enable ctest, testing so we can see if unit tests pass or fail in CI
 enable_testing()
