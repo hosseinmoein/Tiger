@@ -46,7 +46,8 @@ endif()
 set(LIBRARY_TARGET_NAME ${PROJECT_NAME})
 add_definitions(-D DMS_INCLUDE_SOURCE) # Need this for some of the .tcc files to be compiled
 add_library(${LIBRARY_TARGET_NAME} INTERFACE)
-target_sources(${LIBRARY_TARGET_NAME} INTERFACE
+# List of header files.
+set(${LIBRARY_TARGET_NAME}_HDR
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Complex.h>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.h>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.tcc>
@@ -57,17 +58,33 @@ target_sources(${LIBRARY_TARGET_NAME} INTERFACE
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.tcc>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.h>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.tcc>
-  )
+   # Get files from the DMScu module too
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_MathOperators.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_StepVectorRange.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_VectorRange.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_Exception.h>
+)
 
-add_subdirectory(DMScu) # Include files from DMScu module
+target_sources(${LIBRARY_TARGET_NAME} INTERFACE "${${LIBRARY_TARGET_NAME}_HDR}")
+
+# This transfers control flow to the given subdir, so
+# cmake will start parsing the cmake file in that dir
+add_subdirectory(DMScu) # Make the test targets for DMScu
+
+
 
 # Specify installation targets, typology and destination folders.
+# First install cmake exported files 
 install(TARGETS ${LIBRARY_TARGET_NAME}
         EXPORT  ${PROJECT_NAME}
         LIBRARY       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT shlib
         ARCHIVE       DESTINATION "${CMAKE_INSTALL_LIBDIR}"                            COMPONENT lib
         RUNTIME       DESTINATION "${CMAKE_INSTALL_BINDIR}"                            COMPONENT bin
-        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_TARGET_NAME}" COMPONENT dev)
+	)
+# Second install the actual header files
+install(FILES "${${LIBRARY_TARGET_NAME}_HDR}"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LIBRARY_TARGET_NAME}"
+	)
 
 # Create and install CMake configuration files for your project that are
 # necessary to for other projects to call find_package().

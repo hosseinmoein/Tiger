@@ -1,12 +1,5 @@
 set(LIBRARY_TARGET_NAME ${PROJECT_NAME})
 
-target_sources(${LIBRARY_TARGET_NAME} INTERFACE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_MathOperators.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_StepVectorRange.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_VectorRange.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DMScu_Exception.h>
-  )
-
 # Build the test binary
 add_executable(mathopt_tester src/mathopt_tester.cc)
 if(NOT "${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)") # If 64 bit windows build, don't add this
