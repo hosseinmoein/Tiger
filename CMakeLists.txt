@@ -59,13 +59,16 @@ set(${LIBRARY_TARGET_NAME}_HDR
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.h>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.tcc>
    # Get files from the DMScu module too
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_MathOperators.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_StepVectorRange.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_VectorRange.h>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_Exception.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_MathOperators.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_StepVectorRange.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_VectorRange.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_Exception.h>
 )
 
-target_sources(${LIBRARY_TARGET_NAME} INTERFACE "${${LIBRARY_TARGET_NAME}_HDR}")
+target_include_directories(${LIBRARY_TARGET_NAME} INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+                                                            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include>"
+                                                            "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>"
+							    )
 
 # This transfers control flow to the given subdir, so
 # cmake will start parsing the cmake file in that dir
