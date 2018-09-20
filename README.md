@@ -7,7 +7,8 @@ Please see src/materix_tester.cc for how to use this library.
 Also see include/Matrix.h for documentation. I know, I will add a documentation file
 
 # Documentation (I know, I will add an explicit documentation file)
-[Documentation](include/Matrix.h)
+[Matrix Documentation](include/Matrix.h)
+[Complex Documentation](include/Complex.h)
 
 # Test/Example
 [Test File](src/matrix_tester.cc)
