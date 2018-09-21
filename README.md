@@ -5,8 +5,7 @@
 
 # Matrix
 This is a high performance matrix math and arithmetic library.
-Please see src/materix_tester.cc for how to use this library.
-Also see include/Matrix.h for documentation. I know, I will add a documentation file
+What I like most about it is its simplicity of use and performance.
 
 # Documentation (I know, I will add better documentation)
 [Matrix Documentation](include/Matrix.h)<BR>
