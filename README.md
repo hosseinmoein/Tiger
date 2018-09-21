@@ -35,7 +35,7 @@ make uninstall
 ```
 
 
-Have you ever needed a good matrix math library, say in C++? If so, continue reading and implement your own. It is not that big of a deal, if you put some thoughts to it. But most importantly it is fun.
+Have you ever needed a good matrix math library, say in C++? If so, continue reading. It is not that big of a deal, if you put some thoughts to it. But most importantly it is fun.
 
 If you want to do this the right way, so it could handle a large spectrum of problems, you should start specifying the bits and pieces before getting to your main matrix object.
 
@@ -43,15 +43,15 @@ One of the pieces that need its own construct is whether you need a dense or spa
 
 Then you should ask yourself where do I want to store all the data in the matrix and how do I want to lay them out (e.g. in memory vector, mmaped vector, hash map, etc.). That, of course, depends on the previous construct that you layed down for dense/sparse choice. But let’s make this a template argument so you will have a freedom of choosing down the line.
 
-Another separation you need, and here you have to choose how to do it, is symmetric vs. non-symmetric matrices. You have to choose whether you want to bake this into the matrix class hierarchy or make it a flag, set at runtime, in the final matrix class. There are pros and cons to both approaches . I am not going into the pros and cons, but I chose to bake it in.
+Another separation you need is symmetric vs. non-symmetric matrices. You have to choose whether you want to bake this into the matrix class hierarchy or make it a flag, set at runtime, in the final matrix class. There are pros and cons to both approaches. I am not going into the pros and cons, but I chose to bake it in.
 
 Now, you thought about most of the basic things you need for a library that can solve a wide range of problems. So let’s put them together succinctly:
 
-1) template<T> MatrixBase. T is the type of data (e.g. double, imaginary, etc.) you want to store. MatrixBase defines basics such as types like size_type, value_type, etc. Also it defines one-liner exceptions such as NotSquare, Singular, etc. That's about it for this.
-2) template<T, S = std::vector>MatrixStorage which is derived from MatrixBase. T is the data type as above, S is where you want to store the data, defaulted to the venerable STL vector. This class contains the data storage. It tells you how many rows and columns you have. It can swap data, etc.
-3) template<T, S> DenseMatrixBase which is derived from MatrixStorage with the corresponding template arguments. This class, basically, implements how the data is laid out given the storage type. For example; is it a vector of vectors, is it a flat vector with column or row major layout. In my case, it is a flat vector with column major layout. Since this is the class that has the knowledge about the data layout, it provides the data access methods including row and column iterators. There is, similarly, a class for sparse matrix. I am omitting that line of derivation here.
-4) template<T, S> SymmMatrixBase which is derived from DenseMatrixBase with the corresponding template arguments. This class implements the shortcuts that we could apply to symmetric matrices. There is no non-symmetric class. A Matrix that doesn’t have SymmMatrixBase in its derivation line, by default, is non-symmetric. Note that a non-symmetric class could still be symmetric based on its run-time data content, but it would not benefit from the shortcuts.
-5) And finally we have the head matrix that draws from all of the above classes. Below is the declaration of the final matrix class.
+1) `template<T> MatrixBase`. T is the type of data (e.g. double, imaginary, etc.) you want to store. MatrixBase defines basics such as types like size_type, value_type, etc. Also it defines one-liner exceptions such as NotSquare, Singular, etc. That's about it for this.
+2) `template<T, S = std::vector> MatrixStorage` which is derived from `MatrixBase`. T is the data type as above, S is where you want to store the data, defaulted to the venerable STL vector. This class contains the data storage. It tells you how many rows and columns you have. It can swap data, etc.
+3) `template<T, S> DenseMatrixBase` which is derived from `MatrixStorage` with the corresponding template arguments. This class, basically, implements how the data is laid out given the storage type. For example; is it a vector of vectors, is it a flat vector with column or row major layout, etc. In my case, it is a flat vector with column major layout. Since this is the class that has the knowledge about the data layout, it provides the data access methods including row and column iterators. There is, similarly, a class for sparse matrix. I am omitting that line of derivation here.
+4) `template<T, S> SymmMatrixBase` which is derived from `DenseMatrixBase` with the corresponding template arguments. This class implements the shortcuts that we could apply to symmetric matrices. There is no non-symmetric class. A Matrix that doesn’t have SymmMatrixBase in its derivation line, by default, is non-symmetric. Note that a non-symmetric class could still be symmetric based on its run-time data content, but it would not benefit from the shortcuts.
+5) And finally we have the head matrix that draws from all of the above classes.
 
 
 OK, so we have a working matrix class now. So far, most of the things we have done are boilerplate with some thoughts given to class design.
