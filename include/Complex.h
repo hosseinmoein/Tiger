@@ -14,7 +14,7 @@
 namespace hmma
 {
 
-// For thousands of years, mathematicians considered the equation x^2 + 1 = 0
+// For hunderds of years, mathematicians considered the equation x^2 + 1 = 0
 // to be insolvable.  From a functional point of view, we know that the range
 // of the square function, f(x) = x^2, contains only positive numbers, so that
 // x^2 = -1 (and x^2 + 1 = 0) has no solution in the real number system.  In
@@ -80,10 +80,10 @@ class   Complex  {
         inline value_type &imaginary () noexcept  { return (imaginary_); }
 
        // NOTE: Mathematically speaking this assignment makes no sense. But
-       //       I define it here for practical reasons. For example I want
-       //       the following code to compile both for real and complex
-       //       numbers.
-       //           double  x = 0;
+       //       I define it here for practical reasons. For example, I want
+       //       the following two lines to live side by side in harmony.
+       //           double           d = 0;
+       //           Complex<double>  c = 0;
        //
         inline Complex &operator = (const value_type &rhs) noexcept  {
 
