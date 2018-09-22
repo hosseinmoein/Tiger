@@ -34,8 +34,8 @@ cd build
 make uninstall
 ```
 
-
-Have you ever needed a good matrix math library, say in C++? If so, continue reading. It is not that big of a deal, if you put some thoughts to it. But most importantly it is fun.
+# Some Thoughts
+Have you ever needed a good matrix math library, in C++? If so, continue reading. It is not that big of a deal, if you put some thoughts to it. But most importantly it is fun.
 
 If you want to do this the right way, so it could handle a large spectrum of problems, you should start specifying the bits and pieces before getting to your main matrix object.
 
