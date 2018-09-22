@@ -28,7 +28,6 @@ make install
 ```
 
 # Uninstalling
-
 ```
 cd build
 make uninstall
