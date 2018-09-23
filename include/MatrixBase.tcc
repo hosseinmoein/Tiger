@@ -16,8 +16,8 @@
 namespace hmma
 {
 
-template<class TYPE, class STORAGE>
-void DenseMatrixStorage<TYPE, STORAGE>::
+template<class T, class S>
+void DenseMatrixStorage<T, S>::
 _resize (size_type in_row,
          size_type in_col,
          size_type data_size,
@@ -36,8 +36,8 @@ _resize (size_type in_row,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE, class STORAGE>
-void DenseMatrixStorage<TYPE, STORAGE>::clear () noexcept  {
+template<class T, class S>
+void DenseMatrixStorage<T, S>::clear () noexcept  {
 
     data_.clear ();
     rows_ = 0;
@@ -47,8 +47,8 @@ void DenseMatrixStorage<TYPE, STORAGE>::clear () noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE, class STORAGE>
-inline void DenseMatrixStorage<TYPE, STORAGE>::
+template<class T, class S>
+inline void DenseMatrixStorage<T, S>::
 swap (DenseMatrixStorage &rhs) noexcept  {
 
     data_.swap (rhs.data_);

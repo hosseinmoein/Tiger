@@ -10,9 +10,9 @@
 namespace hmma
 {
 
-template<class TYPE>
-inline typename SymmMatrixBase<TYPE>::reference
-SymmMatrixBase<TYPE>::at (size_type r, size_type c) noexcept  {
+template<class T>
+inline typename SymmMatrixBase<T>::reference
+SymmMatrixBase<T>::at (size_type r, size_type c) noexcept  {
 
     if (r > c)
         std::swap (r, c);
@@ -23,9 +23,9 @@ SymmMatrixBase<TYPE>::at (size_type r, size_type c) noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename SymmMatrixBase<TYPE>::const_reference
-SymmMatrixBase<TYPE>::
+template<class T>
+inline typename SymmMatrixBase<T>::const_reference
+SymmMatrixBase<T>::
 at (size_type r, size_type c) const noexcept  {
 
     if (r > c)
@@ -37,8 +37,8 @@ at (size_type r, size_type c) const noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-void SymmMatrixBase<TYPE>::
+template<class T>
+void SymmMatrixBase<T>::
 resize (size_type in_row, size_type in_col, const_reference def_value)  {
 
     BaseClass::_resize (in_row,
@@ -51,8 +51,8 @@ resize (size_type in_row, size_type in_col, const_reference def_value)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-std::ostream &SymmMatrixBase<TYPE>::
+template<class T>
+std::ostream &SymmMatrixBase<T>::
 dump (std::ostream &out_stream) const {
 
     // const   size_type           old_precision = out_stream.precision (2);

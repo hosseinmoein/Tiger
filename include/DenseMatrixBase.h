@@ -18,13 +18,13 @@
 namespace hmma
 {
 
-template<class TYPE>
-class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
+template<class T>
+class   DenseMatrixBase : public DenseMatrixStorage<T>  {
 
 
     public:
 
-        typedef DenseMatrixStorage<TYPE> BaseClass;
+        typedef DenseMatrixStorage<T>               BaseClass;
 
         typedef typename BaseClass::size_type       size_type;
         typedef typename BaseClass::value_type      value_type;
@@ -41,7 +41,7 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
         typedef DMScu_VectorRange<value_type>       ColumnVector;
         typedef DMScu_StepVectorRange<value_type>   RowVector;
 
-        typedef DenseMatrixBase<value_type>  SelfType;
+        typedef DenseMatrixBase<value_type>         SelfType;
 
     protected:
 
@@ -51,8 +51,8 @@ class   DenseMatrixBase : public DenseMatrixStorage<TYPE>  {
 
         inline
         DenseMatrixBase (size_type row,
-                                size_type col,
-                                const_reference def_value = value_type ())
+                         size_type col,
+                         const_reference def_value = value_type ())
             noexcept
             : BaseClass (row, col, row * col, def_value)  {   }
 

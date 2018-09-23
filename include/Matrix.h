@@ -38,8 +38,8 @@ class   Matrix : public BASE<TYPE>  {
         inline Matrix () noexcept  {   }
 
         inline Matrix (size_type row,
-                              size_type col,
-                              const_reference def_value = value_type ())
+                       size_type col,
+                       const_reference def_value = value_type ())
             noexcept
             : BaseClass (row, col, def_value)  {   }
 
@@ -138,8 +138,8 @@ class   Matrix : public BASE<TYPE>  {
        //       the original matrix.
        //
         inline Matrix &get_minor (Matrix &mmatrix,
-                                         size_type drow,
-                                         size_type dcol) const noexcept;
+                                  size_type drow,
+                                  size_type dcol) const noexcept;
 
        // A Cofactor of a matrix is the determinant of a minor of the matrix.
        // You can also say cofactor is the signed minor of the matrix.
@@ -322,12 +322,12 @@ class   Matrix : public BASE<TYPE>  {
        // A^n = U*(λ^n)*(U^-1)
        // 
         inline Matrix &power (Matrix &result,
-                                     value_type n,
-                                     bool is_diag) const; // throw (NotSolvable);
+                              value_type n,
+                              bool is_diag) const; // throw (NotSolvable);
         inline Matrix &power (value_type n,
-                                     bool is_diag); // throw (NotSolvable);
+                              bool is_diag); // throw (NotSolvable);
 
-	   // In linear algebra, the Singular Value Decomposition (SVD) is an
+       // In linear algebra, the Singular Value Decomposition (SVD) is an
        // important factorization of a rectangular real or complex matrix,
        // with several applications in signal processing and statistics.
        // Applications which employ the SVD include computing the
@@ -358,10 +358,11 @@ class   Matrix : public BASE<TYPE>  {
        // fashion. In this case, the diagonal matrix Σ is uniquely determined
        // by M (though the matrices U and V are not).
        //
-        inline void svd (Matrix &U,
-                         Matrix &S,
-                         Matrix &V,
-                         bool full_size_S = true) const; // throw (NotSolvable);
+        inline void svd (
+            Matrix &U,
+            Matrix &S,
+            Matrix &V,
+            bool full_size_S = true) const; // throw (NotSolvable);
 
        // In linear algebra, the QR decomposition (also called the QR
        // factorization) of a matrix is a decomposition of the matrix into an

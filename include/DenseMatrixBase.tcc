@@ -13,18 +13,18 @@ namespace hmma
 // This is a column major matrix. if it were row major, we would have
 // return (*(data_.begin () + (r * columns () + c)));
 //
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::reference
-DenseMatrixBase<TYPE>::at (size_type r, size_type c) noexcept  {
+template<class T>
+inline typename DenseMatrixBase<T>::reference
+DenseMatrixBase<T>::at (size_type r, size_type c) noexcept  {
 
     return (BaseClass::_get_data () [c * BaseClass::rows () + r]);
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::const_reference
-DenseMatrixBase<TYPE>::
+template<class T>
+inline typename DenseMatrixBase<T>::const_reference
+DenseMatrixBase<T>::
 at (size_type r, size_type c) const noexcept  {
 
     return (BaseClass::_get_data () [c * BaseClass::rows () + r]);
@@ -32,9 +32,9 @@ at (size_type r, size_type c) const noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::ColumnVector
-DenseMatrixBase<TYPE>::get_column (size_type c) noexcept  {
+template<class T>
+inline typename DenseMatrixBase<T>::ColumnVector
+DenseMatrixBase<T>::get_column (size_type c) noexcept  {
 
     return (
         ColumnVector (
@@ -44,9 +44,9 @@ DenseMatrixBase<TYPE>::get_column (size_type c) noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::ColumnVector
-DenseMatrixBase<TYPE>::get_column (size_type c) const noexcept  {
+template<class T>
+inline typename DenseMatrixBase<T>::ColumnVector
+DenseMatrixBase<T>::get_column (size_type c) const noexcept  {
 
     return (
         ColumnVector (
@@ -58,9 +58,9 @@ DenseMatrixBase<TYPE>::get_column (size_type c) const noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::RowVector
-DenseMatrixBase<TYPE>::get_row (size_type r) noexcept  {
+template<class T>
+inline typename DenseMatrixBase<T>::RowVector
+DenseMatrixBase<T>::get_row (size_type r) noexcept  {
 
     return (
         RowVector (
@@ -71,9 +71,9 @@ DenseMatrixBase<TYPE>::get_row (size_type r) noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline typename DenseMatrixBase<TYPE>::RowVector
-DenseMatrixBase<TYPE>::get_row (size_type r) const noexcept  {
+template<class T>
+inline typename DenseMatrixBase<T>::RowVector
+DenseMatrixBase<T>::get_row (size_type r) const noexcept  {
 
     return (
         RowVector (
@@ -86,9 +86,9 @@ DenseMatrixBase<TYPE>::get_row (size_type r) const noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class ITER>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 set_column (ITER col_data, size_type col)  {
 
     for (size_type r = 0; r < BaseClass::rows (); ++r)
@@ -99,9 +99,9 @@ set_column (ITER col_data, size_type col)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class ITER>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 set_row (ITER row_data, size_type row)  {
 
     for (size_type c = 0; c < BaseClass::columns (); ++c)
@@ -112,9 +112,9 @@ set_row (ITER row_data, size_type row)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class OPT, class ITER>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 column_operation (OPT opt, ITER col_data, size_type col)  {
 
     for (size_type r = 0; r < BaseClass::rows (); ++r)  {
@@ -128,9 +128,9 @@ column_operation (OPT opt, ITER col_data, size_type col)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class OPT, class ITER>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 row_operation (OPT opt, ITER row_data, size_type row)  {
 
     for (size_type c = 0; c < BaseClass::columns (); ++c)  {
@@ -144,9 +144,9 @@ row_operation (OPT opt, ITER row_data, size_type row)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class OPT, class EXPR>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 scale_column (OPT opt, const EXPR &e, size_type col)  {
 
     for (size_type r = 0; r < BaseClass::rows (); ++r)  {
@@ -160,9 +160,9 @@ scale_column (OPT opt, const EXPR &e, size_type col)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class OPT, class EXPR>
-inline void DenseMatrixBase<TYPE>::
+inline void DenseMatrixBase<T>::
 scale_row (OPT opt, const EXPR &e, size_type row)  {
 
     for (size_type c = 0; c < BaseClass::columns (); ++c)  {
@@ -176,10 +176,10 @@ scale_row (OPT opt, const EXPR &e, size_type row)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
+template<class T>
 template<class OPT, class EXPR>
 inline void
-DenseMatrixBase<TYPE>::
+DenseMatrixBase<T>::
 scale (OPT opt, const EXPR &e) noexcept  {
 
     for (col_iterator iter = col_begin (); iter != col_end (); ++iter)
@@ -190,8 +190,8 @@ scale (OPT opt, const EXPR &e) noexcept  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-void DenseMatrixBase<TYPE>::
+template<class T>
+void DenseMatrixBase<T>::
 resize (size_type in_row, size_type in_col, const_reference def_value)  {
 
     BaseClass::_resize (in_row, in_col, in_row * in_col, true, def_value);
@@ -200,8 +200,8 @@ resize (size_type in_row, size_type in_col, const_reference def_value)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-std::ostream &DenseMatrixBase<TYPE>::
+template<class T>
+std::ostream &DenseMatrixBase<T>::
 dump (std::ostream &out_stream) const  {
 
     // const   size_type           old_precision = out_stream.precision (2);

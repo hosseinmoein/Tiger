@@ -11,7 +11,7 @@
 namespace hmma
 {
 
-template<class TYPE>
+template<class T>
 class   MatrixBase  {
 
     public:
@@ -34,7 +34,7 @@ class   MatrixBase  {
     public:
 
         typedef unsigned int        size_type;
-        typedef TYPE            value_type;
+        typedef T                   value_type;
         typedef value_type &        reference;
         typedef const value_type &  const_reference;
         typedef value_type *        pointer;
@@ -47,12 +47,12 @@ class   MatrixBase  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE, class STORAGE = std::vector<TYPE> >
-class   DenseMatrixStorage : public MatrixBase<TYPE>  {
+template<class T, class S = std::vector<T> >
+class   DenseMatrixStorage : public MatrixBase<T>  {
 
     public:
 
-        typedef MatrixBase<TYPE>         BaseClass;
+        typedef MatrixBase<T>                       BaseClass;
         typedef typename BaseClass::size_type       size_type;
         typedef typename BaseClass::value_type      value_type;
         typedef typename BaseClass::reference       reference;
@@ -62,7 +62,7 @@ class   DenseMatrixStorage : public MatrixBase<TYPE>  {
 
     protected:
 
-        typedef STORAGE DataVector;
+        typedef S DataVector;
 
         static  const   size_type   _NOPOS = static_cast<size_type>(-1);
 
@@ -82,9 +82,9 @@ class   DenseMatrixStorage : public MatrixBase<TYPE>  {
             : rows_ (0), cols_ (0), data_ ()  {   }
 
         inline DenseMatrixStorage (size_type row,
-                                  size_type col,
-                                  size_type data_size,
-                                  const_reference def_value = value_type ())
+                                   size_type col,
+                                   size_type data_size,
+                                   const_reference def_value = value_type ())
             noexcept
             : rows_ (row),
               cols_ (col),

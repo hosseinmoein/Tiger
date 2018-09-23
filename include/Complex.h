@@ -52,12 +52,12 @@ namespace hmma
 // This gives us the relations
 //     a = r * cos(t)   and   b = r * sin(t)
 //
-template<class TYPE = double>
+template<class T = double>
 class   Complex  {
 
     public:
 
-        typedef TYPE    value_type;
+        typedef T   value_type;
 
     private:
 
@@ -67,8 +67,7 @@ class   Complex  {
     public:
 
         inline Complex () noexcept : real_ (), imaginary_ ()  {   }
-        inline Complex (const value_type &r, const value_type &i)
-            noexcept
+        inline Complex (const value_type &r, const value_type &i) noexcept
             : real_ (r), imaginary_ (i)  {   }
 
         inline const value_type &real () const noexcept  { return (real_); }
@@ -136,7 +135,7 @@ class   Complex  {
         inline Complex exp () const noexcept  {
 
             return (Complex (::exp (real ()) * ::cos (imaginary ()),
-                                    ::exp (real ()) * ::sin (imaginary ())));
+                             ::exp (real ()) * ::sin (imaginary ())));
         }
 
        // We define the natural logarithm of a (nonzero) complex number z as
@@ -151,9 +150,8 @@ class   Complex  {
        //
         inline Complex ln (int k = 0) const noexcept  {
 
-            return (Complex (
-                        ::log (cabs ()),
-                        angle () + k * 2.0 * 3.14159265358979323846));
+            return (Complex (::log (cabs ()),
+                             angle () + k * 2.0 * 3.14159265358979323846));
         }
 
        // a + bi raised to the power of c + di
@@ -227,9 +225,8 @@ class   Complex  {
 
 // ----------------------------------------------------------------------------
 
-template<class STREAM, class TYPE>
-inline STREAM &
-operator << (STREAM &lhs, const Complex<TYPE> &rhs)  {
+template<class S, class T>
+inline S &operator << (S &lhs, const Complex<T> &rhs)  {
 
     return (lhs << rhs.real ()
                 << (rhs.imaginary () >= 0 ? '+' : '-')
@@ -244,31 +241,25 @@ operator << (STREAM &lhs, const Complex<TYPE> &rhs)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator + (const Complex<TYPE> &lhs,
-            const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> operator + (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () + rhs.real (),
-                                      lhs.imaginary () + rhs.imaginary ()));
+    return (Complex<T>(lhs.real () + rhs.real (),
+                       lhs.imaginary () + rhs.imaginary ()));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator + (const Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> operator + (const Complex<T> &lhs, const T &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () + rhs,
-                                      lhs.imaginary () + rhs));
+    return (Complex<T>(lhs.real () + rhs, lhs.imaginary () + rhs));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator += (Complex<TYPE> &lhs,
-             const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> &operator += (Complex<T> &lhs, const Complex<T> &rhs)  {
 
     lhs.real () += rhs.real ();
     lhs.imaginary () += rhs.imaginary ();
@@ -277,9 +268,8 @@ operator += (Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator += (Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> &operator += (Complex<T> &lhs, const T &rhs)  {
 
     lhs.real () += rhs;
     lhs.imaginary () += rhs;
@@ -288,31 +278,26 @@ operator += (Complex<TYPE> &lhs, const TYPE &rhs)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator - (const Complex<TYPE> &lhs,
-            const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> operator - (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () - rhs.real (),
-                                      lhs.imaginary () - rhs.imaginary ()));
+    return (Complex<T>(lhs.real () - rhs.real (),
+                       lhs.imaginary () - rhs.imaginary ()));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator - (const Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T>
+operator - (const Complex<T> &lhs, const T &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () - rhs,
-                                      lhs.imaginary () - rhs));
+    return (Complex<T>(lhs.real () - rhs, lhs.imaginary () - rhs));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator -= (Complex<TYPE> &lhs,
-             const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> &operator -= (Complex<T> &lhs, const Complex<T> &rhs)  {
 
     lhs.real () -= rhs.real ();
     lhs.imaginary () -= rhs.imaginary ();
@@ -321,9 +306,8 @@ operator -= (Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator -= (Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> &operator -= (Complex<T> &lhs, const T &rhs)  {
 
     lhs.real () -= rhs;
     lhs.imaginary () -= rhs;
@@ -332,32 +316,26 @@ operator -= (Complex<TYPE> &lhs, const TYPE &rhs)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator * (const Complex<TYPE> &lhs,
-            const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> operator * (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
-    return (Complex<TYPE> (
+    return (Complex<T>(
         lhs.real () * rhs.real () - lhs.imaginary () * rhs.imaginary (),
         lhs.real () * rhs.imaginary () + lhs.imaginary () * rhs.real ()));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator * (const Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> operator * (const Complex<T> &lhs, const T &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () * rhs,
-                                      lhs.imaginary () * rhs));
+    return (Complex<T>(lhs.real () * rhs, lhs.imaginary () * rhs));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator *= (Complex<TYPE> &lhs,
-             const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> &operator *= (Complex<T> &lhs, const Complex<T> &rhs)  {
 
     lhs.real () =
         lhs.real () * rhs.real () - lhs.imaginary () * rhs.imaginary ();
@@ -369,9 +347,8 @@ operator *= (Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator *= (Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> &operator *= (Complex<T> &lhs, const T &rhs)  {
 
     lhs.real () *= rhs;
     lhs.imaginary () *= rhs;
@@ -381,37 +358,31 @@ operator *= (Complex<TYPE> &lhs, const TYPE &rhs)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator / (const Complex<TYPE> &lhs,
-            const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> operator / (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
-    const   TYPE    d =
+    const   T   d =
         rhs.real () * rhs.real () + rhs.imaginary () * rhs.imaginary ();
 
-    return (Complex<TYPE> (
+    return (Complex<T>(
         (lhs.real () * rhs.real () + lhs.imaginary () * rhs.imaginary ()) / d,
         (lhs.imaginary() * rhs.real () - lhs.real () * rhs.imaginary ()) / d));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE>
-operator / (const Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> operator / (const Complex<T> &lhs, const T &rhs)  {
 
-    return (Complex<TYPE> (lhs.real () / rhs,
-                                      lhs.imaginary () / rhs));
+    return (Complex<T>(lhs.real () / rhs, lhs.imaginary () / rhs));
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator /= (Complex<TYPE> &lhs,
-             const Complex<TYPE> &rhs)  {
+template<class T>
+inline Complex<T> &operator /= (Complex<T> &lhs, const Complex<T> &rhs)  {
 
-    const   TYPE    d =
+    const   T   d =
         rhs.real () * rhs.real () + rhs.imaginary () * rhs.imaginary ();
 
     lhs.real () =
@@ -424,9 +395,8 @@ operator /= (Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline Complex<TYPE> &
-operator /= (Complex<TYPE> &lhs, const TYPE &rhs)  {
+template<class T>
+inline Complex<T> &operator /= (Complex<T> &lhs, const T &rhs)  {
 
     lhs.real () /= rhs;
     lhs.imaginary () /= rhs;
@@ -442,18 +412,16 @@ operator /= (Complex<TYPE> &lhs, const TYPE &rhs)  {
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline bool operator == (const Complex<TYPE> &lhs,
-                         const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator == (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () == rhs.real () && lhs.imaginary () == rhs.imaginary());
 }
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline bool operator != (const Complex<TYPE> &lhs,
-                         const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator != (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () != rhs.real () || lhs.imaginary () != rhs.imaginary());
 }
@@ -466,9 +434,8 @@ inline bool operator != (const Complex<TYPE> &lhs,
 //       practical reasons.
 //
 
-template<class TYPE>
-inline bool operator < (const Complex<TYPE> &lhs,
-                        const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator < (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () < rhs.real () ||
             (lhs.real() == rhs.real () && lhs.imaginary () < rhs.imaginary()));
@@ -476,9 +443,8 @@ inline bool operator < (const Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline bool operator <= (const Complex<TYPE> &lhs,
-                         const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator <= (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () < rhs.real () ||
             (lhs.real() == rhs.real() && lhs.imaginary() <= rhs.imaginary()));
@@ -486,9 +452,8 @@ inline bool operator <= (const Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline bool operator > (const Complex<TYPE> &lhs,
-                        const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator > (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () > rhs.real () ||
             (lhs.real() == rhs.real () && lhs.imaginary () > rhs.imaginary()));
@@ -496,9 +461,8 @@ inline bool operator > (const Complex<TYPE> &lhs,
 
 // ----------------------------------------------------------------------------
 
-template<class TYPE>
-inline bool operator >= (const Complex<TYPE> &lhs,
-                         const Complex<TYPE> &rhs)  {
+template<class T>
+inline bool operator >= (const Complex<T> &lhs, const Complex<T> &rhs)  {
 
     return (lhs.real () > rhs.real () ||
             (lhs.real() == rhs.real() && lhs.imaginary() >= rhs.imaginary()));
