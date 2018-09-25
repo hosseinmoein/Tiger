@@ -110,7 +110,7 @@ class   MatMultiplies : public MatrixOptBase  {
 
     public:
 
-        typedef CLASS   value_type;
+        typedef CLASS       value_type;
         typedef value_type  result_type;
 
     public:
@@ -152,7 +152,7 @@ class   MatColMean : public MatrixOptBase  {
 
     public:
 
-        typedef CLASS   value_type;
+        typedef CLASS       value_type;
         typedef value_type  result_type;
 
     public:
@@ -189,7 +189,7 @@ class   MatTranspose : public MatrixOptBase  {
 
     public:
 
-        typedef CLASS   value_type;
+        typedef CLASS       value_type;
         typedef value_type  result_type;
 
     private:
@@ -227,21 +227,21 @@ class   MatUnaExprOpt  {
 
     public:
 
-        typedef TYPE                        value_type;
+        typedef TYPE                     value_type;
         typedef MatrixOptBase::size_type size_type;
 
     private:
 
-        mutable ITER    rhs_citer_;
+        mutable ITER        rhs_citer_;
         const   size_type   rhs_row_size_;
         const   size_type   rhs_col_size_;
-        const   OPT     opt_;
+        const   OPT         opt_;
 
     public:
 
         inline MatUnaExprOpt (const ITER &it,
-                                     size_type rhs_row_size,
-                                     size_type rhs_col_size) noexcept
+                              size_type rhs_row_size,
+                              size_type rhs_col_size) noexcept
             : rhs_citer_ (it),
               rhs_row_size_ (rhs_row_size),
               rhs_col_size_ (rhs_col_size),
@@ -310,25 +310,25 @@ class   MatBinExprOpt  {
 
     public:
 
-        typedef TYPE                        value_type;
+        typedef TYPE                     value_type;
         typedef MatrixOptBase::size_type size_type;
 
     private:
 
-        ITER1           lhs_citer_;
-        ITER2           rhs_citer_;
+        ITER1               lhs_citer_;
+        ITER2               rhs_citer_;
         const   size_type   lhs_row_size_;
         const   size_type   rhs_row_size_;
         const   size_type   rhs_col_size_;
-        const   OPT     opt_;
+        const   OPT         opt_;
 
     public:
 
         inline MatBinExprOpt (const ITER1 &it1,
-                                     const ITER2 &it2,
-                                     size_type lhs_row_size,
-                                     size_type rhs_row_size,
-                                     size_type rhs_col_size) noexcept
+                              const ITER2 &it2,
+                              size_type lhs_row_size,
+                              size_type rhs_row_size,
+                              size_type rhs_col_size) noexcept
             : lhs_citer_ (it1),
               rhs_citer_ (it2),
               lhs_row_size_ (lhs_row_size),
@@ -396,7 +396,7 @@ class   MatrixExpr  {
 
     public:
 
-        typedef TYPE                        value_type;
+        typedef TYPE                     value_type;
         typedef MatrixOptBase::size_type size_type;
 
     private:
@@ -404,13 +404,13 @@ class   MatrixExpr  {
         typedef Matrix<BASE, TYPE>   MatrixType;
 
         size_type                   multi_count_;
-        ITER                    expr_opt_;
+        ITER                        expr_opt_;
         const   unsigned    char    opt_type_;
 
     public:
 
         inline MatrixExpr (const ITER &eo,
-                                  unsigned char opt_type) noexcept
+                           unsigned char opt_type) noexcept
             : multi_count_ (0), expr_opt_ (eo), opt_type_ (opt_type)  {   }
 
         inline MatrixExpr &operator ++ () noexcept  {  // ++Prefix
@@ -538,8 +538,8 @@ class   MatrixExpr  {
             private:
 
                 const   MatrixExpr   *expr_node_;
-                ITER                    expr_opt_;
-                size_type                   multi_count_;
+                ITER                 expr_opt_;
+                size_type            multi_count_;
 
             public:
 
@@ -652,8 +652,8 @@ operator ~ (const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatUnaExprOpt<typename MatrixType::row_const_iterator,
-                                 MatTranspose<TYPE>,
-                                 TYPE>      expr_type;
+                          MatTranspose<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (rhs.row_begin (), rhs.rows (), rhs.columns ()),
@@ -667,18 +667,14 @@ template<template<class T> class BASE, class ITER, class TYPE>
 inline
 MatrixExpr
     <MatUnaExprOpt<MatrixExpr<ITER, BASE, TYPE>,
-                          MatTranspose<TYPE>,
-                          TYPE>,
+                   MatTranspose<TYPE>,
+                   TYPE>,
      BASE,
      TYPE>
-operator ~ (const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+operator ~ (const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
-    typedef MatUnaExprOpt<MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatTranspose<TYPE>,
-                                 TYPE>  expr_type;
+    typedef MatUnaExprOpt<MatrixExpr<ITER, BASE, TYPE>, MatTranspose<TYPE>,
+                          TYPE>  expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (rhs, rhs.rhs_row_size (). rhs.rhs_col_size ()),
@@ -703,8 +699,8 @@ mat_col_mean (const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatUnaExprOpt<typename MatrixType::col_const_iterator,
-                                 MatColMean<TYPE>,
-                                 TYPE>      expr_type;
+                          MatColMean<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (rhs.col_begin (), rhs.rows (), rhs.columns ()),
@@ -716,19 +712,12 @@ mat_col_mean (const Matrix<BASE, TYPE> &rhs) noexcept  {
 template<template<class T> class BASE, class ITER, class TYPE>
 inline
 MatrixExpr
-    <MatUnaExprOpt<MatrixExpr<ITER, BASE, TYPE>,
-                          MatColMean<TYPE>,
-                          TYPE>,
-     BASE,
-     TYPE>
-mat_col_mean (const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+    <MatUnaExprOpt<MatrixExpr<ITER, BASE, TYPE>, MatColMean<TYPE>, TYPE>,
+                   BASE, TYPE>
+mat_col_mean (const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
-    typedef MatUnaExprOpt<MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatColMean<TYPE>,
-                                 TYPE>  expr_type;
+    typedef MatUnaExprOpt<MatrixExpr<ITER, BASE, TYPE>, MatColMean<TYPE>,
+                          TYPE>  expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (rhs, rhs.rhs_row_size (). rhs.rhs_col_size ()),
@@ -760,9 +749,9 @@ operator + (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 typename MatrixType::col_const_iterator,
-                                 MatPlus<TYPE>,
-                                 TYPE>      expr_type;
+                          typename MatrixType::col_const_iterator,
+                          MatPlus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs.col_begin (),
@@ -790,9 +779,9 @@ operator - (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 typename MatrixType::col_const_iterator,
-                                 MatMinus<TYPE>,
-                                 TYPE>      expr_type;
+                          typename MatrixType::col_const_iterator,
+                          MatMinus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs.col_begin (),
@@ -820,9 +809,9 @@ operator * (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 typename MatrixType::col_const_iterator,
-                                 MatMultiplies<TYPE>,
-                                 TYPE>      expr_type;
+                          typename MatrixType::col_const_iterator,
+                          MatMultiplies<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                (expr_type (lhs.col_begin (),
@@ -873,11 +862,11 @@ operator + (const MatrixExpr<ITER, BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 typename MatrixType::col_const_iterator,
-                                 MatPlus<TYPE>,
-                                 TYPE>      expr_type;
+                                     BASE,
+                                     TYPE>,
+                          typename MatrixType::col_const_iterator,
+                          MatPlus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs,
@@ -905,11 +894,11 @@ operator - (const MatrixExpr<ITER, BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 typename MatrixType::col_const_iterator,
-                                 MatMinus<TYPE>,
-                                 TYPE>      expr_type;
+                                     BASE,
+                                     TYPE>,
+                          typename MatrixType::col_const_iterator,
+                          MatMinus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs,
@@ -937,11 +926,11 @@ operator * (const MatrixExpr<ITER, BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 typename MatrixType::col_const_iterator,
-                                 MatMultiplies<TYPE>,
-                                 TYPE>      expr_type;
+                                     BASE,
+                                     TYPE>,
+                          typename MatrixType::col_const_iterator,
+                          MatMultiplies<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                (expr_type (lhs,
@@ -993,11 +982,11 @@ operator + (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatPlus<TYPE>,
-                                 TYPE>      expr_type;
+                          MatrixExpr<ITER,
+                                     BASE,
+                                     TYPE>,
+                          MatPlus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs.col_begin (),
@@ -1026,11 +1015,11 @@ operator - (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatMinus<TYPE>,
-                                 TYPE>      expr_type;
+                          MatrixExpr<ITER,
+                                     BASE,
+                                     TYPE>,
+                          MatMinus<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs.col_begin (),
@@ -1059,11 +1048,11 @@ operator * (const Matrix<BASE, TYPE> &lhs,
 
     typedef Matrix<BASE, TYPE>   MatrixType;
     typedef MatBinExprOpt<typename MatrixType::col_const_iterator,
-                                 MatrixExpr<ITER,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatMultiplies<TYPE>,
-                                 TYPE>      expr_type;
+                          MatrixExpr<ITER,
+                                     BASE,
+                                     TYPE>,
+                          MatMultiplies<TYPE>,
+                          TYPE>      expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs.col_begin (),
@@ -1108,9 +1097,9 @@ template<template<class T> class BASE,
 inline
 MatrixExpr
     <MatBinExprOpt<MatrixExpr<ITER1, BASE, TYPE>,
-                          MatrixExpr<ITER2, BASE, TYPE>,
-                          MatPlus<TYPE>,
-                          TYPE>,
+                   MatrixExpr<ITER2, BASE, TYPE>,
+                   MatPlus<TYPE>,
+                   TYPE>,
      BASE,
      TYPE>
 operator + (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
@@ -1144,9 +1133,9 @@ template<template<class T> class BASE,
 inline
 MatrixExpr
     <MatBinExprOpt<MatrixExpr<ITER1, BASE, TYPE>,
-                          MatrixExpr<ITER2, BASE, TYPE>,
-                          MatMinus<TYPE>,
-                          TYPE>,
+                   MatrixExpr<ITER2, BASE, TYPE>,
+                   MatMinus<TYPE>,
+                   TYPE>,
      BASE,
      TYPE>
 operator - (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
@@ -1154,13 +1143,13 @@ operator - (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
     noexcept  {
 
     typedef MatBinExprOpt<MatrixExpr<ITER1,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatrixExpr<ITER2,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatMinus<TYPE>,
-                                 TYPE>  expr_type;
+                                     BASE,
+                                     TYPE>,
+                          MatrixExpr<ITER2,
+                                     BASE,
+                                     TYPE>,
+                          MatMinus<TYPE>,
+                          TYPE>  expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                 (expr_type (lhs,
@@ -1180,9 +1169,9 @@ template<template<class T> class BASE,
 inline
 MatrixExpr
     <MatBinExprOpt<MatrixExpr<ITER1, BASE, TYPE>,
-                          MatrixExpr<ITER2, BASE, TYPE>,
-                          MatMultiplies<TYPE>,
-                          TYPE>,
+                   MatrixExpr<ITER2, BASE, TYPE>,
+                   MatMultiplies<TYPE>,
+                   TYPE>,
      BASE,
      TYPE>
 operator * (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
@@ -1190,13 +1179,13 @@ operator * (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
     noexcept  {
 
     typedef MatBinExprOpt<MatrixExpr<ITER1,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatrixExpr<ITER2,
-                                                   BASE,
-                                                   TYPE>,
-                                 MatMultiplies<TYPE>,
-                                 TYPE>  expr_type;
+                                     BASE,
+                                     TYPE>,
+                          MatrixExpr<ITER2,
+                                     BASE,
+                                     TYPE>,
+                          MatMultiplies<TYPE>,
+                          TYPE>  expr_type;
 
     return (MatrixExpr<expr_type, BASE, TYPE>
                (expr_type (lhs,
@@ -1326,10 +1315,9 @@ operator /= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator += (Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
-    typedef Matrix<BASE, TYPE>               MatrixType;
+    typedef Matrix<BASE, TYPE>           MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
 
     typename ExprType::const_iterator   rhs_citer = rhs.begin ();
@@ -1346,10 +1334,9 @@ operator += (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator -= (Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
-    typedef Matrix<BASE, TYPE>               MatrixType;
+    typedef Matrix<BASE, TYPE>           MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
 
     typename ExprType::const_iterator   rhs_citer = rhs.begin ();
@@ -1366,8 +1353,7 @@ operator -= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator *= (Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1381,8 +1367,7 @@ operator *= (Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline Matrix<BASE, TYPE> &
 operator /= (Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1403,8 +1388,7 @@ operator /= (Matrix<BASE, TYPE> &lhs,
 //
 template<template<class T> class BASE, class TYPE>
 inline bool operator == (const Matrix<BASE, TYPE> &lhs,
-                         const Matrix<BASE, TYPE> &rhs)
-    noexcept  {
+                         const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     typedef Matrix<BASE, TYPE>   MatrixType;
 
@@ -1425,8 +1409,7 @@ inline bool operator == (const Matrix<BASE, TYPE> &lhs,
 
 template<template<class T> class BASE, class TYPE>
 inline bool operator != (const Matrix<BASE, TYPE> &lhs,
-                         const Matrix<BASE, TYPE> &rhs)
-    noexcept  {
+                         const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1438,10 +1421,9 @@ inline bool operator != (const Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator == (const Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
-    typedef Matrix<BASE, TYPE>               MatrixType;
+    typedef Matrix<BASE, TYPE>           MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
 
     if (lhs.rows () != rhs.result_row_size () ||
@@ -1463,8 +1445,7 @@ operator == (const Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator != (const Matrix<BASE, TYPE> &lhs,
-             const MatrixExpr<ITER, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER, BASE, TYPE> &rhs) noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1476,10 +1457,9 @@ operator != (const Matrix<BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator == (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs)
-    noexcept  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
-    typedef Matrix<BASE, TYPE>               MatrixType;
+    typedef Matrix<BASE, TYPE>           MatrixType;
     typedef MatrixExpr<ITER, BASE, TYPE> ExprType;
 
     if (lhs.result_row_size () != rhs.rows () ||
@@ -1501,8 +1481,7 @@ operator == (const MatrixExpr<ITER, BASE, TYPE> &lhs,
 template<template<class T> class BASE, class ITER, class TYPE>
 inline bool
 operator != (const MatrixExpr<ITER, BASE, TYPE> &lhs,
-             const Matrix<BASE, TYPE> &rhs)
-    noexcept  {
+             const Matrix<BASE, TYPE> &rhs) noexcept  {
 
     return (! (lhs == rhs));
 }
@@ -1517,8 +1496,7 @@ template<template<class T> class BASE,
          class TYPE>
 inline bool
 operator == (const MatrixExpr<ITER1, BASE, TYPE> &lhs,
-             const MatrixExpr<ITER2, BASE, TYPE> &rhs)
-    noexcept  {
+             const MatrixExpr<ITER2, BASE, TYPE> &rhs) noexcept  {
 
     typedef MatrixExpr<ITER1, BASE, TYPE> LhsExprType;
     typedef MatrixExpr<ITER2, BASE, TYPE> RhsExprType;
