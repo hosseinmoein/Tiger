@@ -10,16 +10,16 @@
 
 // ----------------------------------------------------------------------------
 
-// This is an adopter that would make an already existing array of contiuous
-// memeory look like an STL vector.
+// This is an adopter/view that would make an already existing array of
+// contiuous memory look like an STL vector.
 // It also gives you STL conformant iterators.
 //
-template <class cu_TYPE>
+template <typename T>
 class   DMScu_VectorRange  {
 
     public:
 
-        typedef cu_TYPE                 value_type;
+        typedef T                       value_type;
         typedef unsigned long long int  size_type;
         typedef value_type *            pointer;
         typedef const value_type *      const_pointer;
@@ -31,10 +31,9 @@ class   DMScu_VectorRange  {
 
     public:
 
-        inline DMScu_VectorRange () noexcept
-            : begin_ptr_ (NULL), end_ptr_ (NULL)  {   }
+        inline DMScu_VectorRange() = default;
         inline DMScu_VectorRange (value_type *bp, value_type *ep) noexcept
-            : begin_ptr_ (bp), end_ptr_ (ep)  {   }
+            : begin_ptr_(bp), end_ptr_(ep)  {   }
 
         inline bool empty () const noexcept  {
 
@@ -46,7 +45,7 @@ class   DMScu_VectorRange  {
                         ? static_cast<size_type>(end_ptr_ - begin_ptr_) + 1
                         : 0);
         }
-        inline void clear () noexcept  { begin_ptr_ = end_ptr_ = NULL; }
+        inline void clear () noexcept  { begin_ptr_ = end_ptr_ = nullptr; }
 
         inline reference operator [] (size_type i) noexcept  {
 
@@ -73,8 +72,8 @@ class   DMScu_VectorRange  {
 
     private:
 
-        value_type  *begin_ptr_;
-        value_type  *end_ptr_;
+        value_type  *begin_ptr_ {nullptr};
+        value_type  *end_ptr_ {nullptr};
 
     public:
 
@@ -92,13 +91,13 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline const_reverse_iterator () noexcept : node_ (NULL)  {   }
+                inline const_reverse_iterator () = default;
 
                 inline const_reverse_iterator (value_type const *const node)
                     noexcept : node_ (node)  {   }
 
                 inline const_reverse_iterator (const const_iterator &itr)
-                    noexcept : node_ (NULL)  {
+                    noexcept : node_ (nullptr)  {
 
                     *this = itr;
                 }
@@ -220,9 +219,9 @@ class   DMScu_VectorRange  {
 
             private:
 
-                const_pointer   node_;
+                const_pointer   node_ {nullptr};
         };
-        
+
         class iterator;
         class   const_iterator
             : public std::iterator<std::random_access_iterator_tag,
@@ -237,13 +236,13 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline const_iterator () noexcept : node_ (NULL)  {   }
+                inline const_iterator () = default;
 
                 inline const_iterator (value_type const *const node) noexcept
                     : node_ (node)  {   }
 
                 inline const_iterator (const iterator &itr) noexcept
-                    : node_ (NULL)  {
+                    : node_ (nullptr)  {
 
                     *this = itr;
                 }
@@ -364,7 +363,7 @@ class   DMScu_VectorRange  {
 
             private:
 
-                const_pointer   node_;
+                const_pointer   node_ {nullptr};
 
                 friend  class   DMScu_VectorRange::const_reverse_iterator;
         };
@@ -385,7 +384,7 @@ class   DMScu_VectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be the "end" iterator
                //
-                inline iterator () noexcept : node_ (NULL)  {   }
+                inline iterator () = default;
 
                 inline iterator (value_type *node) noexcept
                     : node_ (node)  {  }
@@ -486,7 +485,7 @@ class   DMScu_VectorRange  {
 
             private:
 
-                pointer node_;
+                pointer node_ {nullptr};
 
                 friend  class   DMScu_VectorRange::const_iterator;
         };

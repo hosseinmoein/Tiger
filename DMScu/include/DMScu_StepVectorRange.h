@@ -13,16 +13,16 @@
 // ----------------------------------------------------------------------------
 
 // This is an adopter that would make an already existing array of contiuous
-// memeory look like an STL vector.
-// NOTE: This class iterates over the voctor _not_ _one_ _element_ _at_ _a_
-//       _time_, but step elements at a time.
+// memory look like an STL vector.
+// NOTE: This class iterates over the voctor not one _element_ at a
+//       time, but step elements at a time.
 //
-template <class cu_TYPE>
+template <typename T>
 class   DMScu_StepVectorRange  {
 
     public:
 
-        typedef cu_TYPE                 value_type;
+        typedef T                       value_type;
         typedef unsigned    int         size_type;
         typedef value_type *            pointer;
         typedef const value_type *      const_pointer;
@@ -34,8 +34,7 @@ class   DMScu_StepVectorRange  {
 
     public:
 
-        inline DMScu_StepVectorRange () noexcept
-            : begin_ptr_ (NULL), end_ptr_ (NULL), step_size_ (0)  {   }
+        inline DMScu_StepVectorRange () = default;
         inline DMScu_StepVectorRange (value_type *bp,
                                       value_type *ep,
                                       size_type step)
@@ -74,7 +73,7 @@ class   DMScu_StepVectorRange  {
         }
         inline void clear () noexcept  {
 
-            begin_ptr_ = end_ptr_ = NULL;
+            begin_ptr_ = end_ptr_ = nullptr;
             step_size_ = 0;
         }
 
@@ -104,9 +103,9 @@ class   DMScu_StepVectorRange  {
 
     private:
 
-        value_type  *begin_ptr_;
-        value_type  *end_ptr_;
-        size_type   step_size_;
+        value_type  *begin_ptr_ {nullptr};
+        value_type  *end_ptr_ {nullptr};
+        size_type   step_size_ {0};
 
     public:
 
@@ -124,9 +123,7 @@ class   DMScu_StepVectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be an "undefined" iterator
                //
-                inline const_iterator () noexcept
-                    : node_ (NULL), step_ (0)  {   }
-
+                inline const_iterator () = default;
                 inline const_iterator (value_type const *node,
                                        size_type step) noexcept
                     : node_ (node), step_ (step)  {   }
@@ -137,7 +134,7 @@ class   DMScu_StepVectorRange  {
                 }
 
                 inline const_iterator (const iterator &itr) noexcept
-                    : node_ (NULL)  {
+                    : node_ (nullptr)  {
 
                     *this = itr;
                 }
@@ -270,8 +267,8 @@ class   DMScu_StepVectorRange  {
 
             private:
 
-                const_pointer   node_;
-                size_type       step_;
+                const_pointer   node_ {nullptr};
+                size_type       step_ {0};
         };
 
        // This iterator contains only one pointer. Like STL iterators,
@@ -290,8 +287,7 @@ class   DMScu_StepVectorRange  {
                // NOTE: The constructor with no argument initializes
                //       the iterator to be an "undefined" iterator
                //
-                inline iterator () noexcept : node_ (NULL), step_ (0)  {   }
-
+                inline iterator () = default;
                 inline iterator (value_type *node, size_type step) noexcept
                     : node_ (node), step_ (step)  {  }
 
@@ -406,8 +402,8 @@ class   DMScu_StepVectorRange  {
 
             private:
 
-                pointer     node_;
-                size_type   step_;
+                pointer     node_ {nullptr};
+                size_type   step_ {0};
 
                 friend  class   DMScu_StepVectorRange::const_iterator;
         };
