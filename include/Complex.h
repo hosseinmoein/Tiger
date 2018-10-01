@@ -90,6 +90,23 @@ class   Complex  {
             return (*this);
         }
 
+       // Transforms and returns the complex number to a new complex number
+       // by running func().
+       //
+        template<typename F>
+        inline Complex transform(F &func) const  { return (func(*this)); }
+
+       // Transforms the complex number to a new complex number,
+       // by running func().
+       //
+        template<typename F>
+        inline void self_transform(F &func) { *this = func(*this); }
+
+       // Runs func() on the complex number which returns true or false
+       //
+        template<typename F>
+        inline bool filter(F &func) const  { return (func(*this)); }
+
         inline Complex conjugate () const noexcept  {
 
             return (Complex (real (), -imaginary ()));

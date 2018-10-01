@@ -1,4 +1,4 @@
-/// Hossein Moein
+// Hossein Moein
 // February 11, 2018
 // Copyright (C) 2018-2019 Hossein Moein
 // Distributed under the BSD Software License (see file License)
@@ -7,6 +7,7 @@
 
 #include <DMScu_MathOperators.h>
 
+#include <Complex.h>
 #include <Matrix.h>
 #include <MathOperators.h>
 
@@ -1549,6 +1550,33 @@ int main (int argCnt, char *argVctr [])  {
             posvec * ~totretvec - dmat1 * (posvec * sigma * ~posvec);
 
         dmat5.dump (std::cout) << std::endl;
+
+        std::cout.precision (pre);
+    }
+
+    {
+        const   int pre = std::cout.precision (10);
+
+        std::cout << "\nTesting Complex ...\n" << std::endl;
+
+        Complex<double> c1(20, 5);
+        Complex<double> c2(-3, -40);
+
+        std::cout << "c1 = " << c1 << std::endl;
+        std::cout << "c2 = " << c2 << std::endl;
+
+        auto    filter_func = [](const Complex<double> &cpx) {
+            return (cpx.real() > 0);
+        };
+        auto    trans_func = [](const Complex<double> &cpx) {
+            const Complex<double>   local_c(cpx.real() * 10, cpx.imaginary());
+            return (local_c);
+        };
+
+        std::cout << "c1 filtered = " << c1.filter(filter_func) << std::endl;
+        std::cout << "c2 filtered = " << c2.filter(filter_func) << std::endl;
+        std::cout << "c2 transformed = "
+                  << c2.transform(trans_func) << std::endl;
 
         std::cout.precision (pre);
     }
