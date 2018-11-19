@@ -108,8 +108,8 @@ hypot__<long double> (long double x, long double y) noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-const   typename Matrix<BASE, TYPE>::value_type
-    Matrix<BASE, TYPE>::EPSILON_ = pow__ (value_type(2.0), value_type(-52.0));
+const typename Matrix<BASE, TYPE>::value_type Matrix<BASE, TYPE>::EPSILON_ =
+    pow__ (value_type(2.0), value_type(-52.0));
 
 // ----------------------------------------------------------------------------
 
@@ -176,7 +176,7 @@ Matrix<BASE, TYPE>::invert ()  {
 
     tmp.identity ();
     for (size_type r = 0; r < BaseClass::rows (); ++r)  {
-        const   size_type   indx = ppivot_ (r);
+        const size_type indx = ppivot_ (r);
 
         if (indx == BaseClass::_NOPOS)
             throw Singular ();
@@ -185,7 +185,7 @@ Matrix<BASE, TYPE>::invert ()  {
             for (size_type c = 0; c < BaseClass::columns (); ++c)
                 std::swap (tmp (r, c), tmp (indx, c));
 
-        const   value_type  diag = BaseClass::at (r, r);
+        const value_type    diag = BaseClass::at (r, r);
 
         for (size_type c = 0; c < BaseClass::columns (); ++c)  {
             BaseClass::at (r, c) /= diag;
@@ -194,7 +194,7 @@ Matrix<BASE, TYPE>::invert ()  {
 
         for (size_type rr = 0; rr < BaseClass::rows (); ++rr)
             if (rr != r)  {
-                const   value_type  off_diag = BaseClass::at (rr, r);
+                const value_type    off_diag = BaseClass::at (rr, r);
 
                 for (size_type c = 0; c < BaseClass::columns (); ++c)  {
                     BaseClass::at (rr, c) -= off_diag * BaseClass::at (r, c);
@@ -229,13 +229,13 @@ Matrix<BASE, TYPE>::rref (size_type &rank) noexcept  {
         if (r >= BaseClass::columns () || ppivot_ (r) == BaseClass::_NOPOS)
             break;
 
-        const    value_type  diag = BaseClass::at (r, r);
+        const value_type    diag = BaseClass::at (r, r);
 
         for (size_type c = r; c < BaseClass::columns (); ++c)
             BaseClass::at (r, c) /= diag;
 
         for (size_type rr = r + 1; rr < BaseClass::rows (); ++rr)  {
-            const   value_type  below_diag = BaseClass::at (rr, r);
+            const value_type    below_diag = BaseClass::at (rr, r);
 
             for (size_type c = r; c < BaseClass::columns (); ++c)
                 BaseClass::at (rr, c) -= below_diag * BaseClass::at (r, c);
@@ -282,8 +282,7 @@ template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 Matrix<BASE, TYPE>::identity () {
 
-    const   size_type   dem =
-        std::min (BaseClass::rows (), BaseClass::columns ());
+    const size_type dem = std::min (BaseClass::rows (), BaseClass::columns ());
 
     BaseClass::resize (dem, dem);
     for (size_type r = 0; r < BaseClass::rows (); ++r)
@@ -318,7 +317,7 @@ Matrix<BASE, TYPE>::determinant () const {
     value_type   result (1.0);
 
     for (size_type r = 0; r < BaseClass::rows (); ++r)  {
-        const   size_type   indx = tmp.ppivot_ (r);
+        const size_type indx = tmp.ppivot_ (r);
 
         if (indx == BaseClass::_NOPOS)
             return (value_type(0.0));
@@ -326,11 +325,11 @@ Matrix<BASE, TYPE>::determinant () const {
         if (indx != 0)
             result = -result;
 
-        const   value_type  diag = tmp (r, r);
+        const value_type    diag = tmp (r, r);
 
         result *= diag;
         for (size_type rr = r + 1; rr < BaseClass::rows (); ++rr)  {
-            const   value_type  piv = tmp (rr, r) / diag;
+            const value_type    piv = tmp (rr, r) / diag;
 
             for (size_type c = r + 1; c < BaseClass::columns (); ++c)
                 tmp (rr, c) -= piv * tmp (r, c);
@@ -407,7 +406,7 @@ inline Matrix<BASE, TYPE>
 Matrix<BASE, TYPE>::
 covariance (bool is_unbiased) const {
 
-    const   value_type   denom =
+    const value_type    denom =
         is_unbiased ? BaseClass::rows () - 1 : BaseClass::rows ();
 
     if (denom <= value_type(0.0))
@@ -451,8 +450,8 @@ template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE>
 Matrix<BASE, TYPE>::correlation () const {
 
-    const   Matrix   tmp = covariance ();
-    Matrix           sol (tmp.rows (), tmp.columns ());
+    const Matrix    tmp = covariance ();
+    Matrix          sol (tmp.rows (), tmp.columns ());
 
     for (size_type c = 0; c < sol.columns (); ++c)
         for (size_type r = c; r < sol.rows (); ++r)
@@ -704,8 +703,8 @@ Matrix<BASE, TYPE>::power (value_type n, bool is_diag) {
     else  {
         Matrix  eigenvalues;
         Matrix  eigenvectors;
- 
-        eigen_space (eigenvalues, eigenvectors, true); 
+
+        eigen_space (eigenvalues, eigenvectors, true);
 
         Matrix   diag_evals (BaseClass::rows (), BaseClass::columns ());
 
@@ -726,7 +725,7 @@ template<template<class T> class BASE, class TYPE>
 inline void Matrix<BASE, TYPE>::
 svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
 
-    const   size_type   min_dem =
+    const size_type min_dem =
         std::min (BaseClass::rows (), BaseClass::columns ());
 
     if (min_dem < 3)
@@ -740,9 +739,9 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
                                    BaseClass::columns ());
     Matrix                  imagi (1, BaseClass::columns ()); // Imaginary part
     std::vector<value_type> sandbox (BaseClass::rows ());
-    const   size_type       min_col_cnt =
+    const size_type         min_col_cnt =
         std::min (BaseClass::rows () - 1, BaseClass::columns ());
-    const   size_type       max_row_cnt =
+    const size_type         max_row_cnt =
         std::max(0U, std::min(BaseClass::columns () - 2, BaseClass::rows ()));
 
    // Reduce A to bidiagonal form, storing the diagonal elements
@@ -829,7 +828,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
                         sandbox [r] += imagi (0, cc) * self_tmp (r, cc);
 
                 for (size_type cc = c + 1; cc < BaseClass::columns (); ++cc)  {
-                    const   value_type  t = -imagi (0, cc) / imagi (0, c + 1);
+                    const value_type    t = -imagi (0, cc) / imagi (0, c + 1);
 
                     for (size_type r = c + 1; r < BaseClass::rows (); ++r)
                         self_tmp (r, cc) += t * sandbox [r];
@@ -910,7 +909,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
         v_tmp (c, c) = value_type(1.0);
     }
 
-    const   size_type   pp = p - 1;
+    const size_type pp = p - 1;
 
    // Main iteration loop for the singular values.
    //
@@ -950,7 +949,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
                 if (ks == c)
                     break;
 
-                const   value_type  t =
+                const value_type    t =
                     ks != p ? abs__ (imagi (0, ks)) : value_type(0.0) +
                     ks != c + value_type(1.0)
                         ? abs__ (imagi (0, ks - 1))
@@ -1036,7 +1035,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
 
                // Calculate the shift.
                //
-                const   value_type  scale =
+                const value_type    scale =
                     std::max (
                         std::max (
                             std::max (
@@ -1045,15 +1044,15 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
                                 abs__ (imagi (0, p - 2))),
                             abs__ (s_tmp [c])),
                         abs__ (imagi (0, c)));
-                const   value_type  sp = s_tmp [p - 1] / scale;
-                const   value_type  spm1 = s_tmp [p - 2] / scale;
-                const   value_type  epm1 = imagi (0, p - 2) / scale;
-                const   value_type  sk = s_tmp [c] / scale;
-                const   value_type  ek = imagi (0, c) / scale;
-                const   value_type  b =
+                const value_type    sp = s_tmp [p - 1] / scale;
+                const value_type    spm1 = s_tmp [p - 2] / scale;
+                const value_type    epm1 = imagi (0, p - 2) / scale;
+                const value_type    sk = s_tmp [c] / scale;
+                const value_type    ek = imagi (0, c) / scale;
+                const value_type    b =
                     ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) /
                     value_type(2.0);
-                const   value_type  dd = (sp * epm1) * (sp * epm1);
+                const value_type    dd = (sp * epm1) * (sp * epm1);
                 value_type          shift (0.0);
 
                 if (b != value_type(0.0) || dd != value_type(0.0))  {
@@ -1517,7 +1516,7 @@ Matrix<BASE, TYPE>::is_orthogonal () const  {
     if (! is_square ())
         return (false);
 
-    const   Matrix   tmp = *this * ~ *this;
+    const Matrix    tmp = *this * ~ *this;
 
     return (tmp.is_identity ());
 }
@@ -1553,7 +1552,7 @@ Matrix<BASE, TYPE>::ppivot_ (size_type the_row) noexcept  {
     value_type  max_value (-1.0);
 
     for (size_type r = the_row; r < BaseClass::rows (); ++r)  {
-        const   value_type  tmp = abs__ (BaseClass::at (r, the_row));
+        const value_type    tmp = abs__ (BaseClass::at (r, the_row));
 
         if (tmp > max_value && tmp != value_type(0.0))  {
             max_value = tmp;
@@ -1610,7 +1609,7 @@ tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
                 h += e_vals (0, c) * e_vals (0, c);
             }
 
-            const   value_type  &f = e_vals (0, r - 1);
+            const value_type    &f = e_vals (0, r - 1);
             value_type          g =
                 f > value_type(0.0) ? -sqrt__ (h) :  sqrt__ (h);
 
@@ -1624,7 +1623,7 @@ tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
            // Apply similarity transformation to remaining columns.
            //
             for (size_type c = 0; c < r; ++c)  {
-                const   value_type  &ff = e_vals (0, c);
+                const value_type    &ff = e_vals (0, c);
 
                 e_vecs (c, r) = ff;
                 g = imagi (0, c) + e_vecs (c, c) * ff;
@@ -1643,7 +1642,7 @@ tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
                 ff += imagi (0, c) * e_vals (0, c);
             }
 
-            const   value_type  hh = ff / (h + h);
+            const value_type    hh = ff / (h + h);
 
             for (size_type c = 0; c < r; ++c)
                 imagi (0, c) -= hh * e_vals (0, c);
@@ -1667,7 +1666,7 @@ tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
         e_vecs (e_vecs.rows () - 1, r) = e_vecs (r, r);
         e_vecs (r, r) = value_type(1.0);
 
-        const   value_type  &h = e_vals (0, r + 1);
+        const value_type    &h = e_vals (0, r + 1);
 
         if (h != value_type(0.0))  {
             for (size_type c = 0; c <= r; ++c)
@@ -1746,7 +1745,7 @@ diagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
                 e_vals (0, c) = imagi (0, c) / (p + dis);
                 e_vals (0, c + 1) = imagi (0, c) * (p + dis);
 
-                const   value_type  dl1 = e_vals (0, c + 1);
+                const value_type    dl1 = e_vals (0, c + 1);
                 value_type          h = g - e_vals (0, c);
 
                 for (size_type cc = c + 2; cc < e_vecs.columns (); ++cc)
@@ -1833,7 +1832,7 @@ red_to_hessenberg_ (MAT &e_vecs, MAT &hess_form) noexcept  {
                 h += ortho (0, cc) * ortho (0, cc);
             }
 
-            const   value_type  g =
+            const value_type    g =
                 ortho (0, c) > value_type(0.0) ? -sqrt__ (h) : sqrt__ (h);
 
             h -= ortho (0, c) * g;
@@ -1964,7 +1963,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
             hess_form (n, n) += exshift;
             hess_form (n - 1, n - 1) += exshift;
 
-            const   value_type  &xx = hess_form (n, n);
+            const value_type    &xx = hess_form (n, n);
 
             if (q >= value_type(0.0))  {  // Real pair
                 z = p >= value_type(0.0) ? p + z : p - z;
@@ -1977,7 +1976,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
                 imagi (0, n - 1) = value_type(0.0);
                 imagi (0, n) = value_type(0.0);
 
-                const   value_type  &cref = hess_form (n, n - 1);
+                const value_type    &cref = hess_form (n, n - 1);
 
                 s = abs__ (cref) + abs__ (z);
                 p = cref / s;
@@ -1989,7 +1988,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
                // Row modification
                //
                 for (size_type c = n - 1; c < e_vecs.columns (); ++c)  {
-                    const   value_type  &cref = hess_form (n - 1, c);
+                    const value_type    &cref = hess_form (n - 1, c);
 
                     hess_form (n - 1, c) = q * cref + p * hess_form (n, c);
                     hess_form (n, c) = q * hess_form (n, c) - p * cref;
@@ -1998,7 +1997,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
                // Column modification
                //
                 for (size_type r = 0; r <= n; ++r)  {
-                    const   value_type  &cref = hess_form (r, n - 1);
+                    const value_type    &cref = hess_form (r, n - 1);
 
                     hess_form (r, n - 1) = q * cref + p * hess_form (r, n);
                     hess_form (r, n) = q * hess_form (r, n) - p * cref;
@@ -2007,7 +2006,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
                // Accumulate transformations
                //
                 for (size_type r = 0; r <= e_vecs.rows () - 1; ++r)  {
-                    const   value_type  &cref = e_vecs (r, n - 1);
+                    const value_type    &cref = e_vecs (r, n - 1);
 
                     e_vecs (r, n - 1) = q * cref + p * e_vecs (r, n);
                     e_vecs (r, n) = q * e_vecs (r, n) - p * cref;
@@ -2073,7 +2072,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
             int m = n - 2;
 
             while (m >= l)  {
-                const   value_type  &cref = hess_form (m, m);
+                const value_type    &cref = hess_form (m, m);
 
                 oo = x - cref;
                 s = y - cref;
@@ -2110,7 +2109,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
            // Double QR step involving rows l to n and columns m to n
            //
             for (size_type k = m; k <= n - 1; ++k)  {
-                const   bool    notlast = k != n - 1;
+                const bool  notlast = k != n - 1;
 
                 if (k != m)  {
                     p = hess_form (k, k - 1);
@@ -2206,7 +2205,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
             hess_form (c, c) = value_type(1.0);
 
             for (int r = c - 1; r >= 0; --r)  {
-                const   value_type  ww = hess_form (r, r) - p;
+                const value_type    ww = hess_form (r, r) - p;
 
                 oo = value_type(0.0);
                 for (int cc = l; cc <= c; ++cc)
@@ -2227,8 +2226,8 @@ hessenberg_to_schur_ (MAT &e_vecs,
                         q = (e_vals (0, r) - p) * (e_vals (0, r) - p) +
                             imagi (0, r) * imagi (0, r);
 
-                        const   value_type  &xx = hess_form (r, r + 1);
-                        const   value_type  tt = (xx * s - z * oo) / q;
+                        const value_type    &xx = hess_form (r, r + 1);
+                        const value_type    tt = (xx * s - z * oo) / q;
 
                         hess_form (r, c) = tt;
 
@@ -2240,7 +2239,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
 
                    // Overflow control
                    //
-                    const   value_type  t = abs__ (hess_form (r, c));
+                    const value_type    t = abs__ (hess_form (r, c));
 
                     if (EPSILON_ * t * t > value_type(1.0))
                         for (size_type rr = r; rr <= c; ++rr)
@@ -2282,7 +2281,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
                     sa += hess_form (r, cc) * hess_form (cc, c);
                 }
 
-                const   value_type  ww = hess_form (r, r) - p;
+                const value_type    ww = hess_form (r, r) - p;
 
                 if (imagi (0, r) < value_type(0.0))  {
                     z = ww;
@@ -2298,9 +2297,9 @@ hessenberg_to_schur_ (MAT &e_vecs,
                         hess_form (r, c) = cdivi;
                     }
                     else  {  // Solve complex equations
-                        const   value_type  &xx = hess_form (r, r + 1);
-                        const   value_type  &yy = hess_form (r + 1, r);
-                        const   value_type  vi =
+                        const value_type    &xx = hess_form (r, r + 1);
+                        const value_type    &yy = hess_form (r + 1, r);
+                        const value_type    vi =
                             (e_vals (0, r) - p) * value_type(2.0) * q;
                         value_type          vr =
                             (e_vals (0, r) - p) * (e_vals (0, r) - p) +
@@ -2348,7 +2347,7 @@ hessenberg_to_schur_ (MAT &e_vecs,
 
                    // Overflow control
                    //
-                    const   value_type  t =
+                    const value_type    t =
                         std::max (abs__ (hess_form (r, c - 1)),
                                   abs__ (hess_form (r, c)));
 
@@ -2393,15 +2392,15 @@ cdiv_ (value_type xr,
        value_type &cdivi) noexcept  {
 
     if (abs__ (yr) > abs__ (yi))  {
-        const  value_type   r = yi / yr;
-        const  value_type   d = yr + r * yi;
+        const value_type    r = yi / yr;
+        const value_type    d = yr + r * yi;
 
         cdivr = (xr + r * xi) / d;
         cdivi = (xi - r * xr) / d;
     }
     else  {
-        const  value_type   r = yr / yi;
-        const  value_type   d = yi + r * yr;
+        const value_type    r = yr / yi;
+        const value_type   d = yi + r * yr;
 
         cdivr = (r * xr + xi) / d;
         cdivi = (r * xi - xr) / d;
