@@ -32,11 +32,6 @@ class   SymmMatrixBase : public DenseMatrixStorage<T>  {
         typedef typename BaseClass::pointer         pointer;
         typedef typename BaseClass::const_pointer   const_pointer;
 
-        typedef typename BaseClass::Exception       Exception;
-        typedef typename BaseClass::NotSquare       NotSquare;
-        typedef typename BaseClass::Singular        Singular;
-        typedef typename BaseClass::NotSolvable     NotSolvable;
-
         typedef SymmMatrixBase<value_type>          SelfType;
 
     protected:

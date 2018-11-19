@@ -3,8 +3,7 @@
 // Copyright (C) 2018-2019 Hossein Moein
 // Distributed under the BSD Software License (see file License)
 
-#ifndef _INCLUDED_Complex_h
-#define _INCLUDED_Complex_h
+#pragma once
 
 #include <math.h>
 #include <iostream>
@@ -55,189 +54,186 @@ namespace hmma
 template<class T = double>
 class   Complex  {
 
-    public:
+public:
 
-        typedef T   value_type;
+    using value_type = T;
 
-    private:
+private:
 
-        value_type  real_;
-        value_type  imaginary_;
+    value_type  real_ { };
+    value_type  imaginary_ { };
 
-    public:
+public:
 
-        inline Complex () noexcept : real_ (), imaginary_ ()  {   }
-        inline Complex (const value_type &r, const value_type &i) noexcept
-            : real_ (r), imaginary_ (i)  {   }
+    // inline Complex () = default;
+    inline Complex (const value_type &r, const value_type &i) noexcept
+        : real_ (r), imaginary_ (i)  {   }
 
-        inline const value_type &real () const noexcept  { return (real_); }
-        inline value_type &real () noexcept  { return (real_); }
-        inline const value_type &imaginary () const noexcept  {
+    inline const value_type &real () const noexcept  { return (real_); }
+    inline value_type &real () noexcept  { return (real_); }
+    inline const value_type &imaginary () const noexcept  {
 
-            return (imaginary_);
-        }
-        inline value_type &imaginary () noexcept  { return (imaginary_); }
+        return (imaginary_);
+    }
+    inline value_type &imaginary () noexcept  { return (imaginary_); }
 
-       // NOTE: Mathematically speaking this assignment makes no sense. But
-       //       I define it here for practical reasons. For example, I want
-       //       the following two lines to live side by side in harmony.
-       //           double           d = 0;
-       //           Complex<double>  c = 0;
+   // NOTE: Mathematically speaking this assignment makes no sense. But
+   //       I define it here for practical reasons. For example, I want
+   //       the following two lines to live side by side in harmony.
+   //           double           d = 0;
+   //           Complex<double>  c = 0;
+   //
+    inline Complex &operator = (const value_type &rhs) noexcept  {
+
+        real () = imaginary () = rhs;
+        return (*this);
+    }
+
+   // Transforms and returns the complex number to a new complex number
+   // by running func().
+   //
+    template<typename F>
+    inline Complex transform(F &func) const  { return (func(*this)); }
+
+   // Transforms the complex number to a new complex number,
+   // by running func().
+   //
+    template<typename F>
+    inline void self_transform(F &func) { *this = func(*this); }
+
+   // Runs func() on the complex number which returns true or false
+   //
+    template<typename F>
+    inline bool filter(F &func) const  { return (func(*this)); }
+
+    inline Complex conjugate () const noexcept  {
+
+        return (Complex (real (), -imaginary ()));
+    }
+
+    inline value_type norm () const noexcept  {
+
+        return (real () * real () + imaginary () * imaginary ());
+    }
+
+   // Complex absolute value also called Modulus, also called magnitude,
+   // also called the distance from the origin
+   //
+    inline value_type cabs () const noexcept { return (::sqrt (norm ())); }
+
+    inline Complex sqrt () const noexcept  {
+
+        const value_type    y = ::sqrt ((cabs () - real ()) / 2.0);
+
+       // NOTE: We have two roots: (+/-x + yi)
        //
-        inline Complex &operator = (const value_type &rhs) noexcept  {
+        return (Complex (::fabs (imaginary () / (2.0 * y)), y));
+    }
 
-            real () = imaginary () = rhs;
-            return (*this);
-        }
+   // The angle or phase or argument of the complex number a + bi is the
+   // angle, measured in radians, from the point 1 + 0i to a + bi, with
+   // counterclockwise denoting positive angle. The angle of a complex
+   // number c = a + bi is denoted Lc:
+   //     Lc = arctan(b / a):
+   //
+   // A few comments are in order. First, angles that differ by a
+   // multiple of 2PI are considered equal. Second, the formula above uses
+   // the four quadrant arctan (often expressed as atan2(b, a) in computer
+   // languages). The angle of the complex number 0 is undefined.
+   //
+    inline value_type angle () const noexcept  {
 
-       // Transforms and returns the complex number to a new complex number
-       // by running func().
-       //
-        template<typename F>
-        inline Complex transform(F &func) const  { return (func(*this)); }
+        return (::atan2 (imaginary (), real ()));
+    }
 
-       // Transforms the complex number to a new complex number,
-       // by running func().
-       //
-        template<typename F>
-        inline void self_transform(F &func) { *this = func(*this); }
+   // e raised to the power of (a + bi)
+   //
+    inline Complex exp () const noexcept  {
 
-       // Runs func() on the complex number which returns true or false
-       //
-        template<typename F>
-        inline bool filter(F &func) const  { return (func(*this)); }
+        return (Complex (::exp (real ()) * ::cos (imaginary ()),
+                         ::exp (real ()) * ::sin (imaginary ())));
+    }
 
-        inline Complex conjugate () const noexcept  {
+   // We define the natural logarithm of a (nonzero) complex number z as
+   //     ln(z) = ln(|z|) + i * angle()
+   // so that e^ln(z) = z.
+   //
+   // NOTE: The imaginary component of ln(z) is ambiguous; we can freely
+   //       add any multiple of 2PI. Thus we can say that
+   //       ln(1 - i) = ln(sqrt(2)) - i(PI/4 + 2*PI*k)
+   //       where k is any integer 0, +/-1, +/-2, ...
+   // k == 0 is called the principal logarithm
+   //
+    inline Complex ln (int k = 0) const noexcept  {
 
-            return (Complex (real (), -imaginary ()));
-        }
+        return (Complex (::log (cabs ()),
+                         angle () + k * 2.0 * 3.14159265358979323846));
+    }
 
-        inline value_type norm () const noexcept  {
+   // a + bi raised to the power of c + di
+   //
+    inline Complex pow (const Complex &n) const noexcept  {
 
-            return (real () * real () + imaginary () * imaginary ());
-        }
+        const value_type    ca = cabs ();
+        const value_type    an = angle ();
+        const value_type    v =
+            ::exp (n.real () * ::log (ca) - n.imaginary () * an);
 
-       // Complex absolute value also called Modulus, also called magnitude,
-       // also called the distance from the origin
-       //
-        inline value_type cabs () const noexcept { return (::sqrt (norm ())); }
+        return (Complex (
+            v * ::cos (n.real () * an + n.imaginary () * ::log (ca)),
+            v * ::sin (n.real () * an + n.imaginary () * ::log (ca))));
+    }
 
-        inline Complex sqrt () const noexcept  {
+   // a + bi raised to the power real number n
+   //
+    inline Complex pow (const value_type &n) const noexcept  {
 
-            const   value_type  y = ::sqrt ((cabs () - real ()) / 2.0);
+        const value_type    an = angle ();
+        const value_type    v = ::exp (n * ::log (cabs ()));
 
-           // NOTE: We have two roots: (+/-x + yi)
-           //
-            return (Complex (::fabs (imaginary () / (2.0 * y)), y));
-        }
+        return (Complex (v * ::cos (n * an), v * ::sin (n * an)));
+    }
 
-       // The angle or phase or argument of the complex number a + bi is the
-       // angle, measured in radians, from the point 1 + 0i to a + bi, with
-       // counterclockwise denoting positive angle. The angle of a complex
-       // number c = a + bi is denoted Lc:
-       //     Lc = arctan(b / a):
-       //
-       // A few comments are in order. First, angles that differ by a
-       // multiple of 2PI are considered equal. Second, the formula above uses
-       // the four quadrant arctan (often expressed as atan2(b, a) in computer
-       // languages). The angle of the complex number 0 is undefined.
-       //
-        inline value_type angle () const noexcept  {
+    inline Complex &operator ++ () noexcept  {    // ++Prefix
 
-            return (::atan2 (imaginary (), real ()));
-        }
+        real () += 1;
+        imaginary () += 1;
+        return (*this);
+    }
+    inline Complex operator ++ (int) noexcept  {  // Postfix++
 
-       // e raised to the power of (a + bi)
-       //
-        inline Complex exp () const noexcept  {
+        const Complex   slug = *this;
 
-            return (Complex (::exp (real ()) * ::cos (imaginary ()),
-                             ::exp (real ()) * ::sin (imaginary ())));
-        }
+        real () += 1;
+        imaginary () += 1;
+        return (slug);
+    }
 
-       // We define the natural logarithm of a (nonzero) complex number z as
-       //     ln(z) = ln(|z|) + i * angle()
-       // so that e^ln(z) = z.
-       //
-       // NOTE: The imaginary component of ln(z) is ambiguous; we can freely
-       //       add any multiple of 2PI. Thus we can say that
-       //       ln(1 - i) = ln(sqrt(2)) - i(PI/4 + 2*PI*k)
-       //       where k is any integer 0, +/-1, +/-2, ...
-       // k == 0 is called the principal logarithm
-       //
-        inline Complex ln (int k = 0) const noexcept  {
+    inline Complex &operator -- () noexcept  {    // --Prefix
 
-            return (Complex (::log (cabs ()),
-                             angle () + k * 2.0 * 3.14159265358979323846));
-        }
+        real () -= 1;
+        imaginary () -= 1;
+        return (*this);
+    }
+    inline Complex operator -- (int) noexcept  {  // Postfix--
 
-       // a + bi raised to the power of c + di
-       //
-        inline Complex pow (const Complex &n) const noexcept  {
+        const Complex   slug = *this;
 
-            const   value_type  ca = cabs ();
-            const   value_type  an = angle ();
-            const   value_type  v =
-                ::exp (n.real () * ::log (ca) - n.imaginary () * an);
+        real () -= 1;
+        imaginary () -= 1;
+        return (slug);
+    }
 
-            return (Complex (
-                v * ::cos (n.real () * an + n.imaginary () * ::log (ca)),
-                v * ::sin (n.real () * an + n.imaginary () * ::log (ca))));
-        }
+    inline Complex &operator + () noexcept  { return (*this); }
+    inline Complex operator - () noexcept  {
 
-       // a + bi raised to the power real number n
-       //
-        inline Complex pow (const value_type &n) const noexcept  {
+        return (Complex (-real (), -imaginary ()));
+    }
+    inline const Complex &operator + () const noexcept { return (*this); }
+    inline Complex operator - () const noexcept  {
 
-            const   value_type  an = angle ();
-            const   value_type  v = ::exp (n * ::log (cabs ()));
-
-            return (Complex (v * ::cos (n * an), v * ::sin (n * an)));
-        }
-
-        inline Complex &operator ++ () noexcept  {    // ++Prefix
-
-            real () += 1;
-            imaginary () += 1;
-            return (*this);
-        }
-        inline Complex operator ++ (int) noexcept  {  // Postfix++
-
-            const   Complex  slug = *this;
-
-            real () += 1;
-            imaginary () += 1;
-            return (slug);
-        }
-
-        inline Complex &operator -- () noexcept  {    // --Prefix
-
-            real () -= 1;
-            imaginary () -= 1;
-            return (*this);
-        }
-        inline Complex operator -- (int) noexcept  {  // Postfix--
-
-            const   Complex  slug = *this;
-
-            real () -= 1;
-            imaginary () -= 1;
-            return (slug);
-        }
-
-        inline Complex &operator + () noexcept  { return (*this); }
-        inline Complex operator - () noexcept  {
-
-            return (Complex (-real (), -imaginary ()));
-        }
-        inline const Complex &operator + () const noexcept {
-
-            return (*this);
-        }
-        inline Complex operator - () const noexcept  {
-
-            return (Complex (-real (), -imaginary ()));
-        }
+        return (Complex (-real (), -imaginary ()));
+    }
 };
 
 // ----------------------------------------------------------------------------
@@ -488,10 +484,6 @@ inline bool operator >= (const Complex<T> &lhs, const Complex<T> &rhs)  {
 } // namespace hmma
 
 // ----------------------------------------------------------------------------
-
-#undef _INCLUDED_Complex_h
-#define _INCLUDED_Complex_h 1
-#endif  // _INCLUDED_Complex_h
 
 // Local Variables:
 // mode:C++
