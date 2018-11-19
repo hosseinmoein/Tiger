@@ -65,7 +65,7 @@ private:
 
 public:
 
-    // inline Complex () = default;
+    inline Complex () = default;
     inline Complex (const value_type &r, const value_type &i) noexcept
         : real_ (r), imaginary_ (i)  {   }
 
