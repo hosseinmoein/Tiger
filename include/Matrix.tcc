@@ -115,8 +115,7 @@ const typename Matrix<BASE, TYPE>::value_type Matrix<BASE, TYPE>::EPSILON_ =
 
 template<template<class T> class BASE, class TYPE>
 inline typename Matrix<BASE, TYPE>::reference
-Matrix<BASE, TYPE>::
-operator () (size_type r, size_type c) noexcept  {
+Matrix<BASE, TYPE>::operator () (size_type r, size_type c) noexcept  {
 
     return (BaseClass::at (r, c));
 }
@@ -125,8 +124,7 @@ operator () (size_type r, size_type c) noexcept  {
 
 template<template<class T> class BASE, class TYPE>
 inline typename Matrix<BASE, TYPE>::const_reference
-Matrix<BASE, TYPE>::
-operator () (size_type r, size_type c) const noexcept  {
+Matrix<BASE, TYPE>::operator () (size_type r, size_type c) const noexcept  {
 
     return (BaseClass::at (r, c));
 }
@@ -135,8 +133,7 @@ operator () (size_type r, size_type c) const noexcept  {
 
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::
-transpose (Matrix &that) const noexcept  {
+Matrix<BASE, TYPE>::transpose (Matrix &that) const noexcept  {
 
     // Matrix      tmp = *this;
     // size_type   count = 0;
@@ -153,8 +150,7 @@ transpose (Matrix &that) const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::transpose () noexcept  {
+inline Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::transpose () noexcept  {
 
     Matrix   tmp;
 
@@ -166,8 +162,7 @@ Matrix<BASE, TYPE>::transpose () noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::invert ()  {
+inline Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::invert ()  {
 
     if (! is_square ())
         throw NotSquare ();
@@ -210,9 +205,7 @@ Matrix<BASE, TYPE>::invert ()  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::
-inverse (Matrix &that) const {
+inline Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::inverse (Matrix &that) const {
 
     that = *this;
     return (that.invert ());
@@ -250,8 +243,7 @@ Matrix<BASE, TYPE>::rref (size_type &rank) noexcept  {
 
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::
-rref (Matrix &that, size_type &rank) const noexcept  {
+Matrix<BASE, TYPE>::rref (Matrix &that, size_type &rank) const noexcept  {
 
     that = *this;
     return (that.rref (rank));
@@ -262,9 +254,7 @@ rref (Matrix &that, size_type &rank) const noexcept  {
 // Static
 //
 template<template<class T> class BASE, class TYPE>
-Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::
-identity (Matrix &that) {
+Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::identity (Matrix &that) {
 
     if (! that.is_square ())
         throw NotSquare ();
@@ -279,8 +269,7 @@ identity (Matrix &that) {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::identity () {
+inline Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::identity () {
 
     const size_type dem = std::min (BaseClass::rows (), BaseClass::columns ());
 
@@ -344,8 +333,7 @@ Matrix<BASE, TYPE>::determinant () const {
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE> &
 Matrix<BASE, TYPE>::
-get_minor (Matrix &mmatrix, size_type drow, size_type dcol)
-    const noexcept  {
+get_minor (Matrix &mmatrix, size_type drow, size_type dcol) const noexcept  {
 
     mmatrix.resize (BaseClass::rows () - 1, BaseClass::columns () - 1);
 
@@ -369,8 +357,7 @@ get_minor (Matrix &mmatrix, size_type drow, size_type dcol)
 
 template<template<class T> class BASE, class TYPE>
 inline typename Matrix<BASE, TYPE>::value_type
-Matrix<BASE, TYPE>::
-cofactor (size_type row, size_type column) const {
+Matrix<BASE, TYPE>::cofactor (size_type row, size_type column) const {
 
     if (! is_square ())
         throw NotSquare ();
@@ -384,9 +371,7 @@ cofactor (size_type row, size_type column) const {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE> &
-Matrix<BASE, TYPE>::
-adjoint (Matrix &that) const {
+inline Matrix<BASE, TYPE> &Matrix<BASE, TYPE>::adjoint (Matrix &that) const {
 
     if (! is_square ())
         throw NotSquare ();
@@ -403,8 +388,7 @@ adjoint (Matrix &that) const {
 
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE>
-Matrix<BASE, TYPE>::
-covariance (bool is_unbiased) const {
+Matrix<BASE, TYPE>::covariance (bool is_unbiased) const {
 
     const value_type    denom =
         is_unbiased ? BaseClass::rows () - 1 : BaseClass::rows ();
@@ -447,16 +431,14 @@ covariance (bool is_unbiased) const {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline Matrix<BASE, TYPE>
-Matrix<BASE, TYPE>::correlation () const {
+inline Matrix<BASE, TYPE> Matrix<BASE, TYPE>::correlation () const {
 
     const Matrix    tmp = covariance ();
     Matrix          sol (tmp.rows (), tmp.columns ());
 
     for (size_type c = 0; c < sol.columns (); ++c)
         for (size_type r = c; r < sol.rows (); ++r)
-            sol (r, c) =
-                tmp (r, c) / (sqrt__(tmp (c, c)) * sqrt__ (tmp (r, r)));
+            sol (r, c) = tmp(r, c) / (sqrt__(tmp (c, c)) * sqrt__(tmp (r, r)));
 
    // Here I can; Fill up the other half of the, by-definition,
    // symmetric matrix
@@ -472,14 +454,12 @@ Matrix<BASE, TYPE>::correlation () const {
 
 template<template<class T> class BASE, class TYPE>
 inline Matrix<BASE, TYPE>
-Matrix<BASE, TYPE>::
-solve_se (const Matrix &rhs) const {
+Matrix<BASE, TYPE>::solve_se (const Matrix &rhs) const {
 
     if (! is_square () || BaseClass::columns () != rhs.rows ())
         throw NotSolvable ();
 
-    Matrix  tmp (BaseClass::rows (),
-                 BaseClass::columns () + rhs.columns ());
+    Matrix  tmp (BaseClass::rows (), BaseClass::columns () + rhs.columns ());
 
     for (size_type r = 0; r < BaseClass::rows (); ++r)  {
         for (size_type c = 0; c < BaseClass::columns (); ++c)
@@ -516,7 +496,7 @@ Matrix<BASE, TYPE>::norm () const noexcept  {
 
     value_type  result (0.0);
 
-    for (typename BaseClass::col_const_iterator citer = BaseClass::col_begin();
+    for (auto citer = BaseClass::col_begin();
          citer != BaseClass::col_end (); ++citer)
         result += *citer * *citer;
 
@@ -531,7 +511,7 @@ Matrix<BASE, TYPE>::max_norm () const noexcept  {
 
     value_type  result (0.0);
 
-    for (typename BaseClass::col_const_iterator citer = BaseClass::col_begin();
+    for (auto citer = BaseClass::col_begin();
          citer != BaseClass::col_end (); ++citer)
         if (abs__ (*citer) > result)
             result = abs__ (*citer);
@@ -549,7 +529,7 @@ Matrix<BASE, TYPE>::col_norm () const noexcept  {
     value_type  final_result (0.0);
     size_type   r_counter = 0;
 
-    for (typename BaseClass::col_const_iterator citer = BaseClass::col_begin();
+    for (auto citer = BaseClass::col_begin();
          citer != BaseClass::col_end (); ++citer, ++r_counter)  {
         if (r_counter == BaseClass::rows ())  {
             r_counter = 0;
@@ -590,8 +570,7 @@ Matrix<BASE, TYPE>::row_norm () const noexcept  {
 
 template<template<class T> class BASE, class TYPE>
 inline typename Matrix<BASE, TYPE>::value_type
-Matrix<BASE, TYPE>::
-condition () const {
+Matrix<BASE, TYPE>::condition () const {
 
     Matrix  inv;
 
@@ -735,8 +714,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
     Matrix                  u_tmp (BaseClass::rows (), min_dem);
     std::vector<value_type> s_tmp (std::min (BaseClass::rows () + 1,
                                              BaseClass::columns ()));
-    Matrix                  v_tmp (BaseClass::columns (),
-                                   BaseClass::columns ());
+    Matrix                  v_tmp (BaseClass::columns(), BaseClass::columns());
     Matrix                  imagi (1, BaseClass::columns ()); // Imaginary part
     std::vector<value_type> sandbox (BaseClass::rows ());
     const size_type         min_col_cnt =
@@ -923,11 +901,11 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
        // negligible elements in the s and imagi arrays.  On
        // completion the variables kase and c are set as follows.
        //
-       // kase == 1 --> if s (p) and imagi (0, c - 1) are negligible and k < p
-       // kase == 2 --> if s (c) is negligible and c < p
-       // kase == 3 --> if imagi (0, c - 1) is negligible, c < p, and
+       // case == 1 --> if s (p) and imagi (0, c - 1) are negligible and k < p
+       // case == 2 --> if s (c) is negligible and c < p
+       // case == 3 --> if imagi (0, c - 1) is negligible, c < p, and
        //               s (c), ..., s (p) are not negligible (qr step).
-       // kase == 4 --> if e (p - 1) is negligible (convergence).
+       // case == 4 --> if e (p - 1) is negligible (convergence).
        //
         for (c = p - 2; c >= -1; --c)  {
             if (c == -1)
@@ -1164,9 +1142,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
 
     size_type   row_count = 0;
 
-    for (typename std::vector<value_type>::const_iterator citer =
-             s_tmp.begin ();
-         citer != s_tmp.end (); ++citer, ++row_count)
+    for (auto citer = s_tmp.begin(); citer != s_tmp.end(); ++citer, ++row_count)
         S (row_count, full_size_S ? row_count : 0) = *citer;
 
     V.swap (v_tmp);
@@ -1177,8 +1153,7 @@ svd (Matrix &U, Matrix &S, Matrix &V, bool full_size_S) const {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline void Matrix<BASE, TYPE>::
-qrd (Matrix &Q, Matrix &R) const noexcept  {
+inline void Matrix<BASE, TYPE>::qrd (Matrix &Q, Matrix &R) const noexcept  {
 
     std::vector<value_type> r_diag (BaseClass::columns ());
     Matrix                  self_tmp = *this;
@@ -1256,8 +1231,7 @@ qrd (Matrix &Q, Matrix &R) const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline void Matrix<BASE, TYPE>::
-lud (Matrix &L, Matrix &U) const {
+inline void Matrix<BASE, TYPE>::lud (Matrix &L, Matrix &U) const {
 
     if (! is_square ())
         throw NotSquare ();
@@ -1316,8 +1290,7 @@ lud (Matrix &L, Matrix &U) const {
 
 template<template<class T> class BASE, class TYPE>
 template<class MAT>
-inline void Matrix<BASE, TYPE>::
-chod (MAT &R, bool right) const {
+inline void Matrix<BASE, TYPE>::chod (MAT &R, bool right) const {
 
     if (! is_square ())
         throw NotSolvable ();
@@ -1418,7 +1391,7 @@ inline bool Matrix<BASE, TYPE>::is_identity () const noexcept  {
 template<template<class T> class BASE, class TYPE>
 inline bool Matrix<BASE, TYPE>::is_null () const noexcept  {
 
-    for (typename BaseClass::col_const_iterator citer = BaseClass::col_begin();
+    for (auto citer = BaseClass::col_begin();
          citer != BaseClass::col_end (); ++citer)
         if (*citer != value_type(0.0))
             return (false);
@@ -1429,8 +1402,7 @@ inline bool Matrix<BASE, TYPE>::is_null () const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool Matrix<BASE, TYPE>::
-is_symmetric () const noexcept  {
+inline bool Matrix<BASE, TYPE>::is_symmetric () const noexcept  {
 
     if (BaseClass::_is_symmetric_matrix ())
         return (true);
@@ -1448,8 +1420,7 @@ is_symmetric () const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool Matrix<BASE, TYPE>::
-is_skew_symmetric () const noexcept  {
+inline bool Matrix<BASE, TYPE>::is_skew_symmetric () const noexcept  {
 
     if (! is_square ())
         return (false);
@@ -1465,8 +1436,7 @@ is_skew_symmetric () const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool
-Matrix<BASE, TYPE>::is_upper_triangular () const noexcept  {
+inline bool Matrix<BASE, TYPE>::is_upper_triangular () const noexcept  {
 
     if (! is_square ())
         return (false);
@@ -1482,8 +1452,7 @@ Matrix<BASE, TYPE>::is_upper_triangular () const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool
-Matrix<BASE, TYPE>::is_lower_triangular () const noexcept  {
+inline bool Matrix<BASE, TYPE>::is_lower_triangular () const noexcept  {
 
     if (! is_square ())
         return (false);
@@ -1510,8 +1479,7 @@ inline bool Matrix<BASE, TYPE>::is_normal () const noexcept  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool
-Matrix<BASE, TYPE>::is_orthogonal () const  {
+inline bool Matrix<BASE, TYPE>::is_orthogonal () const  {
 
     if (! is_square ())
         return (false);
@@ -1524,8 +1492,7 @@ Matrix<BASE, TYPE>::is_orthogonal () const  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline bool Matrix<BASE, TYPE>::
-is_special_orthogonal () const  {
+inline bool Matrix<BASE, TYPE>::is_special_orthogonal () const  {
 
     return (is_orthogonal () && determinant () == value_type(1.0));
 }
@@ -1533,8 +1500,7 @@ is_special_orthogonal () const  {
 // ----------------------------------------------------------------------------
 
 template<template<class T> class BASE, class TYPE>
-inline void Matrix<BASE, TYPE>::
-diagonal_power_ (value_type n)  {
+inline void Matrix<BASE, TYPE>::diagonal_power_ (value_type n)  {
 
     for (size_type c = 0; c < BaseClass::columns (); ++c)
         BaseClass::at (c, c) = pow__ (BaseClass::at (c, c), n);
@@ -1565,8 +1531,7 @@ Matrix<BASE, TYPE>::ppivot_ (size_type the_row) noexcept  {
 
     if (max_row != the_row)  {
         for (size_type c = 0; c < BaseClass::columns (); ++c)
-            std::swap (BaseClass::at (the_row, c),
-                       BaseClass::at (max_row, c));
+            std::swap (BaseClass::at (the_row, c), BaseClass::at (max_row, c));
 
         return (max_row);
     }
@@ -1611,7 +1576,7 @@ tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept  {
 
             const value_type    &f = e_vals (0, r - 1);
             value_type          g =
-                f > value_type(0.0) ? -sqrt__ (h) :  sqrt__ (h);
+                f > value_type(0.0) ? -sqrt__ (h) : sqrt__ (h);
 
             imagi (0, r) = scale * g;
             h -= f * g;
@@ -1969,9 +1934,8 @@ hessenberg_to_schur_ (MAT &e_vecs,
                 z = p >= value_type(0.0) ? p + z : p - z;
 
                 e_vals (0, n - 1) = xx + z;
-                e_vals (0, n) = z != value_type(0.0)
-                                    ? xx - w / z
-                                    : e_vals (0, n - 1);
+                e_vals (0, n) = z !=
+                    value_type(0.0) ? xx - w / z : e_vals (0, n - 1);
 
                 imagi (0, n - 1) = value_type(0.0);
                 imagi (0, n) = value_type(0.0);
@@ -2264,7 +2228,8 @@ hessenberg_to_schur_ (MAT &e_vecs,
                        -hess_form (c - 1, c),
                        hess_form (c - 1, c - 1) - p,
                        q,
-                       cdivr, cdivi);
+                       cdivr,
+                       cdivi);
                 hess_form (c - 1, c - 1) = cdivr;
                 hess_form (c - 1, c) = cdivi;
             }
@@ -2400,7 +2365,7 @@ cdiv_ (value_type xr,
     }
     else  {
         const value_type    r = yr / yi;
-        const value_type   d = yi + r * yr;
+        const value_type    d = yi + r * yr;
 
         cdivr = (r * xr + xi) / d;
         cdivi = (r * xi - xr) / d;
