@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/acuqcseoi6y19wp4?svg=true)](https://ci.appveyor.com/project/hosseinmoein/matrix)
-<!--[![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/justinjk007/Matrix)-->
+[![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/hosseinmoein/Matrix)
 
 ![Alt text](Matrix.jpeg "Matrix")
 
