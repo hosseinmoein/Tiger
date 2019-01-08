@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <future>
+
 #include <DenseMatrixBase.h>
 #include <SymmMatrixBase.h>
 
@@ -118,6 +120,12 @@ public:
    //       is O(n!), where n is the number of rows or columns.
    //
     inline value_type determinant () const; // throw (NotSquare);
+
+    inline std::future<value_type>
+    determinant_async () const  {
+
+        return (std::async(std::launch::async, &Matrix::determinant, this));
+   }
 
    // Minor of a matrix is the same matrix with the specified row
    // and column taken out.
@@ -301,14 +309,28 @@ public:
                  MAT &eigenvectors,
                  bool sort_values = false) const; // throw (NotSolvable);
 
-   // The n-th root of a diagonal matrix is another diagonal matrix with 
+    template<class MAT>
+    inline std::future<void>
+    eigen_space_async (MAT &eigenvalues,
+                       MAT &eigenvectors,
+                       bool sort_values = false) const  {
+
+        return (std::async(std::launch::async,
+                           &Matrix::eigen_space<MAT>,
+                           this,
+                           std::ref(eigenvalues),
+                           std::ref(eigenvectors),
+                           sort_values));
+    }
+
+   // The n-th root of a diagonal matrix is another diagonal matrix with
    // each element being the n-th root of the corresponding element in the
    // original matrix.
    // A non-diagonal nXn matrix A could be written as A = Uλ(U^-1).
    // Where U is the matrix of Eigen vectors and λ is the diagonal matrix
    // of Eigen values. If λ is positive then:
    // A^n = U*(λ^n)*(U^-1)
-   // 
+   //
     inline Matrix &power (Matrix &result,
                           value_type n,
                           bool is_diag) const; // throw (NotSolvable);
@@ -334,12 +356,12 @@ public:
    // Singular Value Decomposition of M.
    //
    //  -- The matrix V thus contains a set of orthonormal "input" or
-   //     "analysing" basis vector directions for M 
+   //     "analysing" basis vector directions for M
    //  -- The matrix U contains a set of orthonormal "output" basis vector
-   //     directions for M 
+   //     directions for M
    //  -- The matrix Σ contains the singular values, which can be thought
    //     of as scalar "gain controls" by which each corresponding input
-   //     is multiplied to give a corresponding output. 
+   //     is multiplied to give a corresponding output.
    //
    // A common convention is to order the values Σi,i in non-increasing
    // fashion. In this case, the diagonal matrix Σ is uniquely determined
@@ -482,7 +504,7 @@ private:
    //
     template<class MAT>
     static inline void
-	tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept;
+    tridiagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept;
 
    // Symmetric tridiagonal QL algorithm.
    //
@@ -492,7 +514,7 @@ private:
    //
     template<class MAT>
     static inline void
-	diagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept;
+    diagonalize_ (MAT &e_vecs, MAT &e_vals, MAT &imagi) noexcept;
 
    // Nonsymmetric reduction to Hessenberg form.
    //
@@ -502,7 +524,7 @@ private:
    //
     template<class MAT>
     static inline void
-	red_to_hessenberg_ (MAT &e_vecs, MAT &hess_form) noexcept;
+    red_to_hessenberg_ (MAT &e_vecs, MAT &hess_form) noexcept;
 
    // Nonsymmetric reduction from Hessenberg to real Schur form.
    //

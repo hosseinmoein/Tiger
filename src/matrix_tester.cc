@@ -298,7 +298,11 @@ int main (int argCnt, char *argVctr [])  {
         dmat (2, 0) = 3.0;
         dmat (2, 1) = 1.0;
         dmat (2, 2) = -2.0;
-        std::cout << "Determinant:  " << dmat.determinant () << std::endl;
+
+        auto            dfut = dmat.determinant_async ();
+        const double    deter = dfut.get();
+
+        std::cout << "Determinant:  " << deter << std::endl;
         std::cout << "Condition#:   " << dmat.condition () << std::endl;
         std::cout << "Is singular?  " << dmat.is_singular () << std::endl;
 
@@ -879,7 +883,9 @@ int main (int argCnt, char *argVctr [])  {
         std::cout << "Original Matrix:\n";
         dmat2.dump (std::cout) << std::endl;
 
-        dmat2.eigen_space (eigenvals, eigenvecs, true);
+        auto    efut = dmat2.eigen_space_async(eigenvals, eigenvecs, true);
+
+        efut.get();
         std::cout << "Eigen Values:\n";
         eigenvals.dump (std::cout) << std::endl;
         std::cout << "Eigen Vectors:\n";
