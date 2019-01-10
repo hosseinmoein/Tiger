@@ -122,8 +122,7 @@ if (UNIX)
   # Find pthreads library
   set(THREADS_PREFER_PTHREAD_FLAG ON)
   find_package(Threads REQUIRED)
-  target_link_libraries(dataframe_tester Threads::Threads)
-  target_link_libraries(vectors_tester Threads::Threads)
+  target_link_libraries(matrix_tester Threads::Threads)
 endif (UNIX)
 
 # Enable ctest, testing so we can see if unit tests pass or fail in CI
