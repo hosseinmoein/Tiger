@@ -20,7 +20,10 @@ HEADERS = $(LOCAL_INCLUDE_DIR)/MathOperators.h \
           $(LOCAL_INCLUDE_DIR)/DenseMatrixBase.h \
           $(LOCAL_INCLUDE_DIR)/DenseMatrixBase.tcc \
           $(LOCAL_INCLUDE_DIR)/Matrix.h \
-          $(LOCAL_INCLUDE_DIR)/Matrix.tcc
+          $(LOCAL_INCLUDE_DIR)/Matrix.tcc \
+          $(LOCAL_INCLUDE_DIR)/VectorRange.h \
+          $(LOCAL_INCLUDE_DIR)/StepVectorRange.h \
+          $(LOCAL_INCLUDE_DIR)/BaseMathOperators.h
 
 LIB_NAME =
 TARGET_LIB =

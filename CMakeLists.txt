@@ -58,23 +58,11 @@ set(${LIBRARY_TARGET_NAME}_HDR
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.tcc>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.h>
    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.tcc>
-   # Get files from the DMScu module too
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_MathOperators.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_StepVectorRange.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_VectorRange.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include/DMScu_Exception.h>
 )
 
 target_include_directories(${LIBRARY_TARGET_NAME} INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-                                                            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include>"
                                                             "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>"
 							    )
-
-# This transfers control flow to the given subdir, so
-# cmake will start parsing the cmake file in that dir
-add_subdirectory(DMScu) # Make the test targets for DMScu
-
-
 
 # Specify installation targets, typology and destination folders.
 # First install cmake exported files 
@@ -117,7 +105,6 @@ include(AddUninstallTarget)
 # Build the test binary
 add_executable(matrix_tester src/matrix_tester.cc)
 target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(matrix_tester PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/DMScu/include)
 if (UNIX)
   # Find pthreads library
   set(THREADS_PREFER_PTHREAD_FLAG ON)

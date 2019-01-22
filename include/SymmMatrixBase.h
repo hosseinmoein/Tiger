@@ -3,13 +3,12 @@
 // Copyright (C) 2018-2019 Hossein Moein
 // Distributed under the BSD Software License (see file License)
 
-#ifndef _INCLUDED_SymmMatrixBase_h
-#define _INCLUDED_SymmMatrixBase_h
+#pragma once
 
 #include <iostream>
 
-#include <DMScu_VectorRange.h>
-#include <DMScu_StepVectorRange.h>
+#include <VectorRange.h>
+#include <StepVectorRange.h>
 
 #include <MatrixBase.h>
 
@@ -369,10 +368,6 @@ class   SymmMatrixBase : public DenseMatrixStorage<T>  {
 #  endif // DMS_INCLUDE_SOURCE
 
 // ----------------------------------------------------------------------------
-
-#undef _INCLUDED_SymmMatrixBase_h
-#define _INCLUDED_SymmMatrixBase_h 1
-#endif  // _INCLUDED_SymmMatrixBase_h
 
 // Local Variables:
 // mode:C++

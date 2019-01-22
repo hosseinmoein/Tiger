@@ -7,8 +7,8 @@
 
 #include <iostream>
 
-#include <DMScu_VectorRange.h>
-#include <DMScu_StepVectorRange.h>
+#include <VectorRange.h>
+#include <StepVectorRange.h>
 
 #include <MatrixBase.h>
 
@@ -31,8 +31,8 @@ public:
     using pointer = typename BaseClass::pointer;
     using const_pointer = typename BaseClass::const_pointer;
 
-    using ColumnVector = DMScu_VectorRange<value_type>;
-    using RowVector = DMScu_StepVectorRange<value_type>;
+    using ColumnVector = VectorRange<value_type>;
+    using RowVector = StepVectorRange<value_type>;
 
     using SelfType = DenseMatrixBase<value_type>;
 

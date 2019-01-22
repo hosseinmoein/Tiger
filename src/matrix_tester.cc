@@ -5,11 +5,11 @@
 
 #include <iostream>
 
-#include <DMScu_MathOperators.h>
+#include <BaseMathOperators.h>
+#include <MathOperators.h>
 
 #include <Complex.h>
 #include <Matrix.h>
-#include <MathOperators.h>
 
 using namespace hmma;
 
@@ -270,7 +270,7 @@ int main (int argCnt, char *argVctr [])  {
         std::cout << "The Adjoint matrix:" << std::endl;
         adj.dump (std::cout) << std::endl;
 
-        dmat.scale (DMScu_Multiplies<double>(), 10.0);
+        dmat.scale (Multiplies<double>(), 10.0);
         std::cout << "Determinant after multiplied by 10:  "
                   << dmat.determinant () << std::endl;
         std::cout << "Condition# after multiplied by 10:   "
