@@ -26,53 +26,65 @@ inline T _str_to_num_ (const char *str) noexcept;
 
 template<>
 inline int
-_str_to_num_<int>(const char *str) noexcept  { return (::atoi (str)); }
+_str_to_num_<int>(const char *str) noexcept  {
+
+    return (static_cast<int>(::strtol(str, nullptr, 0)));
+}
 
 template<>
 inline unsigned int
-_str_to_num_<unsigned int>(const char *str) noexcept  { return (::atoi (str)); }
+_str_to_num_<unsigned int>(const char *str) noexcept  {
+
+    return (static_cast<unsigned int>(::strtol(str, nullptr, 0)));
+}
 
 template<>
 inline long int
-_str_to_num_<long int>(const char *str) noexcept  { return (::atol (str)); }
+_str_to_num_<long int>(const char *str) noexcept  {
+
+    return (::strtol(str, nullptr, 0));
+}
 
 template<>
 inline unsigned long int
 _str_to_num_<unsigned long int>(const char *str) noexcept  {
 
-    return (::atol (str));
+    return (static_cast<unsigned long int>(::strtol(str, nullptr, 0)));
 }
 
 template<>
 inline long long int
 _str_to_num_<long long int>(const char *str) noexcept  {
 
-    return (::atoll (str));
+    return (::strtoll(str, nullptr, 0));
 }
 
 template<>
 inline unsigned long long int
 _str_to_num_<unsigned long long int>(const char *str) noexcept  {
 
-    return (::atoll (str));
+    return (static_cast<unsigned long long int>(::strtol(str, nullptr, 0)));
 }
 
 template<>
 inline float
 _str_to_num_<float>(const char *str) noexcept  {
 
-    return (static_cast<float>(::atof (str)));
+    return (::strtof(str, nullptr));
 }
 
 template<>
 inline double
-_str_to_num_<double>(const char *str) noexcept  { return (::atof (str)); }
+_str_to_num_<double>(const char *str) noexcept  {
+
+    return (::strtod(str, nullptr));
+}
 
 template<>
 inline long double
 _str_to_num_<long double>(const char *str) noexcept  {
 
-    return (static_cast<long double>(::atof (str)));
+    return (::strtold(str, nullptr));
 }
 
 // ----------------------------------------------------------------------------
