@@ -117,3 +117,12 @@ enable_testing()
 add_test(NAME matrix_tester
          COMMAND matrix_tester
          WORKING_DIRECTORY $<TARGET_FILE_DIR:matrix_tester>)
+
+message("-- Copying files for testing")
+# Ctest require this files in the build dir, on all platforms
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test/matrix_test_file.csv DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+if (MSVC)
+  file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test/matrix_test_file.csv DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin/Debug)
+  file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test/matrix_test_file.csv DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin/Release)
+endif(MSVC)
+message("-- Copying files for testing - done")

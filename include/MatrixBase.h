@@ -17,6 +17,15 @@ struct  NotSquare : public MatrixException  {  };
 struct  Singular : public MatrixException  {  };
 struct  NotSolvable : public MatrixException  {  };
 
+// -------------------------------------
+
+enum class io_format : unsigned char  {
+    csv = 1,
+    binary = 2
+};
+
+// -------------------------------------
+
 template<class T>
 struct  MatrixBase  {
 
@@ -77,6 +86,10 @@ public:
 
     inline size_type rows () const noexcept  { return (rows_); }
     inline size_type columns () const noexcept  { return (cols_); }
+
+    template<typename STRM>
+    bool write (STRM &stream, io_format iof = io_format::csv) const;
+    bool read (const char *file_name, io_format iof = io_format::csv);
 
 private:
 
