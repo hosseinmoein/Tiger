@@ -5,7 +5,7 @@
 ![Alt text](docs/Matrix.jpeg "Matrix")
 
 # Matrix
-This is a math and arithmetic library. It has stood many years of performing in mission critical production for financial systems. It has been optimized for correctness and performance.
+This is a math and matrix arithmetic library. It has stood many years of performing in mission critical production for financial systems. It has been optimized for correctness and performance.
 Most of the math routines are straight translation from Fortran. Arithmetic operators are implemented using expression template techniques.<BR>
 This is a header-only library
 
