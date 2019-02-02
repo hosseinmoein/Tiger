@@ -9,6 +9,51 @@ This is a math and arithmetic matrix library. It has stood many years of perform
 Most of the math routines are straight translation from Fortran. Arithmetic operators are implemented using expression template techniques.<BR>
 This is a header-only library
 
+```CPP
+typedef Matrix<DenseMatrixBase, double>       DDMatrix;
+
+DDMatrix dmat (8, 8);
+int      count = 0;
+
+for (DDMatrix::size_type i = 0; i < 8; ++i)
+    for (DDMatrix::size_type j = 0; j < 3; ++j)
+        dmat (i, j) = ++count;
+
+dmat.dump (std::cout);
+
+const   DDMatrix::ColumnVector   cv = dmat.get_column (1);
+const   DDMatrix::RowVector      rv = dmat.get_row (4);
+
+std::cout << "Column 1:\n";
+for (DDMatrix::ColumnVector::const_iterator citer = cv.begin ();
+     citer != cv.end (); ++citer)
+    std::cout << *citer << "\n";
+
+std::cout << "\nRow 4:\n";
+for (DDMatrix::RowVector::const_iterator citer = rv.begin ();
+     citer != rv.end (); ++citer)
+    std::cout << *citer << "   ";
+std::cout << std::endl;
+
+auto            dfut = dmat.determinant_async ();
+const double    deter = dfut.get();
+
+std::cout << "Determinant:  " << deter << std::endl;
+std::cout << "Condition:   " << dmat.condition () << std::endl;
+std::cout << "Is singular?  " << dmat.is_singular () << std::endl;
+
+DDMatrix eigenvals;
+DDMatrix eigenvecs;
+
+// This probably will throw an unsolveable exception. I am just showing the interface
+//
+dmat.eigen_space (eigenvals, eigenvecs, true);
+std::cout << "Eigen Values:\n";
+eigenvals.dump (std::cout) << std::endl;
+std::cout << "Eigen Vectors:\n";
+eigenvecs.dump (std::cout) << std::endl;
+```
+
 # Documentation
 [Matrix Documentation](docs/MatrixDoc.pdf)<BR>
 [Complex Documentation](include/Complex.h)
