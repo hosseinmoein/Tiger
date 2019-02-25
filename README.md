@@ -1,6 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/acuqcseoi6y19wp4?svg=true)](https://ci.appveyor.com/project/hosseinmoein/matrix)
 [![C++11](https://img.shields.io/badge/C%2B%2B-11-blue.svg)](https://isocpp.org/std/the-standard )
-<!-- [![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/hosseinmoein/Matrix) -->
+[![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/hosseinmoein/Matrix)
 
 ![Alt text](docs/Matrix.jpeg "Matrix")
 
