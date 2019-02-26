@@ -1584,34 +1584,34 @@ int main (int argCnt, char *argVctr [])  {
         std::cout.precision (pre);
     }
 
-    {
-        std::cout << "\nTesting read() ...\n" << std::endl;
+    // {
+    //     std::cout << "\nTesting read() ...\n" << std::endl;
 
-        /*
-        const size_t    dim = 100;
-        DDMatrix        dmat (dim, dim);
+    //     /*
+    //     const size_t    dim = 100;
+    //     DDMatrix        dmat (dim, dim);
 
-        for (DDMatrix::size_type i = 0; i < dim; ++i)
-            for (DDMatrix::size_type j = 0; j < dim; ++j)
-                dmat (i, j) = ::drand48 ();
-        dmat.write (std::cout);
-        std::cout << std::endl;
-        */
+    //     for (DDMatrix::size_type i = 0; i < dim; ++i)
+    //         for (DDMatrix::size_type j = 0; j < dim; ++j)
+    //             dmat (i, j) = ::drand48 ();
+    //     dmat.write (std::cout);
+    //     std::cout << std::endl;
+    //     */
 
-        DDMatrix    dmat;
+    //     DDMatrix    dmat;
 
-        dmat.read("matrix_test_file.csv");
-        std::cout << "0.396464773760=" << std::setprecision(12) << dmat(0, 0)
-                  << std::endl;
-        std::cout << "0.867329613094=" << std::setprecision(12) << dmat(99, 99)
-                  << std::endl;
-        std::cout << "0.471682027561=" << std::setprecision(12) << dmat(10, 88)
-                  << std::endl;
-        std::cout << "0.306674009279=" << std::setprecision(12) << dmat(98, 23)
-                  << std::endl;
-        std::cout << "0.992849997811=" << std::setprecision(12) << dmat(55, 55)
-                  << std::endl;
-    }
+    //     dmat.read("matrix_test_file.csv");
+    //     std::cout << "0.396464773760=" << std::setprecision(12) << dmat(0, 0)
+    //               << std::endl;
+    //     std::cout << "0.867329613094=" << std::setprecision(12) << dmat(99, 99)
+    //               << std::endl;
+    //     std::cout << "0.471682027561=" << std::setprecision(12) << dmat(10, 88)
+    //               << std::endl;
+    //     std::cout << "0.306674009279=" << std::setprecision(12) << dmat(98, 23)
+    //               << std::endl;
+    //     std::cout << "0.992849997811=" << std::setprecision(12) << dmat(55, 55)
+    //               << std::endl;
+    // }
 
     return (EXIT_SUCCESS);
 }
