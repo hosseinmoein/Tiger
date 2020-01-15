@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <BaseMathOperators.h>
 #include <MathOperators.h>
 
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 
 #include <Complex.h>
 #include <Matrix.h>
@@ -1610,6 +1610,7 @@ int main (int argCnt, char *argVctr [])  {
 
         std::cout.precision (pre);
     }
+    /*
     {
         std::cout << "\nTesting Eigen performace ...\n" << std::endl;
 
@@ -1648,6 +1649,7 @@ int main (int argCnt, char *argVctr [])  {
         std::cout << "Eigen took: " << eend - estart << std::endl
                   << "Hossein Took: " << hend - hstart << std::endl;
     }
+    */
 
     // {
     //     std::cout << "\nTesting read() ...\n" << std::endl;
