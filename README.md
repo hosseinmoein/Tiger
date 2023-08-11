@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/hosseinmoein/Matrix)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hosseinmoein/Matrix/master)
 
-![Alt text](docs/Matrix.jpeg "Matrix")
+<img src="docs/Matrix.jpeg.jpg" alt="Matrix Tiger" width="400"/>
 
 # Matrix
 This is a math and arithmetic matrix library. It has stood many years of performing in mission critical production for financial systems. It has been optimized for correctness and performance.
