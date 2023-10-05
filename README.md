@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/acuqcseoi6y19wp4?svg=true)](https://ci.appveyor.com/project/hosseinmoein/matrix)
-[![C++11](https://img.shields.io/badge/C%2B%2B-11-blue.svg)](https://isocpp.org/std/the-standard )
+[![C++20](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://isocpp.org/std/the-standard )
 [![Build Status](https://travis-ci.org/hosseinmoein/Matrix.svg?branch=master)](https://travis-ci.org/hosseinmoein/Matrix)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hosseinmoein/Matrix/master)
 
