@@ -12,18 +12,18 @@ PROJECT_INCLUDE_DIR = ../../include
 # -----------------------------------------------------------------------------
 
 SRCS =
-HEADERS = $(LOCAL_INCLUDE_DIR)/MathOperators.h \
-          $(LOCAL_INCLUDE_DIR)/SymmMatrixBase.h \
-          $(LOCAL_INCLUDE_DIR)/SymmMatrixBase.tcc \
-          $(LOCAL_INCLUDE_DIR)/MatrixBase.h \
-          $(LOCAL_INCLUDE_DIR)/MatrixBase.tcc \
-          $(LOCAL_INCLUDE_DIR)/DenseMatrixBase.h \
-          $(LOCAL_INCLUDE_DIR)/DenseMatrixBase.tcc \
-          $(LOCAL_INCLUDE_DIR)/Matrix.h \
-          $(LOCAL_INCLUDE_DIR)/Matrix.tcc \
-          $(LOCAL_INCLUDE_DIR)/VectorRange.h \
-          $(LOCAL_INCLUDE_DIR)/StepVectorRange.h \
-          $(LOCAL_INCLUDE_DIR)/BaseMathOperators.h
+HEADERS = $(LOCAL_INCLUDE_DIR)/Tiger/MathOperators.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/SymmMatrixBase.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/SymmMatrixBase.tcc \
+          $(LOCAL_INCLUDE_DIR)/Tiger/MatrixBase.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/MatrixBase.tcc \
+          $(LOCAL_INCLUDE_DIR)/Tiger/DenseMatrixBase.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/DenseMatrixBase.tcc \
+          $(LOCAL_INCLUDE_DIR)/Tiger/Matrix.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/Matrix.tcc \
+          $(LOCAL_INCLUDE_DIR)/Tiger/VectorRange.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/StepVectorRange.h \
+          $(LOCAL_INCLUDE_DIR)/Tiger/BaseMathOperators.h
 
 LIB_NAME =
 TARGET_LIB =
@@ -68,7 +68,7 @@ PRE_BUILD:
 	mkdir -p $(LOCAL_BIN_DIR)
 	mkdir -p $(LOCAL_OBJ_DIR)
 	mkdir -p $(PROJECT_LIB_DIR)
-	mkdir -p $(PROJECT_INCLUDE_DIR)
+	mkdir -p $(PROJECT_INCLUDE_DIR)/Tiger
 
 MATRIX_TESTER_OBJ = $(LOCAL_OBJ_DIR)/matrix_tester.o
 $(LOCAL_BIN_DIR)/matrix_tester: $(MATRIX_TESTER_OBJ)
