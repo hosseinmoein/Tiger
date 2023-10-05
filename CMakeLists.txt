@@ -55,16 +55,16 @@ add_definitions(-D DMS_INCLUDE_SOURCE) # Need this for some of the .tcc files to
 add_library(${LIBRARY_TARGET_NAME} INTERFACE)
 # List of header files.
 set(${LIBRARY_TARGET_NAME}_HDR
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Complex.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/DenseMatrixBase.tcc>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MathOperators.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Matrix.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Matrix.tcc>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/MatrixBase.tcc>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.h>
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/SymmMatrixBase.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/Complex.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/DenseMatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/DenseMatrixBase.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/MathOperators.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/Matrix.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/Matrix.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/MatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/MatrixBase.tcc>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/SymmMatrixBase.h>
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/Tiger/SymmMatrixBase.tcc>
 )
 
 target_include_directories(${LIBRARY_TARGET_NAME} INTERFACE "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

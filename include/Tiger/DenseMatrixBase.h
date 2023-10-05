@@ -11,7 +11,7 @@ modification, are permitted provided that the following conditions are met:
 * Redistributions in binary form must reproduce the above copyright
   notice, this list of conditions and the following disclaimer in the
   documentation and/or other materials provided with the distribution.
-* Neither the name of Hossein Moein and/or the Matrix nor the
+* Neither the name of Hossein Moein and/or the Tiger nor the
   names of its contributors may be used to endorse or promote products
   derived from this software without specific prior written permission.
 
@@ -31,10 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
 
-#include <VectorRange.h>
-#include <StepVectorRange.h>
+#include <Tiger/VectorRange.h>
+#include <Tiger/StepVectorRange.h>
 
-#include <MatrixBase.h>
+#include <Tiger/MatrixBase.h>
 
 // ----------------------------------------------------------------------------
 
@@ -135,10 +135,7 @@ public:
 
    // It goes through the matrix row-by-row starting at [0, 0]
    //
-    class   row_iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type,
-                               long>  {
+    class   row_iterator  {
 
     public:
 
@@ -250,10 +247,7 @@ public:
         friend  class   DenseMatrixBase::row_const_iterator;
     };
 
-    class   row_const_iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type,
-                               long>  {
+    class   row_const_iterator  {
 
     public:
 
@@ -426,7 +420,7 @@ public:
 // ----------------------------------------------------------------------------
 
 #  ifdef DMS_INCLUDE_SOURCE
-#    include <DenseMatrixBase.tcc>
+#    include <Tiger/DenseMatrixBase.tcc>
 #  endif // DMS_INCLUDE_SOURCE
 
 // ----------------------------------------------------------------------------
