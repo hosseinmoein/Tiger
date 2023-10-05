@@ -133,9 +133,7 @@ private:
 public:
 
     class iterator;
-    class   const_iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type const, long>  {
+    class   const_iterator  {
 
     public:
 
@@ -293,9 +291,7 @@ public:
     // This iterator contains only one pointer. Like STL iterators,
     // it is cheap to create and copy around.
     //
-    class   iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type, long>  {
+    class   iterator  {
 
     public:
 

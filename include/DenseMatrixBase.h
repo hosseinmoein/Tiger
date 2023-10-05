@@ -135,10 +135,7 @@ public:
 
    // It goes through the matrix row-by-row starting at [0, 0]
    //
-    class   row_iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type,
-                               long>  {
+    class   row_iterator  {
 
     public:
 
@@ -250,10 +247,7 @@ public:
         friend  class   DenseMatrixBase::row_const_iterator;
     };
 
-    class   row_const_iterator
-        : public std::iterator<std::random_access_iterator_tag,
-                               value_type,
-                               long>  {
+    class   row_const_iterator  {
 
     public:
 

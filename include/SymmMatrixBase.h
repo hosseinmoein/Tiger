@@ -87,9 +87,7 @@ class   SymmMatrixBase : public DenseMatrixStorage<T>  {
 
     public:
 
-        class   iterator
-            : public std::iterator<std::random_access_iterator_tag,
-                                   value_type, long>  {
+        class   iterator  {
 
             public:
 
@@ -201,9 +199,7 @@ class   SymmMatrixBase : public DenseMatrixStorage<T>  {
                 friend  class   SymmMatrixBase::const_iterator;
         };
 
-        class   const_iterator
-            : public std::iterator<std::random_access_iterator_tag,
-                                   value_type, long>  {
+        class   const_iterator  {
 
             public:
 

@@ -551,9 +551,7 @@ class   MatrixExpr  {
 
     public:
 
-        class   const_iterator
-            : public std::iterator<std::forward_iterator_tag,
-                                   value_type, long int>  {
+        class   const_iterator  {
 
             public:
 

@@ -112,14 +112,13 @@ struct  NL::NumAt<T, 0>  { enum { value = T::value }; };
 //
 
 template<class C1, class C2 = C1, class R = C1>
-class   Plus : public std::binary_function<C1, C2, R>  {
+class   Plus  {
 
 public:
 
-    typedef typename std::binary_function<C1, C2, R> BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = C1;
+    using second_argument_type = C2;
 
     inline Plus () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -130,14 +129,13 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C1, class C2 = C1, class R = C1>
-class   Minus : public std::binary_function<C1, C2, R>  {
+class   Minus  {
 
 public:
 
-    typedef typename std::binary_function<C1, C2, R> BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = C1;
+    using second_argument_type = C2;
 
     inline Minus () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -148,14 +146,13 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C1, class C2 = C1, class R = C1>
-class   Multiplies : public std::binary_function<C1, C2, R>  {
+class   Multiplies  {
 
 public:
 
-    typedef typename std::binary_function<C1, C2, R> BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = C1;
+    using second_argument_type = C2;
 
     inline Multiplies () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -166,14 +163,13 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C1, class C2 = C1, class R = C1>
-class   Divides : public std::binary_function<C1, C2, R>  {
+class   Divides  {
 
 public:
 
-    typedef typename std::binary_function<C1, C2, R> BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = C1;
+    using second_argument_type = C2;
 
     inline Divides () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -184,14 +180,13 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C1, class C2 = C1, class R = C1>
-class   Modulus : public std::binary_function<C1, C2, R>  {
+class   Modulus  {
 
 public:
 
-    typedef typename std::binary_function<C1, C2, R> BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = C1;
+    using second_argument_type = C2;
 
     inline Modulus () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -202,13 +197,12 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C, class R = C>
-class   Negate : public std::unary_function<C, R>  {
+class   Negate  {
 
 public:
 
-    typedef typename std::unary_function<C, R>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = R;
+    using argument_type = C;
 
     inline Negate () noexcept  {   }
     inline result_type operator () (const argument_type &lhs)
@@ -222,13 +216,12 @@ public:
 //
 
 template<class C, class R = C>
-class   Identity : public std::unary_function<C, R>  {
+class   Identity  {
 
 public:
 
-    typedef typename std::unary_function<C, R>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = R;
+    using argument_type = C;
 
     inline Identity () noexcept  {   }
 
@@ -239,7 +232,7 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class C, class R = C>
-class   Literal : public std::unary_function<C, R>  {
+class   Literal  {
 
 private:
 
@@ -247,9 +240,8 @@ private:
 
 public:
 
-    typedef typename std::unary_function<C, R>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = R;
+    using argument_type = C;
 
     inline Literal () noexcept : value_ ()  {   }
     inline explicit Literal (const C &v) noexcept : value_ (v)  {   }
@@ -261,7 +253,7 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class E, class A>
-class   Expression : public std::unary_function<A, A>  {
+class   Expression  {
 
 private:
 
@@ -269,9 +261,8 @@ private:
 
 public:
 
-    typedef typename std::unary_function<A, A>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = A;
+    using argument_type = A;
 
     inline Expression () noexcept : exp_ ()  {   }
     inline explicit Expression (const E &e) noexcept : exp_ (e)  {   }
@@ -283,7 +274,7 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class E1, class E2, class O, class A>
-class   BinExprOpt : public std::unary_function<A, A>  {
+class   BinExprOpt  {
 
 private:
 
@@ -293,9 +284,8 @@ private:
 
 public:
 
-    typedef typename std::unary_function<A, A>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = A;
+    using argument_type = A;
 
     inline BinExprOpt () noexcept : expr1_ (), expr2_ (), opt_ ()  {   }
     inline BinExprOpt (const E1 &e1, const E2 &e2) noexcept
@@ -310,7 +300,7 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class E, class O, class A>
-class   UnaExprOpt : public std::unary_function<A, A>  {
+class   UnaExprOpt  {
 
 private:
 
@@ -319,9 +309,8 @@ private:
 
 public:
 
-    typedef typename std::unary_function<A, A>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = A;
+    using argument_type = A;
 
     inline UnaExprOpt () noexcept : expr_ (), opt_ ()  {   }
     inline UnaExprOpt (const E &e) noexcept : expr_ (e), opt_ ()  {   }
@@ -335,14 +324,13 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class T, class R = T>
-class   Power : public std::binary_function<T, T, R>  {
+class   Power  {
 
 public:
 
-    typedef typename std::binary_function<T, T, R>   BaseClass;
-    typedef typename BaseClass::result_type          result_type;
-    typedef typename BaseClass::first_argument_type  first_argument_type;
-    typedef typename BaseClass::second_argument_type second_argument_type;
+    using result_type = R;
+    using first_argument_type = T;
+    using second_argument_type = T;
 
     inline Power () noexcept  {   }
     inline result_type operator () (const first_argument_type &lhs,
@@ -402,13 +390,12 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class T, class R = T>
-class   NLog : public std::unary_function<T, R>  {
+class   NLog  {
 
 public:
 
-    typedef typename std::unary_function<T, R>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = R;
+    using argument_type = T;
 
     inline NLog () noexcept  {   }
     inline result_type operator () (const argument_type &lhs)
@@ -430,13 +417,12 @@ public:
 // ----------------------------------------------------------------------------
 
 template<class T, class R = T>
-class   EExpo : public std::unary_function<T, R>  {
+class   EExpo  {
 
 public:
 
-    typedef typename std::unary_function<T, R>  BaseClass;
-    typedef typename BaseClass::result_type     result_type;
-    typedef typename BaseClass::argument_type   argument_type;
+    using result_type = R;
+    using argument_type = T;
 
     inline EExpo () noexcept  {   }
     inline result_type operator () (const argument_type &lhs)

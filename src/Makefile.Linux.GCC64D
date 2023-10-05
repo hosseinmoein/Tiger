@@ -11,7 +11,7 @@ CXX = /usr/bin/g++
 INCLUDES = -I/usr/include/c++/7 -I/usr/include -I/Users/hosseinmoein/pcode
 
 LFLAGS =
-CXXFLAGS = -g -std=c++17 $(INCLUDES) $(DEFINES)
+CXXFLAGS = -g -std=c++17 $(INCLUDES) $(DEFINES) -std=c++20
 
 PLATFORM_LIBS = -lpthread -ldl -lm -lstdc++
 
