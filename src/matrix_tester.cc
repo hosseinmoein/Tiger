@@ -1036,11 +1036,11 @@ int main (int argCnt, char *argVctr [])  {
             std::cout << "U * S * ~ V:\n";
             A.dump (std::cout) << std::endl;
 
-            //if (dmat != U * S * ~ V)  {
-            //    std::cout << "ERROR: Comparison faild for SVD equality (2)\n"
-            //              << std::endl;
-            //    return (EXIT_FAILURE);
-            //}
+            // if (dmat != U * S * ~ V)  {
+            //     std::cout << "ERROR: Comparison faild for SVD equality (2)\n"
+            //               << std::endl;
+            //     return (EXIT_FAILURE);
+            // }
         }
 
         std::cout << "\n-------\n" << std::endl;
