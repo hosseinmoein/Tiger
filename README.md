@@ -57,7 +57,7 @@ eigenvecs.dump (std::cout) << std::endl;
 
 # Documentation
 [Matrix Documentation](docs/MatrixDoc.pdf)<BR>
-[Complex Documentation](include/Complex.h)
+[Complex Documentation](include/Tiger/Complex.h)
 
 # Test/Example
 [Test File](src/matrix_tester.cc)
